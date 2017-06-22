@@ -51,13 +51,8 @@ public class BaseActivity extends AppCompatActivity {
     private TextView text_title;
 
 
-    private ImageView img_give_suggestion;
-    private ImageView img_settings;
-    private View view_suggestion_volunteer_work;
-    private View view_suggestion_improve_app;
-    private View view_sharing_setting;
-    private View view_account_setting;
-    private TextView tv_name;
+    private ImageView img_scan;
+
    // private AQuery mAQuery;
 
 
@@ -138,6 +133,10 @@ public class BaseActivity extends AppCompatActivity {
 //        view_account_setting = (View) this.findViewById(R.id.view_account_setting);
 //
 //
+
+        img_scan = (ImageView)findViewById(R.id.img_scan);
+        img_scan.setOnClickListener(listener);
+
         // for tab view
         ll_tab_home = (LinearLayout) findViewById(R.id.ll_tab_home);
         ll_tab_home.setOnClickListener(listener);
@@ -169,7 +168,7 @@ public class BaseActivity extends AppCompatActivity {
                 case R.id.ll_silding:
                     slide_me.toggle();
                     break;
-//
+
                 case R.id.ll_tab_home:
                     selecteddeselectedTab(0);
                     Intent mIntent = new Intent(mContext, HomeActivity.class);
@@ -195,8 +194,14 @@ public class BaseActivity extends AppCompatActivity {
                 case R.id.ll_tab_profile:
                     selecteddeselectedTab(4);
 
-                    /*mIntent = new Intent(mContext, ProfileActivity.class);
-                    startActivity(mIntent);*/
+                    mIntent = new Intent(mContext, ProfileActivity.class);
+                    startActivity(mIntent);
+                    break;
+
+                case R.id.img_scan:
+
+                    mIntent = new Intent(mContext, ScanActivity.class);
+                    startActivity(mIntent);
                     break;
 
                 default:

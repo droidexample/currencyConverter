@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/ic_backround_image"
+    tools:context="com.at.currencysell.ProfileActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/rl_circle_image"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:background="@drawable/bg_rounded_profile"
+            android:layout_margin="5dp"
+            >
+
+            <com.at.currencysell.utils.RoundedImageView
+                android:id="@+id/circle_image"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_pro_pic"
+                />
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="JOHN SINA"
+            android:textColor="@color/white"
+            android:textSize="@dimen/large_text"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center">
+            <ImageView
+                android:id="@+id/image_location"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_location"
+                />
+            <TextView
+                android:id="@+id/txt_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="New York"
+                android:textColor="@color/white"
+                android:layout_toRightOf="@+id/image_location"/>
+            <TextView
+                android:id="@+id/txt_member"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Member since"
+                android:textColor="@color/white"
+                android:layout_toRightOf="@+id/txt_location"
+                android:layout_marginLeft="10dp"
+                />
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2015.04.12"
+                android:textColor="@color/white"
+                android:layout_toRightOf="@+id/txt_member"
+                android:layout_marginLeft="5dp"
+                />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:background="@drawable/edit_profile_background"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="EDIT PROFILE"
+                android:textColor="@color/white"
+                android:textSize="@dimen/medium_text"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="6"
+            android:padding="10dp"
+            android:layout_marginTop="10dp"
+            >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                android:layout_weight="3"
+                android:background="@drawable/button_background_gmail"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="REVIEW"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/medium_text"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                android:layout_weight="3"
+                android:background="@drawable/button_background_edittext"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/text_people_need"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="RATES"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/medium_text"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+    <ListView
+        android:id="@+id/list_home"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="@null"
+        android:padding="5dp"></ListView>
+    </LinearLayout>
+
+</RelativeLayout>

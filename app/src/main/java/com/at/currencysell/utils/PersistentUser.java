@@ -7,7 +7,7 @@ import android.content.SharedPreferences.Editor;
 public class PersistentUser {
 
 
-    private static final String PREFS_FILE_NAME = "volunteer";
+    private static final String PREFS_FILE_NAME = "currencysell";
 
 
     public static void setClick(Context c) {
@@ -20,6 +20,14 @@ public class PersistentUser {
     public static boolean isClicked(Context c) {
         final SharedPreferences prefs = c.getSharedPreferences(PREFS_FILE_NAME, Context.MODE_PRIVATE);
         return prefs.getBoolean("clicked", false);
+    }
+
+    public static void NotClicked(Context c) {
+
+        final SharedPreferences prefs = c.getSharedPreferences(PREFS_FILE_NAME,
+                Context.MODE_PRIVATE);
+        prefs.edit().putBoolean("clicked", false).commit();
+
     }
 
 }

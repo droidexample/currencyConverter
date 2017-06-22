@@ -29,4 +29,6 @@
     <!--create request page-->
     <string name="create_request_text">Create a request</string>
     <string name="create_text">Create</string>
+
+    <string name="scan_text">SCAN</string>
 </resources>

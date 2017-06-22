@@ -24,8 +24,8 @@
             >
 
             <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:background="@drawable/btn_home"
                 />
         </LinearLayout>
@@ -46,8 +46,8 @@
                 >
 
                 <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:background="@drawable/btn_my_requests"
                     />
             </LinearLayout>
@@ -55,14 +55,14 @@
     </LinearLayout>
     <RelativeLayout
         android:id="@+id/rl_tab_add"
-        android:layout_width="75dp"
-        android:layout_height="75dp"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
         android:layout_centerInParent="true"
         android:background="@drawable/circle_shape">
 
         <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_centerHorizontal="true"
             android:layout_centerInParent="true"
             android:background="@drawable/ic_add"
@@ -92,8 +92,8 @@
             >
 
             <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                android:background="@drawable/btn_chat"
                 />
         </LinearLayout>
@@ -114,8 +114,8 @@
                 >
 
                 <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:background="@drawable/btn_profile"
                     />
             </LinearLayout>

@@ -71,7 +71,7 @@ public class MyRequestWantActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                PersistentUser.setClick(mContext);
+                PersistentUser.NotClicked(mContext);
                 Intent intent = new Intent(mContext,CreateRequestActivity.class);
                 startActivity(intent);
             }
