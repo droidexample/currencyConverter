@@ -189,13 +189,12 @@ public class BaseActivity extends AppCompatActivity {
 
                 case R.id.ll_tab_chat:
                     selecteddeselectedTab(3);
-
-                    /*mIntent = new Intent(mContext, ProfileActivity.class);
-                    startActivity(mIntent);*/
+                    mIntent = new Intent(mContext, ChatActivity.class);
+                    startActivity(mIntent);
                     break;
                 case R.id.ll_tab_profile:
                     selecteddeselectedTab(4);
-                    Toast.makeText(mContext,"Profile Clicked",Toast.LENGTH_LONG).show();
+
                     /*mIntent = new Intent(mContext, ProfileActivity.class);
                     startActivity(mIntent);*/
                     break;
