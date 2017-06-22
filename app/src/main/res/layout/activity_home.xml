@@ -8,9 +8,47 @@
     android:background="@drawable/ic_backround_image"
     tools:context="com.at.currencysell.HomeActivity">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"></LinearLayout>
+
+     <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:orientation="horizontal"
+       android:weightSum="6"
+       android:padding="10dp"
+       >
+
+       <LinearLayout
+           android:layout_width="wrap_content"
+           android:layout_height="50dp"
+           android:layout_weight="3"
+           android:background="@drawable/button_background_gmail"
+           android:gravity="center">
+
+           <TextView
+               android:id="@+id/textView"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="PEOPLE NEED"
+               android:textColor="@color/white"
+               android:textSize="@dimen/medium_text"/>
+       </LinearLayout>
+       <LinearLayout
+           android:layout_width="wrap_content"
+           android:layout_height="50dp"
+           android:layout_weight="3"
+           android:background="@drawable/button_background_edittext"
+           android:gravity="center">
+
+           <TextView
+               android:id="@+id/text_people_need"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="PEOPLE NEED"
+               android:textColor="@color/white"
+               android:textSize="@dimen/medium_text"/>
+       </LinearLayout>
+
+   </LinearLayout>
 
 
     <ListView

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.at.currencysell.LoginActivity"
-    android:background="@color/background">
+    android:background="@drawable/ic_backround_image">
     <RelativeLayout
         android:id="@+id/rl_header"
         android:layout_width="match_parent"
