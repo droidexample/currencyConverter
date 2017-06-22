@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">Currency Sell</string>
+    <string name="currency_text">Currency</string>
+    <string name="exchange_text">Exchange</string>
+
+    <!--first signup page-->
+    <string name="fb_login_text">Login with facebook</string>
+    <string name="gmail_login_text">Login with email</string>
+    <string name="member_text">Not yet a member?</string>
+    <string name="sign_up_text"><u>Sign Up</u></string>
+
+    <!--login page-->
+    <string name="login_text">Login</string>
+    <string name="email_text">Email</string>
+    <string name="password_text">Password</string>
+
+    <!--signup page-->
+    <string name="first_name_text">First name</string>
+    <string name="last_name_text">Last name</string>
+    <string name="confirm_password_text">Confirm Password</string>
+    <string name="already_member_text">Already member?</string>
+    <string name="login_text_underlined"><u>Login</u></string>
+
+    <!--home_left_menu page-->
+    <string name="notification_text">Notifications</string>
+    <string name="setting_text">Setting</string>
+    <string name="trust_text">Trust and verifications</string>
+    <string name="sign_out_text">Sign Out</string>
+    <!--create request page-->
+    <string name="create_request_text">Create a request</string>
+    <string name="create_text">Create</string>
+</resources>

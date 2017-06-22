@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#950A63</color>
+    <color name="colorPrimaryDark">#950A63</color>
+    <color name="colorAccent">#950A63</color>
+
+    <color name="button_color_fb">#0033FF</color>
+    <color name="button_color_gmail">#F68E15</color>
+    <color name="button_color_editext">#681359</color>
+    <color name="white">#ffffff</color>
+    <color name="black">#000</color>
+    <color name="ash">#F2F2F2</color>
+    <color name="statusbar_color">#55A593</color>
+
+    <color name="fontColor">#7C7C7C</color>
+    <color name="deep_ash">#636262</color>
+    <color name="background">#950A63</color>
+    <color name="red">#ef1a31</color>
+    <color name="buttonColor">#4182B1</color>
+    <color name="button_color_singIn">#3BBFDC</color>
+    <color name="indicator_1">#55B3C2</color>
+    <color name="indicator_2">#64A4A4</color>
+    <color name="indicator_3">#66D7B9</color>
+    <color name="button_background_color">#0C7EFB</color>
+    <color name="edittext_background_color">#ECEBEC</color>
+
+    <color name="text_concord">#7C7C7C</color>
+    <color name="light_white">#FAFAFA</color>
+    <color name="dim_gray">#6A6A6A</color>
+    <color name="active">#303F9F</color>
+    <color name="deactive">#7C7C7C</color>
+    <color name="bg_color">#f2f2f2</color>
+    <color name="alabaster">#FAFAFA</color>
+
+    <color name="color_boackgbound">#ece9f0</color>
+    <color name="color_white">#ffffff</color>
+
+    <color name="ash_ash">#000000</color>
+    <color name="ash_normal">#eeeeee</color>
+    <color name="color_read">#B71C1C</color>
+    <color name="back_ground_color">#F2F2F2</color>
+
+    <color name="nav_text_color">#8B8B86</color>
+    <color name="nav_view_color">#D8D8CD</color>
+
+</resources>
