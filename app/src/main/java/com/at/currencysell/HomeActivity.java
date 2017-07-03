@@ -1,9 +1,14 @@
 package com.at.currencysell;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.at.currencysell.adapter.HomeListAdapter;
 import com.at.currencysell.model.HomeListModel;
@@ -16,6 +21,8 @@ public class HomeActivity extends BaseActivity {
     private ListView listView;
     private HomeListAdapter adapter;
     String[] names = {"MICHEAL SMITH","JOHN SMITH","PITER SMITH","ROSIN SMITH","MICHEAL SMITH"};
+    private LinearLayout ll_people_need;
+    private LinearLayout ll_people_have;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +42,12 @@ public class HomeActivity extends BaseActivity {
 
 
     private void initUI(){
+
+        ll_people_need = (LinearLayout)this.findViewById(R.id.ll_people_need);
+        ll_people_need.setOnClickListener(listener);
+        ll_people_have = (LinearLayout)this.findViewById(R.id.ll_people_have);
+        ll_people_have.setOnClickListener(listener);
+
         for (int i = 0;i<names.length;i++){
             HomeListModel nameItem = new HomeListModel();
             nameItem.setName(names[i]);
@@ -48,4 +61,20 @@ public class HomeActivity extends BaseActivity {
         listView.setAdapter(adapter);
 
     }
+
+
+    View.OnClickListener listener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+
+            switch (view.getId()) {
+                case R.id.ll_people_need:
+                    break;
+                case R.id.ll_people_have:
+                    break;
+
+            }
+
+        }
+    };
 }

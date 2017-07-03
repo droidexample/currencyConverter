@@ -41,7 +41,46 @@
 
     </RelativeLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="6"
+        android:padding="10dp"
+        >
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:layout_weight="3"
+            android:background="@drawable/button_background_gmail"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CONFIRMED"
+                android:textColor="@color/white"
+                android:textSize="@dimen/medium_text"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:layout_weight="3"
+            android:background="@drawable/button_background_edittext"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/text_people_need"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SCAN"
+                android:textColor="@color/white"
+                android:textSize="@dimen/medium_text"/>
+        </LinearLayout>
+
+    </LinearLayout>
 
     <ListView
         android:id="@+id/list_home"

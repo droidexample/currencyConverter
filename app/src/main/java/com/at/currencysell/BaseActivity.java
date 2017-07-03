@@ -258,7 +258,7 @@ public class BaseActivity extends AppCompatActivity {
             ll_tab_profile.setSelected(false);
 
         }else if (type == 4) {
-
+            text_title.setText(" ");
             ll_tab_profile.setSelected(true);
             ll_tab_chat.setSelected(false);
             ll_tab_my_requests.setSelected(false);

@@ -18,6 +18,7 @@
        >
 
        <LinearLayout
+           android:id="@+id/ll_people_need"
            android:layout_width="wrap_content"
            android:layout_height="45dp"
            android:layout_weight="3"
@@ -33,6 +34,7 @@
                android:textSize="@dimen/medium_text"/>
        </LinearLayout>
        <LinearLayout
+           android:id="@+id/ll_people_have"
            android:layout_width="wrap_content"
            android:layout_height="45dp"
            android:layout_weight="3"
@@ -56,6 +58,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:divider="@null"
-        android:padding="5dp"></ListView>
+        android:padding="5dp"
+        android:scrollbars="none"></ListView>
 
 </LinearLayout>

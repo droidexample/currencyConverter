@@ -48,7 +48,7 @@ public class HomeListAdapter extends BaseAdapter {
         if (inflater == null)
             inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         if (convertView == null)
-            convertView = inflater.inflate(R.layout.home_list_item, null);
+            convertView = inflater.inflate(R.layout.row_item_home, null);
 
 
         final HomeListModel listModel = listItems.get(position);

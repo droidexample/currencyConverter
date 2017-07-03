@@ -55,7 +55,6 @@
                 android:orientation="vertical"
                 android:layout_alignParentLeft="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginBottom="20dp"
                 android:layout_marginTop="10dp">
 
                 <TextView
@@ -73,6 +72,7 @@
                     android:text="That's great! Are you available today evening?"
                     android:singleLine="false"
                     android:maxLines="2"
+                    android:layout_marginTop="10dp"
                     android:textColor="@color/white"/>
 
             </LinearLayout>
@@ -87,8 +87,8 @@
                 >
                 <ImageView
                     android:id="@+id/img_currency_usa"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:src="@drawable/ic_usa"
                     android:layout_alignParentLeft="true"/>
                 <TextView
@@ -96,11 +96,11 @@
                     android:layout_height="wrap_content"
                     android:text="4000"
                     android:layout_toRightOf="@+id/img_currency_usa"
-                    android:textColor="@color/white"
+                    android:textColor="@color/chat_text_color"
                     android:gravity="center"
                     android:textSize="@dimen/large_text"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="5dp"
+
                     />
                 <ImageView
                     android:id="@+id/img_arrow"
@@ -114,8 +114,8 @@
                     android:orientation="horizontal"
                     android:layout_alignParentRight="true">
                 <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:src="@drawable/ic_japan"
                     />
                     <TextView
@@ -123,11 +123,10 @@
                         android:layout_height="wrap_content"
                         android:text="22,652.4"
                         android:layout_toRightOf="@+id/img_currency_usa"
-                        android:textColor="@color/white"
+                        android:textColor="@color/chat_text_color"
                         android:gravity="center"
                         android:textSize="@dimen/large_text"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginTop="5dp"
+                        android:layout_marginLeft="5dp"
                         />
                 </LinearLayout>
 

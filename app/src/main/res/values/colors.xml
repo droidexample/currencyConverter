@@ -24,7 +24,7 @@
     <color name="button_background_color">#0C7EFB</color>
     <color name="edittext_background_color">#ECEBEC</color>
 
-    <color name="text_concord">#7C7C7C</color>
+    <color name="chat_text_color">#E57942</color>
     <color name="light_white">#FAFAFA</color>
     <color name="dim_gray">#6A6A6A</color>
     <color name="active">#303F9F</color>

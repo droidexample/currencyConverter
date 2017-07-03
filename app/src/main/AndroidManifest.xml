@@ -56,8 +56,10 @@
         <activity
             android:name=".ScanActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ProfileActivity"
-            android:theme="@style/AppTheme.NoActionBar" ></activity>
+        <activity
+            android:name=".ProfileActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".FavouriteCurrencyActivity"></activity>
     </application>
 
 </manifest>
