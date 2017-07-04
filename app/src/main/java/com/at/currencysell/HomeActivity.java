@@ -37,6 +37,10 @@ public class HomeActivity extends BaseActivity {
             window.setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark));
         }
 
+
+
+
+
          initUI();
     }
 

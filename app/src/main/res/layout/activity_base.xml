@@ -39,34 +39,35 @@
             android:id="@+id/layout_scan"
             android:layout_width="80dp"
             android:layout_height="fill_parent"
-            android:layout_alignParentRight="true"
-            >
+            android:layout_alignParentRight="true">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
                 android:layout_marginLeft="-10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="-10dp"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
+                android:orientation="horizontal"
                 android:weightSum="2">
 
 
-            <ImageView
-                android:id="@+id/img_scan"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:scaleType="center"
-                android:src="@drawable/ic_scan"
-                android:layout_weight="1"/>
+                <ImageView
+                    android:id="@+id/img_scan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:scaleType="center"
+                    android:src="@drawable/ic_scan" />
+
                 <ImageView
                     android:id="@+id/img_search"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:scaleType="center"
-                    android:src="@drawable/ic_search"
-                    android:layout_weight="1"/>
+                    android:src="@drawable/ic_search" />
             </LinearLayout>
 
         </RelativeLayout>
@@ -75,11 +76,10 @@
     </RelativeLayout>
 
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/bottom_view"
-        android:layout_marginBottom="-20dp"
         android:layout_below="@+id/top_view">
 
         <FrameLayout
@@ -88,8 +88,7 @@
             android:layout_height="match_parent" />
 
 
-    </RelativeLayout>
-
+    </LinearLayout>
 
 
     <LinearLayout
@@ -97,9 +96,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true">
+
         <include layout="@layout/bottom_view"></include>
     </LinearLayout>
-
 
 
 </RelativeLayout>

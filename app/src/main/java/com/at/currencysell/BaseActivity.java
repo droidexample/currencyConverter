@@ -53,7 +53,6 @@ public class BaseActivity extends AppCompatActivity {
 
     private ImageView img_scan;
 
-   // private AQuery mAQuery;
 
 
 
@@ -62,8 +61,6 @@ public class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base);
         mContext = this;
-       // mAQuery = new AQuery(mContext);
-
         if (android.os.Build.VERSION.SDK_INT >= 21) {
             Window window = getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -97,43 +94,6 @@ public class BaseActivity extends AppCompatActivity {
         text_title = (TextView) findViewById(R.id.text_title);
 
 
-        // for naviagtion drower
-//        ll_home = (LinearLayout) findViewById(R.id.ll_home);
-//        ll_home.setOnClickListener(listener);
-//        rl_suggestion_to_do = (RelativeLayout) findViewById(R.id.rl_suggestion_to_do);
-//        rl_suggestion_to_do.setOnClickListener(listener);
-//        rl_give_suggestion = (RelativeLayout) findViewById(R.id.rl_give_suggestion);
-//        rl_give_suggestion.setOnClickListener(listener);
-//        rl_suggestion_volunteer_work = (RelativeLayout) findViewById(R.id.rl_suggestion_volunteer_work);
-//        rl_suggestion_volunteer_work.setOnClickListener(listener);
-//
-//        rl_suggestion_improve_app = (RelativeLayout) findViewById(R.id.rl_suggestion_improve_app);
-//        rl_gallery = (RelativeLayout) findViewById(R.id.rl_gallery);
-//        rl_gallery.setOnClickListener(listener);
-//        rl_about = (RelativeLayout) findViewById(R.id.rl_about);
-//        rl_about.setOnClickListener(listener);
-//        rl_supporter = (RelativeLayout) findViewById(R.id.rl_supporter);
-//        rl_supporter.setOnClickListener(listener);
-//        rl_share_app = (RelativeLayout) findViewById(R.id.rl_share_app);
-//        rl_share_app.setOnClickListener(listener);
-//        rl_account_setting = (RelativeLayout) findViewById(R.id.rl_account_setting);
-//        rl_account_setting.setOnClickListener(listener);
-//        rl_sharing_setting = (RelativeLayout) findViewById(R.id.rl_sharing_setting);
-//        rl_Logout = (RelativeLayout) findViewById(R.id.rl_Logout);
-//        rl_Logout.setOnClickListener(listener);
-//        img_give_suggestion = (ImageView) findViewById(R.id.img_give_suggestion);
-//        img_give_suggestion.setOnClickListener(listener);
-//        li_settings = (RelativeLayout) findViewById(R.id.li_settings);
-//        li_settings.setOnClickListener(listener);
-//        img_settings = (ImageView) this.findViewById(R.id.img_settings);
-//        tv_name = (TextView) this.findViewById(R.id.tv_name);
-//        view_suggestion_volunteer_work = (View) this.findViewById(R.id.view_suggestion_volunteer_work);
-//        view_suggestion_improve_app = (View) this.findViewById(R.id.view_suggestion_improve_app);
-//        view_sharing_setting = (View) this.findViewById(R.id.view_sharing_setting);
-//        view_account_setting = (View) this.findViewById(R.id.view_account_setting);
-//
-//
-
         img_scan = (ImageView)findViewById(R.id.img_scan);
         img_scan.setOnClickListener(listener);
 
@@ -148,13 +108,6 @@ public class BaseActivity extends AppCompatActivity {
         ll_tab_chat.setOnClickListener(listener);
         ll_tab_profile = (LinearLayout) findViewById(R.id.ll_tab_profile);
         ll_tab_profile.setOnClickListener(listener);
-//        ImageView user_profile_photo = (ImageView) this.findViewById(R.id.user_profile_photo);
-//
-//
-//        // Set Persintition Data
-//        tv_name.setText(PersistentUser.getUserName(mContext));
-//        mAQuery.id(user_profile_photo).image(PersistentUser.getUSERPIC(mContext), true, true);
-
 
 
     }

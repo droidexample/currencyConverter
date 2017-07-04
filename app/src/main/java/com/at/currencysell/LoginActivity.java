@@ -29,6 +29,7 @@ public class LoginActivity extends AppCompatActivity {
         member_sign_up.setOnClickListener(listener);
         ll_back_login = (LinearLayout)this.findViewById(R.id.ll_back_login);
         ll_back_login.setOnClickListener(listener);
+
     }
 
     View.OnClickListener listener = new View.OnClickListener() {
