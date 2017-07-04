@@ -73,6 +73,7 @@ public class HomeActivity extends BaseActivity {
 
             switch (view.getId()) {
                 case R.id.ll_people_need:
+
                     break;
                 case R.id.ll_people_have:
                     break;

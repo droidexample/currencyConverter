@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
+import com.at.currencysell.model.UserModel;
+
 public class PersistentUser {
 
 
@@ -28,6 +30,20 @@ public class PersistentUser {
                 Context.MODE_PRIVATE);
         prefs.edit().putBoolean("clicked", false).commit();
 
+    }
+
+    public static void setCurrentUser(UserModel currentUser, Context ctx){
+        ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(ctx, "user_prefs", 0);
+        complexPreferences.putObject("current_user_value", currentUser);
+        complexPreferences.commit();
+    }
+
+
+
+    public static void clearCurrentUser( Context ctx){
+        ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(ctx, "user_prefs", 0);
+        complexPreferences.clearObject();
+        complexPreferences.commit();
     }
 
 }

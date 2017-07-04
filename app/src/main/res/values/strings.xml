@@ -31,4 +31,9 @@
     <string name="create_text">Create</string>
 
     <string name="scan_text">SCAN</string>
+
+
+    <!-- Facebook App Id -->
+    <string name="facebook_app_id">111222619507033</string>
+
 </resources>
