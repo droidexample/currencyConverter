@@ -8,6 +8,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.at.currencysell.adapter.HomeListAdapter;
@@ -23,6 +24,7 @@ public class HomeActivity extends BaseActivity {
     String[] names = {"MICHEAL SMITH","JOHN SMITH","PITER SMITH","ROSIN SMITH","MICHEAL SMITH"};
     private LinearLayout ll_people_need;
     private LinearLayout ll_people_have;
+    RadioButton radioButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,10 +49,14 @@ public class HomeActivity extends BaseActivity {
 
     private void initUI(){
 
-        ll_people_need = (LinearLayout)this.findViewById(R.id.ll_people_need);
+       /* ll_people_need = (LinearLayout)this.findViewById(R.id.ll_people_need);
         ll_people_need.setOnClickListener(listener);
         ll_people_have = (LinearLayout)this.findViewById(R.id.ll_people_have);
-        ll_people_have.setOnClickListener(listener);
+        ll_people_have.setOnClickListener(listener);*/
+        radioButton = (RadioButton) this.findViewById(R.id.rdb1);
+        if (radioButton.isChecked()){
+            //radioButton.setBackgroundDrawable(R.drawable.button_background_edittext);
+        }
 
         for (int i = 0;i<names.length;i++){
             HomeListModel nameItem = new HomeListModel();
@@ -72,11 +78,11 @@ public class HomeActivity extends BaseActivity {
         public void onClick(View view) {
 
             switch (view.getId()) {
-                case R.id.ll_people_need:
+                /*case R.id.ll_people_need:
 
                     break;
                 case R.id.ll_people_have:
-                    break;
+                    break;*/
 
             }
 

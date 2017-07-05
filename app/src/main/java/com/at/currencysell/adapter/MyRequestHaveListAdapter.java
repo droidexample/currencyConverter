@@ -55,7 +55,7 @@ public class MyRequestHaveListAdapter extends BaseAdapter {
 
         final MyReqestHaveMoel listModel = listItems.get(position);
         TextView title = (TextView) convertView.findViewById(R.id.currency_name);
-        TextView full_name = (TextView) convertView.findViewById(R.id.full_name);
+        TextView full_name = (TextView) convertView.findViewById(R.id.currency_full_name);
         ImageView image = (ImageView)convertView.findViewById(R.id.currency_image);
         ImageView imagechecke = (ImageView)convertView.findViewById(R.id.image_checked);
 

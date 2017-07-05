@@ -10,6 +10,66 @@ public class PersistentUser {
 
 
     private static final String PREFS_FILE_NAME = "currencysell";
+    private static final String USERNAME = "username";
+    private static final String USEREMAIL = "useremail";
+    private static final String JSONUSER = "userdate";
+    private static final String USERID = "uid";
+
+
+    public static void setUSERNAME(final Context ctx, final String logindata) {
+        final SharedPreferences prefs = ctx.getSharedPreferences(
+                PersistentUser.PREFS_FILE_NAME, Context.MODE_PRIVATE);
+        final Editor editor = prefs.edit();
+        editor.putString(PersistentUser.USERNAME, logindata);
+        editor.commit();
+    }
+
+    public static void setUserEmail(final Context ctx, final String data) {
+        final SharedPreferences prefs = ctx.getSharedPreferences(
+                PREFS_FILE_NAME, Context.MODE_PRIVATE);
+        final Editor editor = prefs.edit();
+        editor.putString(USEREMAIL, data);
+        editor.commit();
+    }
+
+    public static String getUSERPIC(final Context ctx) {
+        return ctx.getSharedPreferences(PersistentUser.PREFS_FILE_NAME, Context.MODE_PRIVATE).getString(PersistentUser.JSONUSER, "");
+    }
+
+    public static void setUSERPIC(final Context ctx, final String picUrl) {
+        final SharedPreferences prefs = ctx.getSharedPreferences(PersistentUser.PREFS_FILE_NAME, Context.MODE_PRIVATE);
+        final Editor editor = prefs.edit();
+        editor.putString(PersistentUser.JSONUSER, picUrl);
+        editor.commit();
+    }
+
+    public static String getUserID(final Context ctx) {
+        return ctx.getSharedPreferences(PREFS_FILE_NAME, Context.MODE_PRIVATE)
+                .getString(USERID, "");
+    }
+
+
+    public static void setUserID(final Context ctx, final String id) {
+        final SharedPreferences prefs = ctx.getSharedPreferences(PREFS_FILE_NAME, Context.MODE_PRIVATE);
+        final Editor editor = prefs.edit();
+        editor.putString(USERID, id);
+        editor.commit();
+    }
+
+    public static void setLogin(Context c) {
+
+        final SharedPreferences prefs = c.getSharedPreferences(PREFS_FILE_NAME,
+                Context.MODE_PRIVATE);
+        prefs.edit().putBoolean("LOGIN", true).commit();
+    }
+
+    public static void logOut(Context c) {
+
+        final SharedPreferences prefs = c.getSharedPreferences(PREFS_FILE_NAME,
+                Context.MODE_PRIVATE);
+        prefs.edit().putBoolean("LOGIN", false).commit();
+
+    }
 
 
     public static void setClick(Context c) {
@@ -44,6 +104,13 @@ public class PersistentUser {
         ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(ctx, "user_prefs", 0);
         complexPreferences.clearObject();
         complexPreferences.commit();
+    }
+
+    public static void resetAllData(Context c) {
+        setUSERNAME(c, "");
+        setUserID(c, "");
+        setUserEmail(c, "");
+        logOut(c);
     }
 
 }

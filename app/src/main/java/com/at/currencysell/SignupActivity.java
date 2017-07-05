@@ -1,16 +1,74 @@
 package com.at.currencysell;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.AsyncTask;
+import android.os.Build;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
+
+import com.at.currencysell.utils.AlbumStorageDirFactory;
+import com.at.currencysell.utils.AlertMessage;
+import com.at.currencysell.utils.BaseAlbumDirFactory;
+import com.at.currencysell.utils.BaseUrl;
+import com.at.currencysell.utils.BusyDialog;
+import com.at.currencysell.utils.FroyoAlbumDirFactory;
+import com.at.currencysell.utils.MultipartUtility;
+import com.at.currencysell.utils.NetInfo;
+import com.at.currencysell.utils.PersistentUser;
+import com.at.currencysell.utils.StorageUtils;
+import com.at.currencysell.utils.WebUtil;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class SignupActivity extends AppCompatActivity {
     private LinearLayout ll_back_sign_up;
     private LinearLayout ll_member_login;
     Context mContext;
+
+    private ImageView addPhoto;
+    private static final int RESULT_LOAD_IMAGE = 1;
+    private static final int TAKE_PICTURE = 2;
+    private String Apath = "1";
+    private File file_image = null;
+    private static String JPEG_FILE_PREFIX = "";
+    private static final String JPEG_FILE_SUFFIX = ".png";
+    private AlbumStorageDirFactory mAlbumStorageDirFactory = null;
+
+    private EditText et_full_name;
+    private EditText et_user_name;
+    private EditText et_email;
+    private EditText et_password;
+    private EditText et_confirm_password;
+
+    private String fullname;
+    private String username;
+    private String email;
+    private String password;
+    private String confirmpassword;
+    private LinearLayout ll_sign_up;
+    BusyDialog mBusyDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,13 +77,43 @@ public class SignupActivity extends AppCompatActivity {
         mContext = this;
 
         initUI();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.FROYO) {
+            mAlbumStorageDirFactory = new FroyoAlbumDirFactory();
+        } else {
+            mAlbumStorageDirFactory = new BaseAlbumDirFactory();
+        }
+
+        if (!StorageUtils.isSDCardPresent()) {
+            AlertMessage.showMessage(mContext, "Low memory size", "Your mobile have low memory.Please increase some .");
+            return;
+        }
+        if (!StorageUtils.isSdCardWrittenable()) {
+            AlertMessage.showMessage(mContext, "Low memory size", "Your mobile have low memory.Please increase some .");
+            return;
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.FROYO) {
+            mAlbumStorageDirFactory = new FroyoAlbumDirFactory();
+        } else {
+            mAlbumStorageDirFactory = new BaseAlbumDirFactory();
+        }
     }
 
     private void initUI(){
         ll_back_sign_up = (LinearLayout)this.findViewById(R.id.ll_back_sign_up);
         ll_back_sign_up.setOnClickListener(listener);
+        addPhoto = (ImageView) findViewById(R.id.add_photo);
+        addPhoto.setOnClickListener(listener);
+        et_full_name = (EditText) findViewById(R.id.et_full_name);
+        et_user_name = (EditText) findViewById(R.id.et_user_name);
+        et_email = (EditText) findViewById(R.id.et_email);
+        et_password = (EditText) findViewById(R.id.et_password);
+        et_confirm_password = (EditText) findViewById(R.id.et_confirm_password);
         ll_member_login = (LinearLayout)this.findViewById(R.id.ll_member_login);
         ll_member_login.setOnClickListener(listener);
+        ll_sign_up = (LinearLayout)this.findViewById(R.id.ll_sign_up);
+        ll_sign_up.setOnClickListener(listener);
     }
 
     View.OnClickListener listener = new View.OnClickListener() {
@@ -37,7 +125,12 @@ public class SignupActivity extends AppCompatActivity {
                 case R.id.ll_back_sign_up:
                     SignupActivity.this.finish();
                     break;
-
+                case R.id.add_photo:
+                    alertshow();
+                    break;
+                case R.id.ll_sign_up:
+                    signUp();
+                    break;
                 case R.id.ll_member_login:
                     Intent  intent = new Intent(mContext,LoginActivity.class);
                     startActivity(intent);
@@ -47,4 +140,285 @@ public class SignupActivity extends AppCompatActivity {
 
         }
     };
+
+    public void signUp() {
+
+
+        fullname = et_full_name.getText().toString();
+        username = et_user_name.getText().toString();
+        email = et_email.getText().toString();
+        password = et_password.getText().toString();
+        confirmpassword = et_confirm_password.getText().toString();
+
+
+        if (Apath.equalsIgnoreCase("1")) {
+            Toast.makeText(mContext, "Please  select an image", Toast.LENGTH_LONG).show();
+            return;
+        } else if (fullname.equalsIgnoreCase("")) {
+            Toast.makeText(mContext, "Please Enter Your Full Name", Toast.LENGTH_LONG).show();
+            return;
+        } else if (username.equalsIgnoreCase("")) {
+            Toast.makeText(mContext, "Please Enter Your Last Name", Toast.LENGTH_LONG).show();
+            return;
+        } else if (email.equalsIgnoreCase("")) {
+            Toast.makeText(mContext, "Email Should not be blank", Toast.LENGTH_LONG).show();
+            return;
+        } else if (!WebUtil.isValidEmailAddress(email)) {
+            Toast.makeText(mContext, "Email should be correct format", Toast.LENGTH_LONG).show();
+            return;
+        } else if (password.equalsIgnoreCase("")) {
+            Toast.makeText(mContext, "Please Enter Your Password", Toast.LENGTH_LONG).show();
+
+            return;
+        } else if (!(confirmpassword.equalsIgnoreCase(password))) {
+            Toast.makeText(mContext, "Your password not match", Toast.LENGTH_LONG).show();
+
+            return;
+        } else if (password.length() < 6) {
+            Toast.makeText(mContext, "Password minimum length 6 ", Toast.LENGTH_LONG).show();
+
+            return;
+        }  else {
+            Toast.makeText(mContext, "" + "Registered successfully", Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(mContext, LoginActivity.class);
+            startActivity(intent);
+           // new UploadFileToServer().execute();
+
+
+        }
+    }
+
+    private class UploadFileToServer extends AsyncTask<Object, String, Object> {
+
+        String response = "";
+
+
+        @Override
+        protected void onPreExecute() {
+            // setting progress bar to zero
+
+
+            if (!NetInfo.isOnline(mContext)) {
+                AlertMessage.showMessage(mContext, "Status", "Please check internet Connection");
+                return;
+            }
+
+            mBusyDialog = new BusyDialog(mContext, true, "Loading");
+            mBusyDialog.show();
+
+            super.onPreExecute();
+        }
+
+
+        @Override
+        protected Object doInBackground(Object... params) {
+            // TODO Auto-generated method stub
+            try {
+
+
+                String ulr = BaseUrl.HttpUrl + "register";
+                MultipartUtility body = new MultipartUtility(ulr);
+                body.addFormField("name", "" + fullname);
+                body.addFormField("user_name", "" + username);
+                body.addFormField("email", "" + email);
+                body.addFormField("password", "" + password);
+                body.addFormField("password_confirmation", "" + password);
+                body.addFilePart("image_url", Apath);
+                response = body.finish();
+
+
+                mBusyDialog.dismis();
+            } catch (Exception e) {
+                Log.w("Exception", e.getMessage());
+                // TODO Auto-generated catch block
+                mBusyDialog.dismis();
+
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+
+        @Override
+        protected void onPostExecute(Object result) {
+            super.onPostExecute(result);
+
+            mBusyDialog.dismis();
+
+            Log.w("response", "are" + response);
+
+            try {
+                JSONObject JSONresponse = new JSONObject(response);
+
+                int success = JSONresponse.getInt("success");
+                if (success == 1) {
+                    JSONObject userData = JSONresponse.getJSONObject("user");
+                    PersistentUser.setUSERNAME(mContext, userData.getString("user_name"));
+                    PersistentUser.setUserEmail(mContext, userData.getString("email"));
+                    PersistentUser.setUSERPIC(mContext, userData.getString("image_url"));
+                    PersistentUser.setUserID(mContext, userData.getString("id"));
+                    PersistentUser.setLogin(mContext);
+
+                    Intent intent = new Intent(mContext, HomeActivity.class);
+                    startActivity(intent);
+                    SignupActivity.this.finish();
+                    PersistentUser.setLogin(mContext);
+
+                    Toast.makeText(mContext, "" + "Registered successfully", Toast.LENGTH_LONG).show();
+
+
+                } else {
+                    Toast.makeText(mContext, "" + JSONresponse.getInt("message"), Toast.LENGTH_LONG).show();
+
+                }
+
+            } catch (JSONException sd) {
+                Toast.makeText(mContext, sd.toString(), Toast.LENGTH_LONG).show();
+            }
+
+
+        }
+
+    }
+
+
+    public void alertshow() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+        builder.setMessage("Choose Option").setCancelable(true).setPositiveButton("Take a photo",
+                new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog,
+                                        int which) {
+                        Camera();
+
+                    }
+
+                }).setNegativeButton("From Gallery",
+                new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog,
+                                        int which) {
+
+                        Gallery();
+
+                    }
+
+                });
+        final AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+    public void Gallery() {
+        Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(i, RESULT_LOAD_IMAGE);
+    }
+
+    public void Camera() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        // Ensure that there's a camera activity to handle the intent
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            // Create the File where the photo should go
+            try {
+                file_image = createImageFile();
+            } catch (IOException ex) {
+
+            }
+            if (file_image != null) {
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file_image));
+                startActivityForResult(takePictureIntent, TAKE_PICTURE);
+            }
+        }
+
+    }
+
+    private File createImageFile() throws IOException {
+        final String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss")
+                .format(new Date());
+        final String imageFileName = JPEG_FILE_PREFIX + timeStamp + "_";
+        final File albumF = getAlbumDir();
+        final File imageF = File.createTempFile(imageFileName, JPEG_FILE_SUFFIX, albumF);
+        return imageF;
+    }
+
+    private File getAlbumDir() {
+        File storageDir = null;
+
+        if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
+            storageDir = mAlbumStorageDirFactory.getAlbumStorageDir(getAlbumName());
+
+            if (storageDir != null) {
+                if (!storageDir.mkdirs()) {
+                    if (!storageDir.exists()) {
+                        Log.e("directory", "failed to create directory");
+                        return null;
+                    }
+                }
+            }
+        } else {
+            Log.e(getString(R.string.app_name),
+                    "External storage is not mounted READ/WRITE.");
+        }
+        return storageDir;
+    }
+
+    private String getAlbumName() {
+        return getString(R.string.app_name);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+
+            case TAKE_PICTURE:
+                if (resultCode == Activity.RESULT_OK) {
+                    Apath = file_image.getAbsolutePath();
+                    Log.w("ApathA", "" + Apath);
+                    File imgFile = new File(Apath);
+                    if (imgFile.exists()) {
+                        Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                        addPhoto.setImageBitmap(myBitmap);
+
+                    }
+
+
+                }
+                break;
+            case RESULT_LOAD_IMAGE:
+
+                if (resultCode == Activity.RESULT_OK && null != data) {
+                    Uri selectedImageUri = data.getData();
+                    File file = new File(getRealPathFromURI(selectedImageUri));
+                    Apath = file.getAbsolutePath();
+                    Log.w("ApathB", "" + Apath);
+                    File imgFile = new File(Apath);
+                    if (imgFile.exists()) {
+
+                        Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                        addPhoto.setImageBitmap(myBitmap);
+
+                    }
+
+                    break;
+
+                } else {
+                    Toast.makeText(SignupActivity.this, "Error", Toast.LENGTH_LONG).show();
+                }
+
+        }
+    }
+
+    public String getRealPathFromURI(Uri contentUri) {
+        try {
+            String[] proj = {MediaStore.Images.Media.DATA};
+            Cursor cursor = managedQuery(contentUri, proj, null, null, null);
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            cursor.moveToFirst();
+            return cursor.getString(column_index);
+        } catch (Exception e) {
+            return contentUri.getPath();
+        }
+    }
 }

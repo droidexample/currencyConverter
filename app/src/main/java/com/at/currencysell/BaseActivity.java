@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.IntentCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
@@ -16,6 +17,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.at.currencysell.slidermenu.SlidingMenu;
+import com.at.currencysell.utils.PersistentUser;
+import com.facebook.FacebookSdk;
+import com.facebook.login.LoginManager;
 
 
 public class BaseActivity extends AppCompatActivity {
@@ -39,7 +43,7 @@ public class BaseActivity extends AppCompatActivity {
     private RelativeLayout rl_share_app;
     private RelativeLayout rl_sharing_setting;
     private RelativeLayout rl_account_setting;
-    private RelativeLayout rl_Logout;
+    private TextView tv_sign_out;
 
 
     private LinearLayout ll_tab_home;
@@ -59,8 +63,10 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_base);
         mContext = this;
+        FacebookSdk.sdkInitialize(mContext);
+        setContentView(R.layout.activity_base);
+
         if (android.os.Build.VERSION.SDK_INT >= 21) {
             Window window = getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -93,7 +99,9 @@ public class BaseActivity extends AppCompatActivity {
         frameLayout = (FrameLayout) findViewById(R.id.content_frame);
         text_title = (TextView) findViewById(R.id.text_title);
 
-
+        // for naviagtion drower
+        tv_sign_out = (TextView)findViewById(R.id.tv_sign_out);
+        tv_sign_out.setOnClickListener(listener);
         img_scan = (ImageView)findViewById(R.id.img_scan);
         img_scan.setOnClickListener(listener);
 
@@ -155,6 +163,18 @@ public class BaseActivity extends AppCompatActivity {
 
                     mIntent = new Intent(mContext, ScanActivity.class);
                     startActivity(mIntent);
+                    break;
+
+                case R.id.tv_sign_out:
+
+                    PersistentUser.resetAllData(mContext);
+                    PersistentUser.clearCurrentUser(mContext);
+                    LoginManager.getInstance().logOut();
+                    mIntent = new Intent(mContext, LoginActivity.class);
+                    mIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | IntentCompat.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(mIntent);
+                    finish();
+
                     break;
 
                 default:

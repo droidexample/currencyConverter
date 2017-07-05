@@ -21,7 +21,7 @@
 
 
         <LinearLayout
-            android:id="@+id/ll_back_sign_up"
+            android:id="@+id/ll_back_create_request"
             android:layout_width="100dp"
             android:layout_height="match_parent"
             android:gravity="center_vertical">
@@ -55,6 +55,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
+            android:layout_marginLeft="10dp"
             android:layout_weight="3">
             <TextView
                 android:layout_width="wrap_content"
@@ -67,7 +68,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#88095A"
-                android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 >
                 <ImageView
@@ -78,6 +78,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="10dp"/>
                 <TextView
+                    android:id="@+id/tv_currency_name_want"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="USD"
@@ -88,6 +89,7 @@
                     android:layout_marginLeft="10dp"/>
 
                 <TextView
+                    android:id="@+id/tv_currency_rate_want"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="1.2692"
@@ -104,6 +106,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
+                android:layout_marginLeft="20dp"
                 android:layout_weight="3">
                 <TextView
                     android:layout_width="wrap_content"
@@ -116,7 +119,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="#88095A"
-                    android:layout_marginLeft="20dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="5dp"
                     >
@@ -128,6 +130,7 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="10dp"/>
                     <TextView
+                        android:id="@+id/tv_currency_name_have"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="EURO"
@@ -138,6 +141,7 @@
                         android:layout_marginLeft="10dp"/>
 
                     <TextView
+                        android:id="@+id/tv_currency_rate_have"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="1.0"
@@ -171,6 +175,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_centerVertical="true"/>
             <TextView
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Exchange rate"
@@ -182,6 +187,7 @@
                 android:layout_centerInParent="true"/>
 
             <TextView
+                android:id="@+id/tv_exchange_rate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="1.2698"
@@ -220,6 +226,7 @@
                 android:layout_marginLeft="10dp"/>
 
             <TextView
+                android:id="@+id/tv_expiry_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="2017.06.20"
@@ -258,9 +265,10 @@
                 android:layout_marginLeft="10dp"/>
 
             <TextView
+                android:id="@+id/tv_exchane_location"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="2017.06.20"
+                android:text="Road no. 11"
                 android:textColor="@color/white"
                 android:layout_alignParentRight="true"
                 android:layout_centerInParent="true"
@@ -274,6 +282,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="5dp">
             <TextView
+                android:id="@+id/tv_remarks"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="Remarks"
@@ -283,7 +292,6 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/ll_sign_up"
             android:layout_width="fill_parent"
             android:layout_height="70dp"
             android:background="@drawable/button_background_gmail"
