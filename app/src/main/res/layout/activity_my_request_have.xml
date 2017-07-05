@@ -1,49 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/colorPrimary"
-    tools:context="com.at.currencysell.HomeActivity">
+    android:background="@drawable/backround">
+
+
     <RelativeLayout
+        android:id="@+id/rl_header"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-       >
+        android:layout_height="?android:attr/actionBarSize"
+        android:background="@drawable/backround">
+
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/button_background_edittext"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="60dp">
-            <EditText
-                android:layout_width="match_parent"
+            android:id="@+id/ll_back"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColorHint="@color/white"
-                android:textAlignment="center"
-                android:backgroundTint="@color/button_color_editext"/>
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:src="@drawable/ic_back" />
+
         </LinearLayout>
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/ic_search"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="5dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/my_request"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="@dimen/large_text" />
+
 
     </RelativeLayout>
 
 
-    <ListView
-        android:id="@+id/list_my_request_have"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:divider="@null"
-        android:padding="5dp">
+        android:layout_below="@+id/rl_header"
+        android:background="@drawable/backround"
+        android:orientation="vertical">
 
-    </ListView>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
 
-</LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="60dp"
+                android:background="@drawable/button_background_edittext">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/button_color_editext"
+                    android:textAlignment="center"
+                    android:padding="10dp"
+                    android:background="@android:color/transparent"
+                    android:textColorHint="@color/white" />
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp"
+                android:src="@drawable/ic_search" />
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/rl_convert"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/edt_shape"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/tv_from_currency"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight="3"
+                android:text="USD"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="@dimen/large_text" />
+
+            <ImageView
+                android:id="@+id/currency_image"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/ic_eur_img" />
+
+            <TextView
+                android:id="@+id/tv_to_currency"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@+id/currency_image"
+                android:singleLine="true"
+                android:text="USD"
+                android:textColor="@color/white"
+                android:textSize="@dimen/large_text" />
+
+        </RelativeLayout>
+
+
+        <ListView
+            android:id="@+id/list_my_request_have"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@null"
+            android:padding="5dp"></ListView>
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>

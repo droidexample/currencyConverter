@@ -33,6 +33,10 @@
     <string name="scan_text">SCAN</string>
 
 
+    <!--my request activtity-->
+    <string name="my_request">My Request</string>
+
+
     <!-- Facebook App Id -->
     <string name="facebook_app_id">111222619507033</string>
 
