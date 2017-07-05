@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.at.currencysell.R;
-import com.at.currencysell.model.HomeListModel;
 import com.at.currencysell.model.MyReqestHaveMoel;
 import com.at.currencysell.utils.PersistentUser;
 
@@ -21,7 +20,6 @@ public class MyRequestHaveListAdapter extends BaseAdapter {
     private Activity activity;
     private LayoutInflater inflater;
     public List<MyReqestHaveMoel> listItems;
-
 
 
     public MyRequestHaveListAdapter(Activity activity, List<MyReqestHaveMoel> listItems) {
@@ -55,19 +53,19 @@ public class MyRequestHaveListAdapter extends BaseAdapter {
 
         final MyReqestHaveMoel listModel = listItems.get(position);
         TextView title = (TextView) convertView.findViewById(R.id.currency_name);
-        TextView full_name = (TextView) convertView.findViewById(R.id.currency_full_name);
-        ImageView image = (ImageView)convertView.findViewById(R.id.currency_image);
-        ImageView imagechecke = (ImageView)convertView.findViewById(R.id.image_checked);
-
-        boolean click = PersistentUser.isClicked(activity);
-        if (click){
-            imagechecke.setVisibility(View.VISIBLE);
-        }else {
-            imagechecke.setVisibility(View.GONE);
-        }
+//        TextView full_name = (TextView) convertView.findViewById(R.id.currency_full_name);
+        ImageView image = (ImageView) convertView.findViewById(R.id.currency_image);
+//        ImageView imagechecke = (ImageView) convertView.findViewById(R.id.image_checked);
+//
+//        boolean click = PersistentUser.isClicked(activity);
+//        if (click) {
+//            imagechecke.setVisibility(View.VISIBLE);
+//        } else {
+//            imagechecke.setVisibility(View.GONE);
+//        }
 
         title.setText(listModel.getCurrency_name());
-        full_name.setText(listModel.getCurrency_full_name());
+//        full_name.setText(listModel.getCurrency_full_name());
         image.setImageResource(listModel.getImage());
 
         return convertView;

@@ -90,6 +90,7 @@
         android:layout_height="match_parent"
         android:divider="@null"
         android:padding="5dp"
+        android:visibility="gone"
         android:scrollbars="none"></ListView>
 
 </LinearLayout>
