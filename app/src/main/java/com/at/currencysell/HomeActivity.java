@@ -16,7 +16,6 @@ public class HomeActivity extends BaseActivity {
     private ViewPager mViewPager;
     private TabsPagerAdapter mAdapter;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,9 +39,8 @@ public class HomeActivity extends BaseActivity {
         ll_people_need.setOnClickListener(listener);
         ll_people_have = (LinearLayout) this.findViewById(R.id.ll_people_have);
         ll_people_have.setOnClickListener(listener);
+
         ll_people_have.setSelected(true);
-
-
 
         //=============View page for sliding============
         mViewPager = (ViewPager) findViewById(R.id.pager_home);
