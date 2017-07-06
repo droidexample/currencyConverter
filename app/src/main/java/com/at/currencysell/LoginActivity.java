@@ -143,13 +143,11 @@ public class LoginActivity extends AppCompatActivity {
                         //  PersistentUser.setUSERDATA(mContext, ""+userData);
                         PersistentUser.setLogin(mContext);
                         Intent intent = new Intent(mContext, HomeActivity.class);
-                        ((Activity) mContext).overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
 
                         startActivity(intent);
                         LoginActivity.this.finish();
                         Toast.makeText(mContext, "Login Successful", Toast.LENGTH_LONG).show();
                         PersistentUser.setLogin(mContext);
-                        ((Activity) mContext).overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
 
 
                     } else if (success == 0) {

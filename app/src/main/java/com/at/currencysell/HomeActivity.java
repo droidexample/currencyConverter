@@ -40,6 +40,8 @@ public class HomeActivity extends BaseActivity {
         ll_people_need.setOnClickListener(listener);
         ll_people_have = (LinearLayout) this.findViewById(R.id.ll_people_have);
         ll_people_have.setOnClickListener(listener);
+        ll_people_have.setSelected(true);
+
 
 
         //=============View page for sliding============
@@ -55,7 +57,7 @@ public class HomeActivity extends BaseActivity {
 
             @Override
             public void onPageSelected(int position) {
-                selecteddeselectedTab(position);
+                selecteddeselectedbutton(position);
             }
 
             @Override
@@ -74,12 +76,11 @@ public class HomeActivity extends BaseActivity {
 
             switch (view.getId()) {
                 case R.id.ll_people_need:
-                    mViewPager.setCurrentItem(0);
-
+                    selecteddeselectedbutton(0);
                     break;
                 case R.id.ll_people_have:
-                    mViewPager.setCurrentItem(1);
 
+                    selecteddeselectedbutton(1);
 
                     break;
 
@@ -87,4 +88,26 @@ public class HomeActivity extends BaseActivity {
 
         }
     };
+
+    public void selecteddeselectedbutton(int type) {
+
+        mViewPager.setCurrentItem(0);
+
+        switch (type) {
+            case 0:
+                ll_people_need.setSelected(true);
+                ll_people_have.setSelected(false);
+
+                break;
+
+            case 1:
+                ll_people_need.setSelected(false);
+                ll_people_have.setSelected(true);
+
+                break;
+        }
+
+    }
+
+
 }
