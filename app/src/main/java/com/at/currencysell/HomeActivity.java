@@ -1,35 +1,38 @@
 package com.at.currencysell;
 
-import android.app.Activity;
-import android.content.Intent;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RadioButton;
-import android.widget.Toast;
 
 import com.at.currencysell.adapter.HomeListAdapter;
+import com.at.currencysell.fragment.FragmentPeopleHave;
+import com.at.currencysell.fragment.FragmentPeopleNeed;
 import com.at.currencysell.model.HomeListModel;
+import com.at.currencysell.tabpager.TabsPagerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class HomeActivity extends BaseActivity {
-    private List<HomeListModel> nameList = new ArrayList<HomeListModel>();
-    private ListView listView;
-    private HomeListAdapter adapter;
-    String[] names = {"MICHEAL SMITH","JOHN SMITH","PITER SMITH","ROSIN SMITH","MICHEAL SMITH"};
+
     private LinearLayout ll_people_need;
     private LinearLayout ll_people_have;
-    RadioButton radioButton;
+    private ViewPager mViewPager;
+    private TabsPagerAdapter mAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getLayoutInflater().inflate(R.layout.activity_home,frameLayout);
+        getLayoutInflater().inflate(R.layout.activity_home, frameLayout);
         mContext = this;
         selecteddeselectedTab(0);
         if (android.os.Build.VERSION.SDK_INT >= 21) {
@@ -38,39 +41,48 @@ public class HomeActivity extends BaseActivity {
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             window.setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark));
         }
-
-
-
-
-
-         initUI();
+        slide_me.setSlidingEnabled(false);
+        initUI();
     }
 
 
-    private void initUI(){
+    private void initUI() {
 
-       /* ll_people_need = (LinearLayout)this.findViewById(R.id.ll_people_need);
+        ll_people_need = (LinearLayout) this.findViewById(R.id.ll_people_need);
         ll_people_need.setOnClickListener(listener);
-        ll_people_have = (LinearLayout)this.findViewById(R.id.ll_people_have);
-        ll_people_have.setOnClickListener(listener);*/
-        radioButton = (RadioButton) this.findViewById(R.id.rdb1);
-        if (radioButton.isChecked()){
-            //radioButton.setBackgroundDrawable(R.drawable.button_background_edittext);
-        }
+        ll_people_have = (LinearLayout) this.findViewById(R.id.ll_people_have);
+        ll_people_have.setOnClickListener(listener);
 
-        for (int i = 0;i<names.length;i++){
-            HomeListModel nameItem = new HomeListModel();
-            nameItem.setName(names[i]);
 
-            nameList.add(nameItem);
 
-        }
+        //=============View page for sliding============
+        mViewPager = (ViewPager) findViewById(R.id.pager_home);
+        mAdapter = new TabsPagerAdapter(getSupportFragmentManager());
+        mViewPager.setAdapter(mAdapter);
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-        listView = (ListView) findViewById(R.id.list_home);
-        adapter=new HomeListAdapter(this,nameList);
-        listView.setAdapter(adapter);
+
+
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+//                selecteddeselectedTab(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
 
     }
+
+
 
 
     View.OnClickListener listener = new View.OnClickListener() {
@@ -78,11 +90,14 @@ public class HomeActivity extends BaseActivity {
         public void onClick(View view) {
 
             switch (view.getId()) {
-                /*case R.id.ll_people_need:
+                case R.id.ll_people_need:
+
 
                     break;
                 case R.id.ll_people_have:
-                    break;*/
+
+
+                    break;
 
             }
 

@@ -8,7 +8,7 @@
         android:id="@+id/top_view"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        android:background="@color/colorPrimary">
+        android:background="@drawable/backround">
 
         <LinearLayout
             android:id="@+id/ll_silding"

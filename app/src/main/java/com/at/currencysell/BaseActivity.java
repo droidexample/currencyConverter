@@ -22,8 +22,8 @@ public class BaseActivity extends AppCompatActivity {
     LinearLayout ll_silding;
 
 
-    private SlidingMenu slide_me;
-    private LinearLayout top_menu_btn;
+    SlidingMenu slide_me;
+    LinearLayout top_menu_btn;
     FrameLayout frameLayout;
 
     private LinearLayout ll_home;

@@ -5,30 +5,35 @@ import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.at.currencysell.holder.AllDolorList;
 import com.at.currencysell.model.MyReqestHaveMoel;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Vector;
 
 public class MyRequestWantActivity extends AppCompatActivity {
 
 
-    private List<MyReqestHaveMoel> currencyList = new ArrayList<MyReqestHaveMoel>();
     private ListView listView;
-    private MyRequestHaveListAdaptertest adapter;
+    private DolorListAdapter mDolorListAdapter;
     private Context mContext;
+
+    private EditText edt_search;
     private TextView tv_from_currency;
     private TextView tv_to_currency;
     private RelativeLayout rl_convert;
@@ -49,20 +54,17 @@ public class MyRequestWantActivity extends AppCompatActivity {
         mContext = this;
 
 
-        dummyData();
-
         initUI();
     }
 
 
     private void initUI() {
-
+        edt_search = (EditText) this.findViewById(R.id.edt_search);
         rl_convert = (RelativeLayout) this.findViewById(R.id.rl_convert);
         tv_from_currency = (TextView) this.findViewById(R.id.tv_from_currency);
         tv_to_currency = (TextView) this.findViewById(R.id.tv_to_currency);
         listView = (ListView) findViewById(R.id.list_my_request_have);
-        adapter = new MyRequestHaveListAdaptertest(this, currencyList);
-        listView.setAdapter(adapter);
+
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -74,77 +76,26 @@ public class MyRequestWantActivity extends AppCompatActivity {
         });
 
 
-    }
+        // for scarch list
+        edt_search.addTextChangedListener(new TextWatcher() {
+
+            public void afterTextChanged(Editable s) {
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                mDolorListAdapter.getFilter().filter(s.toString());
 
 
-    class MyRequestHaveListAdaptertest extends BaseAdapter {
-
-        private Activity activity;
-        private LayoutInflater inflater;
-        public List<MyReqestHaveMoel> listItems;
+            }
+        });
 
 
-        public MyRequestHaveListAdaptertest(Activity activity, List<MyReqestHaveMoel> listItems) {
-            this.activity = activity;
-            this.listItems = listItems;
-        }
+        dummyData();
 
-        @Override
-        public int getCount() {
-            return listItems.size();
-        }
-
-        @Override
-        public Object getItem(int location) {
-            return listItems.get(location);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        @Override
-        public View getView(final int position, View convertView, ViewGroup parent) {
-
-            if (inflater == null)
-                inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            if (convertView == null)
-                convertView = inflater.inflate(R.layout.my_request_have_list_item, null);
-
-            final MyReqestHaveMoel listModel = listItems.get(position);
-            TextView currency_name = (TextView) convertView.findViewById(R.id.currency_name);
-            TextView full_name = (TextView) convertView.findViewById(R.id.full_name);
-            ImageView image = (ImageView) convertView.findViewById(R.id.currency_image);
-
-
-            currency_name.setText(listModel.getCurrency_name());
-            full_name.setText(listModel.getCurrency_full_name());
-            image.setImageResource(listModel.getImage());
-            currency_name.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                    rl_convert.setVisibility(View.VISIBLE);
-                    tv_from_currency.setText(listModel.getCurrency_name());
-                    tv_to_currency.setText(listModel.getCurrency_name());
-
-
-                }
-            });
-
-            full_name.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    rl_convert.setVisibility(View.VISIBLE);
-                    tv_to_currency.setText(listModel.getCurrency_full_name());
-
-                }
-            });
-
-
-            return convertView;
-        }
     }
 
 
@@ -159,9 +110,134 @@ public class MyRequestWantActivity extends AppCompatActivity {
             nameItem.setCurrency_full_name(currency_full_form[i]);
             nameItem.setImage(images[i]);
 
-            currencyList.add(nameItem);
+            AllDolorList.setmDolorList(nameItem);
 
         }
+
+        mDolorListAdapter = new DolorListAdapter(this, R.layout.my_request_have_list_item, AllDolorList.getmAllDolorList());
+        listView.setAdapter(mDolorListAdapter);
+    }
+
+
+    class DolorListAdapter extends ArrayAdapter<MyReqestHaveMoel> {
+        Context mContext;
+        private Vector<MyReqestHaveMoel> originalList;
+        private Vector<MyReqestHaveMoel> chatList;
+        private CityFilter filter;
+
+
+        public DolorListAdapter(Context context, int textViewResourceId, Vector<MyReqestHaveMoel> cityLists) {
+            super(context, textViewResourceId, cityLists);
+            this.chatList = new Vector<MyReqestHaveMoel>();
+            this.originalList = new Vector<MyReqestHaveMoel>();
+            this.chatList.addAll(cityLists);
+            this.originalList.addAll(cityLists);
+            this.mContext = context;
+
+        }
+
+        @Override
+        public Filter getFilter() {
+            if (filter == null) {
+                filter = new CityFilter();
+            }
+            return filter;
+        }
+
+        @Override
+        public View getView(final int position, View convertView, ViewGroup parent) {
+            final ViewHolder holder;
+            LayoutInflater mInflater = (LayoutInflater) mContext.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+            final MyReqestHaveMoel listModel = AllDolorList.getDolorList(position);
+            if (convertView == null) {
+                convertView = mInflater.inflate(R.layout.my_request_have_list_item, null);
+                holder = new ViewHolder();
+
+                holder.currency_name = (TextView) convertView.findViewById(R.id.currency_name);
+                holder.full_name = (TextView) convertView.findViewById(R.id.full_name);
+                holder.image = (ImageView) convertView.findViewById(R.id.currency_image);
+                convertView.setTag(holder);
+            } else {
+                holder = (ViewHolder) convertView.getTag();
+            }
+            holder.currency_name.setText(listModel.getCurrency_name());
+            holder.full_name.setText(listModel.getCurrency_full_name());
+
+
+            holder.currency_name.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    rl_convert.setVisibility(View.VISIBLE);
+                    tv_from_currency.setText(listModel.getCurrency_name());
+                    tv_to_currency.setText(listModel.getCurrency_name());
+
+
+                }
+            });
+
+            holder.full_name.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    rl_convert.setVisibility(View.VISIBLE);
+                    tv_to_currency.setText(listModel.getCurrency_full_name());
+
+                }
+            });
+
+
+            return convertView;
+
+        }
+
+        class ViewHolder {
+            TextView currency_name;
+            TextView full_name;
+            ImageView image;
+
+        }
+
+        private class CityFilter extends Filter {
+
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+
+                constraint = constraint.toString().toLowerCase();
+                FilterResults result = new FilterResults();
+                if (constraint != null && constraint.toString().length() > 0) {
+                    Vector<MyReqestHaveMoel> filteredItems = new Vector<MyReqestHaveMoel>();
+
+                    for (int i = 0, l = originalList.size(); i < l; i++) {
+                        MyReqestHaveMoel country = originalList.get(i);
+                        if (country.getCurrency_name().toString().toLowerCase().contains(constraint)) {
+                            filteredItems.add(country);
+                        }
+                    }
+                    result.count = filteredItems.size();
+                    result.values = filteredItems;
+                } else {
+                    synchronized (this) {
+                        result.values = originalList;
+                        result.count = originalList.size();
+                    }
+                }
+                return result;
+            }
+
+            @SuppressWarnings("unchecked")
+            @Override
+            protected void publishResults(CharSequence constraint,
+                                          FilterResults results) {
+                chatList = (Vector<MyReqestHaveMoel>) results.values;
+                notifyDataSetChanged();
+                clear();
+                for (int i = 0, l = chatList.size(); i < l; i++)
+
+                    add(chatList.get(i));
+                notifyDataSetInvalidated();
+            }
+        }
+
     }
 
 
