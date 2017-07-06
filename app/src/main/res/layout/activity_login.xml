@@ -52,11 +52,14 @@
     android:layout_marginLeft="50dp"
     android:layout_marginRight="50dp">
     <EditText
+        android:id="@+id/et_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/email_text"
         android:textColorHint="@color/white"
+        android:textColor="@color/white"
         android:textAlignment="center"
+        android:inputType="textEmailAddress"
         android:backgroundTint="@color/button_color_editext"/>
 </LinearLayout>
 
@@ -68,17 +71,20 @@
             android:layout_marginRight="50dp"
             android:layout_marginTop="10dp">
             <EditText
+                android:id="@+id/et_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/password_text"
                 android:textColorHint="@color/white"
+                android:textColor="@color/white"
+                android:inputType="textPassword"
                 android:textAlignment="center"
                 android:backgroundTint="@color/button_color_editext"/>
         </LinearLayout>
 
 
     <LinearLayout
-        android:id="@+id/ll_login"
+
         android:layout_width="fill_parent"
         android:layout_height="40dp"
         android:background="@drawable/button_background_gmail"
