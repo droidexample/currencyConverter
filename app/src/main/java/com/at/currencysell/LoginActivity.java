@@ -3,8 +3,8 @@ package com.at.currencysell;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -50,15 +50,15 @@ public class LoginActivity extends AppCompatActivity {
         initI();
     }
 
-    private void initI(){
+    private void initI() {
 
-        et_email = (EditText)this.findViewById(R.id.et_email);
-        et_password = (EditText)this.findViewById(R.id.et_password);
-        rl_login = (RelativeLayout)this.findViewById(R.id.rl_login);
+        et_email = (EditText) this.findViewById(R.id.et_email);
+        et_password = (EditText) this.findViewById(R.id.et_password);
+        rl_login = (RelativeLayout) this.findViewById(R.id.rl_login);
         rl_login.setOnClickListener(listener);
-        member_sign_up = (LinearLayout)this.findViewById(R.id.member_sign_up);
+        member_sign_up = (LinearLayout) this.findViewById(R.id.member_sign_up);
         member_sign_up.setOnClickListener(listener);
-        ll_back_login = (LinearLayout)this.findViewById(R.id.ll_back_login);
+        ll_back_login = (LinearLayout) this.findViewById(R.id.ll_back_login);
         ll_back_login.setOnClickListener(listener);
 
     }
@@ -69,29 +69,12 @@ public class LoginActivity extends AppCompatActivity {
 
             switch (view.getId()) {
                 case R.id.rl_login:
-                    userEmail = et_email.getText().toString();
-                    userPass = et_password.getText().toString();
-
-                    if (userEmail.equalsIgnoreCase("")) {
-                        Toast.makeText(mContext, "Please Enter Your Email", Toast.LENGTH_LONG).show();
-                        return;
-                    } else if (!WebUtil.isValidEmailAddress(userEmail)) {
-                        Toast.makeText(mContext, "Email should be correct format", Toast.LENGTH_LONG).show();
-                        return;
-                    } else if (userPass.equalsIgnoreCase("")) {
-                        Toast.makeText(mContext, "Please Enter Your Password", Toast.LENGTH_LONG).show();
-
-                        return;
-                    } else {
-                        Intent intent = new Intent(mContext,HomeActivity.class);
-                        startActivity(intent);
-                        finish();
-                       // signIn(userEmail, userPass);
-                    }
-
+                    Intent intent = new Intent(mContext, HomeActivity.class);
+                    startActivity(intent);
+                    finish();
                     break;
                 case R.id.member_sign_up:
-                    Intent in = new Intent(mContext,SignupActivity.class);
+                    Intent in = new Intent(mContext, SignupActivity.class);
                     startActivity(in);
                     break;
                 case R.id.ll_back_login:
@@ -102,6 +85,31 @@ public class LoginActivity extends AppCompatActivity {
 
         }
     };
+
+
+    public void valuationMethods() {
+
+        userEmail = et_email.getText().toString();
+        userPass = et_password.getText().toString();
+
+        if (userEmail.equalsIgnoreCase("")) {
+            Toast.makeText(mContext, "Please Enter Your Email", Toast.LENGTH_LONG).show();
+            return;
+        } else if (!WebUtil.isValidEmailAddress(userEmail)) {
+            Toast.makeText(mContext, "Email should be correct format", Toast.LENGTH_LONG).show();
+            return;
+        } else if (userPass.equalsIgnoreCase("")) {
+            Toast.makeText(mContext, "Please Enter Your Password", Toast.LENGTH_LONG).show();
+
+            return;
+        } else {
+            Intent intent = new Intent(mContext, HomeActivity.class);
+            startActivity(intent);
+            finish();
+            // signIn(userEmail, userPass);
+        }
+
+    }
 
     BusyDialog mBusyDialog;
 
@@ -132,7 +140,7 @@ public class LoginActivity extends AppCompatActivity {
                         PersistentUser.setUserEmail(mContext, userData.getString("email"));
                         PersistentUser.setUSERPIC(mContext, userData.getString("image_url"));
                         PersistentUser.setUserID(mContext, userData.getString("id"));
-                      //  PersistentUser.setUSERDATA(mContext, ""+userData);
+                        //  PersistentUser.setUSERDATA(mContext, ""+userData);
                         PersistentUser.setLogin(mContext);
                         Intent intent = new Intent(mContext, HomeActivity.class);
                         ((Activity) mContext).overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);

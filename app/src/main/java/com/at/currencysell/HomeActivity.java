@@ -1,25 +1,13 @@
 package com.at.currencysell;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 
-import com.at.currencysell.adapter.HomeListAdapter;
-import com.at.currencysell.fragment.FragmentPeopleHave;
-import com.at.currencysell.fragment.FragmentPeopleNeed;
-import com.at.currencysell.model.HomeListModel;
 import com.at.currencysell.tabpager.TabsPagerAdapter;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class HomeActivity extends BaseActivity {
 
@@ -54,7 +42,6 @@ public class HomeActivity extends BaseActivity {
         ll_people_have.setOnClickListener(listener);
 
 
-
         //=============View page for sliding============
         mViewPager = (ViewPager) findViewById(R.id.pager_home);
         mAdapter = new TabsPagerAdapter(getSupportFragmentManager());
@@ -64,13 +51,11 @@ public class HomeActivity extends BaseActivity {
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
 
-
-
             }
 
             @Override
             public void onPageSelected(int position) {
-//                selecteddeselectedTab(position);
+                selecteddeselectedTab(position);
             }
 
             @Override
@@ -83,18 +68,17 @@ public class HomeActivity extends BaseActivity {
     }
 
 
-
-
     View.OnClickListener listener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
 
             switch (view.getId()) {
                 case R.id.ll_people_need:
-
+                    mViewPager.setCurrentItem(0);
 
                     break;
                 case R.id.ll_people_have:
+                    mViewPager.setCurrentItem(1);
 
 
                     break;
