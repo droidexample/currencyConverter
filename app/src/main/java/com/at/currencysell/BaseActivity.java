@@ -122,12 +122,12 @@ public class BaseActivity extends AppCompatActivity {
                     Intent mIntent = new Intent(mContext, HomeActivity.class);
                     startActivity(mIntent);
                     break;
-//
-//                case R.id.ll_tab_my_requests:
-//                    selecteddeselectedTab(1);
-//                    mIntent = new Intent(mContext, MyRequestsActivity.class);
-//                    startActivity(mIntent);
-//                    break;
+
+                case R.id.ll_tab_my_requests:
+                    selecteddeselectedTab(1);
+                    mIntent = new Intent(mContext, MyRequestsActivity.class);
+                    startActivity(mIntent);
+                    break;
                 case R.id.rl_tab_add:
                     selecteddeselectedTab(2);
                     mIntent = new Intent(mContext, MyRequestWantActivity.class);

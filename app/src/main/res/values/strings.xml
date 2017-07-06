@@ -26,6 +26,10 @@
     <string name="setting_text">Setting</string>
     <string name="trust_text">Trust and verifications</string>
     <string name="sign_out_text">Sign Out</string>
+
+    <!--home page-->
+    <string name="people_need_text">PEOPLE NEED</string>
+    <string name="people_have_text">PEOPLE HAVE</string>
     <!--create request page-->
     <string name="create_request_text">Create a request</string>
     <string name="create_text">Create</string>
@@ -33,8 +37,19 @@
     <string name="scan_text">SCAN</string>
 
 
-    <!--my request activtity-->
+    <!--my request page-->
     <string name="my_request">My Request</string>
+    <string name="active_text">ACTIVE</string>
+    <string name="finish_text">FINISH</string>
+
+    <!--profile page-->
+
+    <string name="review_text">REVIEW</string>
+    <string name="rates_text">RATES</string>
+
+    <!--can page-->
+    <string name="confirmed_text">CONFIRMED</string>
+    <string name="scaned_text">SCAN</string>
 
 
     <!-- Facebook App Id -->

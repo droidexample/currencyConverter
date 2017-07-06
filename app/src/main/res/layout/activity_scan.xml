@@ -16,7 +16,7 @@
 
 
         <LinearLayout
-            android:id="@+id/ll_back_login"
+            android:id="@+id/ll_back"
             android:layout_width="100dp"
             android:layout_height="match_parent"
             android:gravity="center_vertical">
@@ -45,48 +45,50 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:weightSum="6"
         android:padding="10dp"
-        >
+        android:weightSum="6">
 
         <LinearLayout
+            android:id="@+id/ll_confirmed"
             android:layout_width="wrap_content"
             android:layout_height="45dp"
             android:layout_weight="3"
-            android:background="@drawable/button_background_gmail"
+            android:background="@drawable/btn_select_unselect"
             android:gravity="center">
 
             <TextView
                 android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="CONFIRMED"
+                android:text="@string/confirmed_text"
                 android:textColor="@color/white"
-                android:textSize="@dimen/medium_text"/>
+                android:textSize="@dimen/medium_text" />
         </LinearLayout>
+
         <LinearLayout
+            android:id="@+id/ll_scan"
             android:layout_width="wrap_content"
             android:layout_height="45dp"
             android:layout_weight="3"
-            android:background="@drawable/button_background_edittext"
+            android:background="@drawable/btn_select_unselect"
             android:gravity="center">
 
             <TextView
                 android:id="@+id/text_people_need"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="SCAN"
+                android:text="@string/scaned_text"
                 android:textColor="@color/white"
-                android:textSize="@dimen/medium_text"/>
+                android:textSize="@dimen/medium_text" />
         </LinearLayout>
 
     </LinearLayout>
 
-    <ListView
-        android:id="@+id/list_home"
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager_home"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:divider="@null"
-        android:padding="5dp"></ListView>
+        android:visibility="visible" />
 
 </LinearLayout>
