@@ -1,6 +1,5 @@
 package com.at.currencysell;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,11 +22,7 @@ import com.at.currencysell.utils.AlertMessage;
 import com.at.currencysell.utils.BaseUrl;
 import com.at.currencysell.utils.BusyDialog;
 import com.at.currencysell.utils.NetInfo;
-import com.at.currencysell.utils.PersistentUser;
 import com.at.currencysell.utils.WebUtil;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -106,7 +101,7 @@ public class LoginActivity extends AppCompatActivity {
             Intent intent = new Intent(mContext, HomeActivity.class);
             startActivity(intent);
             finish();
-            // signIn(userEmail, userPass);
+            signIn(userEmail, userPass);
         }
 
     }
@@ -130,35 +125,34 @@ public class LoginActivity extends AppCompatActivity {
                 mBusyDialog.dismis();
                 Log.w("Response", "are" + response);
 
-                try {
-                    JSONObject JSONresponse = new JSONObject(response.toString());
-
-                    int success = JSONresponse.getInt("success");
-                    if (success == 1) {
-                        JSONObject userData = JSONresponse.getJSONObject("user");
-                        PersistentUser.setUSERNAME(mContext, userData.getString("user_name"));
-                        PersistentUser.setUserEmail(mContext, userData.getString("email"));
-                        PersistentUser.setUSERPIC(mContext, userData.getString("image_url"));
-                        PersistentUser.setUserID(mContext, userData.getString("id"));
-                        //  PersistentUser.setUSERDATA(mContext, ""+userData);
-                        PersistentUser.setLogin(mContext);
-                        Intent intent = new Intent(mContext, HomeActivity.class);
-
-                        startActivity(intent);
-                        LoginActivity.this.finish();
-                        Toast.makeText(mContext, "Login Successful", Toast.LENGTH_LONG).show();
-                        PersistentUser.setLogin(mContext);
-
-
-                    } else if (success == 0) {
-
-                        String error_message = JSONresponse.getString("message");
-                        Toast.makeText(mContext, error_message, Toast.LENGTH_LONG).show();
-
-                    }
-                } catch (JSONException e) {
-                    Toast.makeText(mContext, e.toString(), Toast.LENGTH_LONG).show();
-                }
+//                try {
+//                    JSONObject JSONresponse = new JSONObject(response.toString());
+//
+//                    int success = JSONresponse.getInt("success");
+//                    if (success == 1) {
+//                        JSONObject userData = JSONresponse.getJSONObject("user");
+//                        PersistentUser.setUSERNAME(mContext, userData.getString("user_name"));
+//                        PersistentUser.setUserEmail(mContext, userData.getString("email"));
+//                        PersistentUser.setUSERPIC(mContext, userData.getString("image_url"));
+//                        PersistentUser.setUserID(mContext, userData.getString("id"));
+//                        PersistentUser.setLogin(mContext);
+//                        Intent intent = new Intent(mContext, HomeActivity.class);
+//
+//                        startActivity(intent);
+//                        LoginActivity.this.finish();
+//                        Toast.makeText(mContext, "Login Successful", Toast.LENGTH_LONG).show();
+//                        PersistentUser.setLogin(mContext);
+//
+//
+//                    } else if (success == 0) {
+//
+//                        String error_message = JSONresponse.getString("message");
+//                        Toast.makeText(mContext, error_message, Toast.LENGTH_LONG).show();
+//
+//                    }
+//                } catch (JSONException e) {
+//                    Toast.makeText(mContext, e.toString(), Toast.LENGTH_LONG).show();
+//                }
 
 
             }
@@ -173,6 +167,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
+                params.put("api_key", BaseUrl.Api_key);
                 params.put("email", email);
                 params.put("password", pass);
 
