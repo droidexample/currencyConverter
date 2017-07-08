@@ -6,7 +6,8 @@ package com.at.currencysell.utils;
 
 public class BaseUrl {
 
-    public static String HttpUrl ="http://appsplorer-bd.com/ather/api/v1/";
+    public static String HttpUrl ="http://messengerlab.asia/currency_api/public/api/";
+    public static String Api_key ="08092103003";
 
 
 
