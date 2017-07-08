@@ -52,7 +52,7 @@ public class HomeListAdapter extends BaseAdapter {
 
 
         final HomeListModel listModel = listItems.get(position);
-        TextView title = (TextView) convertView.findViewById(R.id.tvname);
+        TextView title = (TextView) convertView.findViewById(R.id.tv_user_name);
 
         title.setText(listModel.getName());
 

@@ -11,6 +11,8 @@
         android:layout_height="match_parent"
         android:padding="5dp"
         android:scrollbars="none"
-        android:visibility="visible"></ListView>
+        android:visibility="visible">
+
+    </ListView>
 
 </LinearLayout>

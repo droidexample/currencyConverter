@@ -40,7 +40,7 @@ public class HomeActivity extends BaseActivity {
         ll_people_have = (LinearLayout) this.findViewById(R.id.ll_people_have);
         ll_people_have.setOnClickListener(listener);
 
-        ll_people_have.setSelected(true);
+        ll_people_need.setSelected(true);
 
         //=============View page for sliding============
         mViewPager = (ViewPager) findViewById(R.id.pager_home);
@@ -89,7 +89,7 @@ public class HomeActivity extends BaseActivity {
 
     public void selecteddeselectedbutton(int type) {
 
-        mViewPager.setCurrentItem(0);
+        mViewPager.setCurrentItem(type);
 
         switch (type) {
             case 0:

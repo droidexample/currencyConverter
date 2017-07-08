@@ -36,7 +36,6 @@ public class BaseActivity extends AppCompatActivity {
     private RelativeLayout rl_supporter;
     private RelativeLayout rl_share_app;
     private RelativeLayout rl_sharing_setting;
-    private RelativeLayout rl_account_setting;
     private RelativeLayout rl_Logout;
 
 
@@ -50,6 +49,8 @@ public class BaseActivity extends AppCompatActivity {
 
 
     private ImageView img_scan;
+    private ImageView img_search;
+    private RelativeLayout rl_search;
 
 
     @Override
@@ -91,6 +92,9 @@ public class BaseActivity extends AppCompatActivity {
 
         img_scan = (ImageView) findViewById(R.id.img_scan);
         img_scan.setOnClickListener(listener);
+        img_search = (ImageView) findViewById(R.id.img_search);
+        img_search.setOnClickListener(listener);
+        rl_search = (RelativeLayout) findViewById(R.id.rl_search);
 
         // for tab view
         ll_tab_home = (LinearLayout) findViewById(R.id.ll_tab_home);
@@ -150,6 +154,14 @@ public class BaseActivity extends AppCompatActivity {
 
                     mIntent = new Intent(mContext, ScanActivity.class);
                     startActivity(mIntent);
+                    break;
+                case R.id.img_search:
+
+                   if (rl_search.getVisibility()==View.GONE){
+                       rl_search.setVisibility(View.VISIBLE);
+                   }else {
+                       rl_search.setVisibility(View.GONE);
+                   }
                     break;
 
                 default:

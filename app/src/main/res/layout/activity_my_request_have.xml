@@ -132,7 +132,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:divider="@null"
-            android:padding="5dp"></ListView>
+            android:padding="5dp">
+
+        </ListView>
 
 
     </LinearLayout>
