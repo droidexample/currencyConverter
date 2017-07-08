@@ -10,8 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.at.currencysell.R;
-import com.at.currencysell.model.MyReqestHaveMoel;
-import com.at.currencysell.utils.PersistentUser;
+import com.at.currencysell.model.MyReqestActiveMoel;
 
 import java.util.List;
 
@@ -19,10 +18,10 @@ public class MyRequestHaveListAdapter extends BaseAdapter {
 
     private Activity activity;
     private LayoutInflater inflater;
-    public List<MyReqestHaveMoel> listItems;
+    public List<MyReqestActiveMoel> listItems;
 
 
-    public MyRequestHaveListAdapter(Activity activity, List<MyReqestHaveMoel> listItems) {
+    public MyRequestHaveListAdapter(Activity activity, List<MyReqestActiveMoel> listItems) {
         this.activity = activity;
         this.listItems = listItems;
     }
@@ -51,7 +50,7 @@ public class MyRequestHaveListAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.my_request_have_list_item, null);
 
 
-        final MyReqestHaveMoel listModel = listItems.get(position);
+        final MyReqestActiveMoel listModel = listItems.get(position);
         TextView title = (TextView) convertView.findViewById(R.id.currency_name);
 //        TextView full_name = (TextView) convertView.findViewById(R.id.currency_full_name);
         ImageView image = (ImageView) convertView.findViewById(R.id.currency_image);

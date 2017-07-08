@@ -2,7 +2,7 @@ package com.at.currencysell.model;
 
 
 
-public class MyReqestHaveMoel {
+public class MyReqestActiveMoel {
     private String currency_name;
     private String currency_full_name;
     private int image;

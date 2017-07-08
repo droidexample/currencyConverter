@@ -10,6 +10,7 @@ import android.widget.ListView;
 import com.at.currencysell.adapter.MyRequestListAdapter;
 import com.at.currencysell.model.HomeListModel;
 import com.at.currencysell.tabpager.TabsPagerAdapter;
+import com.at.currencysell.tabpager.TabsPagerAdapterMyRequests;
 
 
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ public class MyRequestsActivity extends BaseActivity {
     private LinearLayout ll_active;
     private LinearLayout ll_finish;
     private ViewPager mViewPager;
-    private TabsPagerAdapter mAdapter;
+    private TabsPagerAdapterMyRequests mAdapter;
 
 
     @Override
@@ -54,7 +55,7 @@ public class MyRequestsActivity extends BaseActivity {
 
       //=============View page for sliding============
       mViewPager = (ViewPager) findViewById(R.id.pager_home);
-      mAdapter = new TabsPagerAdapter(getSupportFragmentManager());
+      mAdapter = new TabsPagerAdapterMyRequests(getSupportFragmentManager());
       mViewPager.setAdapter(mAdapter);
       mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
           @Override

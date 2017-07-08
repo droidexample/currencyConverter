@@ -1,7 +1,6 @@
 package com.at.currencysell;
 
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -9,8 +8,6 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
-import com.at.currencysell.adapter.HomeListAdapter;
-import com.at.currencysell.adapter.MyRequestListAdapter;
 import com.at.currencysell.adapter.ProfileAdapter;
 import com.at.currencysell.model.HomeListModel;
 import com.at.currencysell.tabpager.TabsPagerAdapter;

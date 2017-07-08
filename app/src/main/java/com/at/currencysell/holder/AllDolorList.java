@@ -1,7 +1,7 @@
 package com.at.currencysell.holder;
 
 
-import com.at.currencysell.model.MyReqestHaveMoel;
+import com.at.currencysell.model.MyReqestActiveMoel;
 
 import java.util.Vector;
 
@@ -11,23 +11,23 @@ import java.util.Vector;
 
 public class AllDolorList {
 
-    public static Vector<MyReqestHaveMoel> mAllDolorList = new Vector<MyReqestHaveMoel>();
+    public static Vector<MyReqestActiveMoel> mAllDolorList = new Vector<MyReqestActiveMoel>();
 
 
-    public static Vector<MyReqestHaveMoel> getmAllDolorList() {
+    public static Vector<MyReqestActiveMoel> getmAllDolorList() {
         return mAllDolorList;
     }
 
-    public static void setmAllDolorList(Vector<MyReqestHaveMoel> mAllDolorList) {
+    public static void setmAllDolorList(Vector<MyReqestActiveMoel> mAllDolorList) {
         AllDolorList.mAllDolorList = mAllDolorList;
     }
 
 
-    public static MyReqestHaveMoel getDolorList(int postion) {
+    public static MyReqestActiveMoel getDolorList(int postion) {
         return mAllDolorList.elementAt(postion);
     }
 
-    public static void setmDolorList(MyReqestHaveMoel _mAllDolorList) {
+    public static void setmDolorList(MyReqestActiveMoel _mAllDolorList) {
         AllDolorList.mAllDolorList.addElement(_mAllDolorList);
     }
 

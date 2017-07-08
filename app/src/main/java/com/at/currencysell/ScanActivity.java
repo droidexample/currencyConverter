@@ -10,7 +10,6 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
-import com.at.currencysell.adapter.HomeListAdapter;
 import com.at.currencysell.adapter.ScanListAdapter;
 import com.at.currencysell.model.HomeListModel;
 import com.at.currencysell.tabpager.TabsPagerAdapter;

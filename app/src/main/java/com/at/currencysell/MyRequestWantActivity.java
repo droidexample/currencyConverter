@@ -22,7 +22,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.at.currencysell.holder.AllDolorList;
-import com.at.currencysell.model.MyReqestHaveMoel;
+import com.at.currencysell.model.MyReqestActiveMoel;
 
 import java.util.Vector;
 
@@ -103,7 +103,7 @@ public class MyRequestWantActivity extends AppCompatActivity {
         int[] images = {R.drawable.ic_usa, R.drawable.ic_eur_img, R.drawable.ic_japan, R.drawable.ic_uk, R.drawable.ic_franch, R.drawable.ic_usa, R.drawable.ic_uk};
 
         for (int i = 0; i < currency_short_form.length; i++) {
-            MyReqestHaveMoel nameItem = new MyReqestHaveMoel();
+            MyReqestActiveMoel nameItem = new MyReqestActiveMoel();
             nameItem.setCurrency_name(currency_short_form[i]);
             nameItem.setCurrency_full_name(currency_full_form[i]);
             nameItem.setImage(images[i]);
@@ -117,17 +117,17 @@ public class MyRequestWantActivity extends AppCompatActivity {
     }
 
 
-    class DolorListAdapter extends ArrayAdapter<MyReqestHaveMoel> {
+    class DolorListAdapter extends ArrayAdapter<MyReqestActiveMoel> {
         Context mContext;
-        private Vector<MyReqestHaveMoel> originalList;
-        private Vector<MyReqestHaveMoel> chatList;
+        private Vector<MyReqestActiveMoel> originalList;
+        private Vector<MyReqestActiveMoel> chatList;
         private CityFilter filter;
 
 
-        public DolorListAdapter(Context context, int textViewResourceId, Vector<MyReqestHaveMoel> cityLists) {
+        public DolorListAdapter(Context context, int textViewResourceId, Vector<MyReqestActiveMoel> cityLists) {
             super(context, textViewResourceId, cityLists);
-            this.chatList = new Vector<MyReqestHaveMoel>();
-            this.originalList = new Vector<MyReqestHaveMoel>();
+            this.chatList = new Vector<MyReqestActiveMoel>();
+            this.originalList = new Vector<MyReqestActiveMoel>();
             this.chatList.addAll(cityLists);
             this.originalList.addAll(cityLists);
             this.mContext = context;
@@ -146,7 +146,7 @@ public class MyRequestWantActivity extends AppCompatActivity {
         public View getView(final int position, View convertView, ViewGroup parent) {
             final ViewHolder holder;
             LayoutInflater mInflater = (LayoutInflater) mContext.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-            final MyReqestHaveMoel listModel = AllDolorList.getDolorList(position);
+            final MyReqestActiveMoel listModel = AllDolorList.getDolorList(position);
             if (convertView == null) {
                 convertView = mInflater.inflate(R.layout.my_request_have_list_item, null);
                 holder = new ViewHolder();
@@ -203,10 +203,10 @@ public class MyRequestWantActivity extends AppCompatActivity {
                 constraint = constraint.toString().toLowerCase();
                 FilterResults result = new FilterResults();
                 if (constraint != null && constraint.toString().length() > 0) {
-                    Vector<MyReqestHaveMoel> filteredItems = new Vector<MyReqestHaveMoel>();
+                    Vector<MyReqestActiveMoel> filteredItems = new Vector<MyReqestActiveMoel>();
 
                     for (int i = 0, l = originalList.size(); i < l; i++) {
-                        MyReqestHaveMoel country = originalList.get(i);
+                        MyReqestActiveMoel country = originalList.get(i);
                         if (country.getCurrency_name().toString().toLowerCase().contains(constraint)) {
                             filteredItems.add(country);
                         }
@@ -226,7 +226,7 @@ public class MyRequestWantActivity extends AppCompatActivity {
             @Override
             protected void publishResults(CharSequence constraint,
                                           FilterResults results) {
-                chatList = (Vector<MyReqestHaveMoel>) results.values;
+                chatList = (Vector<MyReqestActiveMoel>) results.values;
                 notifyDataSetChanged();
                 clear();
                 for (int i = 0, l = chatList.size(); i < l; i++)
