@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -15,13 +17,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.at.currencysell.adapter.Adapter_listview;
+import com.at.currencysell.adapter.CurrencyNameAdapter;
 import com.at.currencysell.model.Currency_Names;
 import com.at.currencysell.utils.AlertMessage;
-import com.at.currencysell.utils.BaseUrl;
-import com.at.currencysell.utils.BusyDialog;
 import com.at.currencysell.utils.NetInfo;
-import com.at.currencysell.utils.PersistentUser;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -39,7 +38,7 @@ public class CurrencyNameActivity extends AppCompatActivity {
     String  s_names=null            ;
 
     ListView listview                                           ;
-    Adapter_listview adapter_listview                                   ;
+    CurrencyNameAdapter adapter_listview                                   ;
     public static ArrayList<Currency_Names> list_currency_names_data         ;
     String ulr_curency_namees;
     Context mContext;
@@ -57,6 +56,19 @@ public class CurrencyNameActivity extends AppCompatActivity {
     private void initI(){
 
         listview = (ListView)this.findViewById(R.id.listview);
+
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+              ;
+                String currency_name = list_currency_names_data.get(position).short_name;
+
+                Intent intent = new Intent();
+                intent.putExtra("MESSAGE",currency_name);
+                setResult(1,intent);
+                finish();
+            }
+        });
         list_currency_names_data= new ArrayList<>();
         getCrrencyName();
     }
@@ -142,7 +154,7 @@ public class CurrencyNameActivity extends AppCompatActivity {
         });
 
 
-        adapter_listview= new Adapter_listview(CurrencyNameActivity.this,list_currency_names_data);
+        adapter_listview= new CurrencyNameAdapter(CurrencyNameActivity.this,list_currency_names_data);
         listview.setAdapter(adapter_listview);
 
         //pDialog.dismiss();

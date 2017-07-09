@@ -14,7 +14,7 @@ import com.at.currencysell.model.Currency_Names;
 
 import java.util.ArrayList;
 
-public class Adapter_listview extends BaseAdapter {
+public class CurrencyNameAdapter extends BaseAdapter {
 
 	
 	public LayoutInflater l_Inflater;
@@ -27,7 +27,7 @@ public class Adapter_listview extends BaseAdapter {
 	int resId;
 	int pos;
 	
-	public Adapter_listview(Activity a , ArrayList<Currency_Names> list ) {
+	public CurrencyNameAdapter(Activity a , ArrayList<Currency_Names> list ) {
 	
 	 	this.activity	 =	a;
 

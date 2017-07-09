@@ -8,6 +8,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.at.currencysell.tabpager.TabsPagerAdapter;
 
@@ -18,6 +20,7 @@ public class HomeActivity extends BaseActivity {
     private ViewPager mViewPager;
     private TabsPagerAdapter mAdapter;
     private ImageView image_currency;
+    private TextView tv_currency_name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +40,7 @@ public class HomeActivity extends BaseActivity {
 
 
     private void initUI() {
-
+        tv_currency_name = (TextView) this.findViewById(R.id.tv_currency_name);
         image_currency = (ImageView) this.findViewById(R.id.image_currency);
         image_currency.setOnClickListener(listener);
         ll_people_need = (LinearLayout) this.findViewById(R.id.ll_people_need);
@@ -88,7 +91,7 @@ public class HomeActivity extends BaseActivity {
                     break;
                 case R.id.image_currency:
                     Intent intent = new Intent(mContext,CurrencyNameActivity.class);
-                    startActivity(intent);
+                   startActivityForResult(intent,1);
 
                     break;
 
@@ -96,6 +99,19 @@ public class HomeActivity extends BaseActivity {
 
         }
     };
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode==1)
+        {
+            String currency=data.getStringExtra("MESSAGE");
+            Toast.makeText(mContext,currency,Toast.LENGTH_LONG).show();
+            tv_currency_name.setText(currency);
+
+        }
+    }
 
     public void selecteddeselectedbutton(int type) {
 
