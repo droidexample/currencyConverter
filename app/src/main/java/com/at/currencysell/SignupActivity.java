@@ -22,6 +22,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.at.currencysell.utils.AlbumStorageDirFactory;
 import com.at.currencysell.utils.AlertMessage;
 import com.at.currencysell.utils.BaseAlbumDirFactory;
@@ -41,6 +48,8 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SignupActivity extends AppCompatActivity {
     private LinearLayout ll_back_sign_up;
@@ -62,8 +71,8 @@ public class SignupActivity extends AppCompatActivity {
     private EditText et_password;
     private EditText et_confirm_password;
 
-    private String fullname;
-    private String username;
+    private String firstname;
+    private String lastname;
     private String email;
     private String password;
     private String confirmpassword;
@@ -144,20 +153,22 @@ public class SignupActivity extends AppCompatActivity {
     public void signUp() {
 
 
-        fullname = et_full_name.getText().toString();
-        username = et_user_name.getText().toString();
+        firstname = et_full_name.getText().toString();
+        lastname = et_user_name.getText().toString();
         email = et_email.getText().toString();
         password = et_password.getText().toString();
         confirmpassword = et_confirm_password.getText().toString();
+
+        Log.w("Data",firstname+lastname+email+password);
 
 
         if (Apath.equalsIgnoreCase("1")) {
             Toast.makeText(mContext, "Please  select an image", Toast.LENGTH_LONG).show();
             return;
-        } else if (fullname.equalsIgnoreCase("")) {
+        } else if (firstname.equalsIgnoreCase("")) {
             Toast.makeText(mContext, "Please Enter Your Full Name", Toast.LENGTH_LONG).show();
             return;
-        } else if (username.equalsIgnoreCase("")) {
+        } else if (lastname.equalsIgnoreCase("")) {
             Toast.makeText(mContext, "Please Enter Your Last Name", Toast.LENGTH_LONG).show();
             return;
         } else if (email.equalsIgnoreCase("")) {
@@ -179,10 +190,8 @@ public class SignupActivity extends AppCompatActivity {
 
             return;
         }  else {
-            Toast.makeText(mContext, "" + "Registered successfully", Toast.LENGTH_LONG).show();
-            Intent intent = new Intent(mContext, LoginActivity.class);
-            startActivity(intent);
-           // new UploadFileToServer().execute();
+                //signIn(firstname,lastname,email,password);
+            new UploadFileToServer().execute();
 
 
         }
@@ -215,15 +224,14 @@ public class SignupActivity extends AppCompatActivity {
             // TODO Auto-generated method stub
             try {
 
-
-                String ulr = BaseUrl.HttpUrl + "register";
+                String ulr = BaseUrl.HttpUrl + "registration";
                 MultipartUtility body = new MultipartUtility(ulr);
-                body.addFormField("name", "" + fullname);
-                body.addFormField("user_name", "" + username);
+                body.addFormField("first_name", "" + firstname);
+                body.addFormField("last_name", "" + lastname);
                 body.addFormField("email", "" + email);
                 body.addFormField("password", "" + password);
-                body.addFormField("password_confirmation", "" + password);
-                body.addFilePart("image_url", Apath);
+                body.addFilePart("picture", Apath);
+                body.addFilePart("api_key", BaseUrl.Api_key);
                 response = body.finish();
 
 
@@ -279,6 +287,52 @@ public class SignupActivity extends AppCompatActivity {
 
         }
 
+    }
+
+    public void signIn(final String first,final String last,final String mail, final String pass) {
+
+        if (!NetInfo.isOnline(mContext)) {
+            AlertMessage.showMessage(mContext, "Status", "Please check internet Connection");
+            return;
+        }
+
+        mBusyDialog = new BusyDialog(mContext, true, "Loading");
+        mBusyDialog.show();
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, BaseUrl.HttpUrl + "registration", new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                mBusyDialog.dismis();
+                Log.w("response", "are" + response);
+
+
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                mBusyDialog.dismis();
+                Log.d("response", "are" + error);
+
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+
+                params.put("api_key", BaseUrl.Api_key);
+                params.put("first_name", first);
+                params.put("last_name", last);
+                params.put("email", mail);
+                params.put("password", pass);
+
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(mContext);
+        requestQueue.add(stringRequest);
     }
 
 

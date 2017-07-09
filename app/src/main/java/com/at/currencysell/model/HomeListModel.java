@@ -3,7 +3,7 @@ package com.at.currencysell.model;
 
 
 public class HomeListModel {
-private String name;
+    private String name;
 
     public String getName() {
         return name;

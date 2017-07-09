@@ -8,9 +8,8 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
-import com.at.currencysell.adapter.ProfileAdapter;
 import com.at.currencysell.model.HomeListModel;
-import com.at.currencysell.tabpager.TabsPagerAdapter;
+import com.at.currencysell.tabpager.TabsPagerAdapterProfile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,12 +18,12 @@ public class ProfileActivity extends BaseActivity {
 
     private List<HomeListModel> nameList = new ArrayList<HomeListModel>();
     private ListView listView;
-    private ProfileAdapter adapter;
+
 
     private LinearLayout ll_review;
     private LinearLayout ll_rates;
     private ViewPager mViewPager;
-    private TabsPagerAdapter mAdapter;
+    private TabsPagerAdapterProfile mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +52,7 @@ public class ProfileActivity extends BaseActivity {
 
         //=============View page for sliding============
         mViewPager = (ViewPager) findViewById(R.id.pager_home);
-        mAdapter = new TabsPagerAdapter(getSupportFragmentManager());
+        mAdapter = new TabsPagerAdapterProfile(getSupportFragmentManager());
         mViewPager.setAdapter(mAdapter);
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -111,18 +110,6 @@ public class ProfileActivity extends BaseActivity {
 
     }
 
-    private void dummyData() {
-        String[] names = {"1 Good - Micheal","2 Good - John","3 Good - David","1 Good - Rosin","2 Good - Micheal"};
-        for (int i = 0;i<names.length;i++){
-            HomeListModel nameItem = new HomeListModel();
-            nameItem.setName(names[i]);
 
-            nameList.add(nameItem);
-
-        }
-        adapter=new ProfileAdapter(this,nameList);
-        listView.setAdapter(adapter);
-
-    }
 
 }

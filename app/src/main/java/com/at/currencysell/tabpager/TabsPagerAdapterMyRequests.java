@@ -4,6 +4,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.at.currencysell.fragment.FragmentMyRequestActive;
+import com.at.currencysell.fragment.FragmentMyRequestFinish;
 import com.at.currencysell.fragment.FragmentPeopleHave;
 import com.at.currencysell.fragment.FragmentPeopleNeed;
 
@@ -24,7 +25,7 @@ public class TabsPagerAdapterMyRequests extends FragmentPagerAdapter {
             case 0:
                 return new FragmentMyRequestActive();
             case 1:
-                return new FragmentPeopleNeed();
+                return new FragmentMyRequestFinish();
 
         }
         return null;

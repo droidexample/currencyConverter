@@ -7,9 +7,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import com.at.currencysell.adapter.MyRequestListAdapter;
+
 import com.at.currencysell.model.HomeListModel;
-import com.at.currencysell.tabpager.TabsPagerAdapter;
 import com.at.currencysell.tabpager.TabsPagerAdapterMyRequests;
 
 
@@ -19,7 +18,6 @@ import java.util.List;
 public class MyRequestsActivity extends BaseActivity {
     private List<HomeListModel> nameList = new ArrayList<HomeListModel>();
     private ListView listView;
-    private MyRequestListAdapter adapter;
 
     private LinearLayout ll_active;
     private LinearLayout ll_finish;
@@ -117,18 +115,5 @@ public class MyRequestsActivity extends BaseActivity {
 
     }
 
-    private void dummyData() {
-        String[] names = {"USD","USD","USD","USD","USD","USD","USD"};
-        for (int i = 0;i<names.length;i++){
-            HomeListModel nameItem = new HomeListModel();
-            nameItem.setName(names[i]);
 
-            nameList.add(nameItem);
-
-        }
-
-        adapter=new MyRequestListAdapter(this,nameList);
-        listView.setAdapter(adapter);
-
-    }
 }

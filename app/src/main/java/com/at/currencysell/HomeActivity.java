@@ -1,10 +1,12 @@
 package com.at.currencysell;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.at.currencysell.tabpager.TabsPagerAdapter;
@@ -15,6 +17,7 @@ public class HomeActivity extends BaseActivity {
     private LinearLayout ll_people_have;
     private ViewPager mViewPager;
     private TabsPagerAdapter mAdapter;
+    private ImageView image_currency;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +38,8 @@ public class HomeActivity extends BaseActivity {
 
     private void initUI() {
 
+        image_currency = (ImageView) this.findViewById(R.id.image_currency);
+        image_currency.setOnClickListener(listener);
         ll_people_need = (LinearLayout) this.findViewById(R.id.ll_people_need);
         ll_people_need.setOnClickListener(listener);
         ll_people_have = (LinearLayout) this.findViewById(R.id.ll_people_have);
@@ -79,6 +84,11 @@ public class HomeActivity extends BaseActivity {
                 case R.id.ll_people_have:
 
                     selecteddeselectedbutton(1);
+
+                    break;
+                case R.id.image_currency:
+                    Intent intent = new Intent(mContext,CurrencyNameActivity.class);
+                    startActivity(intent);
 
                     break;
 

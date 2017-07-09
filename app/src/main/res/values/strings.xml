@@ -55,4 +55,6 @@
     <!-- Facebook App Id -->
     <string name="facebook_app_id">111222619507033</string>
 
+    <string name="Currencylayer_Key">3741afd246e484205bd81b6bf1ac2922</string>
+
 </resources>

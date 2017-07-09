@@ -24,6 +24,11 @@ public class PersistentUser {
         editor.commit();
     }
 
+    public static String getUserName(final Context ctx) {
+        return ctx.getSharedPreferences(PREFS_FILE_NAME, Context.MODE_PRIVATE)
+                .getString(USERNAME, "");
+    }
+
     public static void setUserEmail(final Context ctx, final String data) {
         final SharedPreferences prefs = ctx.getSharedPreferences(
                 PREFS_FILE_NAME, Context.MODE_PRIVATE);
@@ -72,25 +77,6 @@ public class PersistentUser {
     }
 
 
-    public static void setClick(Context c) {
-
-        final SharedPreferences prefs = c.getSharedPreferences(PREFS_FILE_NAME,
-                Context.MODE_PRIVATE);
-        prefs.edit().putBoolean("clicked", true).commit();
-    }
-
-    public static boolean isClicked(Context c) {
-        final SharedPreferences prefs = c.getSharedPreferences(PREFS_FILE_NAME, Context.MODE_PRIVATE);
-        return prefs.getBoolean("clicked", false);
-    }
-
-    public static void NotClicked(Context c) {
-
-        final SharedPreferences prefs = c.getSharedPreferences(PREFS_FILE_NAME,
-                Context.MODE_PRIVATE);
-        prefs.edit().putBoolean("clicked", false).commit();
-
-    }
 
     public static void setCurrentUser(UserModel currentUser, Context ctx){
         ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(ctx, "user_prefs", 0);

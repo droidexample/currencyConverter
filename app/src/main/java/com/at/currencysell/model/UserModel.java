@@ -8,6 +8,4 @@ public class UserModel {
 
     public String facebookID;
 
-    public String gender;
-
 }

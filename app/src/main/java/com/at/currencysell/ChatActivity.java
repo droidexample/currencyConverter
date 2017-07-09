@@ -5,22 +5,19 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ListView;
 
-import com.at.currencysell.adapter.ChatAdapter;
+import com.at.currencysell.adapter.ChatListAdapter;
+import com.at.currencysell.holder.HomeList;
 import com.at.currencysell.model.HomeListModel;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class ChatActivity extends BaseActivity {
-    private List<HomeListModel> nameList = new ArrayList<HomeListModel>();
-    private ListView listView;
-    private ChatAdapter adapter;
-    String[] names = {"MICHEAL SMITH","JOHN SMITH","PITER SMITH","ROSIN SMITH","MICHEAL SMITH"};
+    private ListView listview;
+    private ChatListAdapter adapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getLayoutInflater().inflate(R.layout.activity_home,frameLayout);
+        getLayoutInflater().inflate(R.layout.activity_chat,frameLayout);
         mContext = this;
         selecteddeselectedTab(3);
         if (android.os.Build.VERSION.SDK_INT >= 21) {
@@ -35,17 +32,25 @@ public class ChatActivity extends BaseActivity {
 
 
     private void initUI(){
-        for (int i = 0;i<names.length;i++){
-            HomeListModel nameItem = new HomeListModel();
-            nameItem.setName(names[i]);
+        listview = (ListView) findViewById(R.id.listview);
+        dummyData();
 
-            nameList.add(nameItem);
+    }
+
+    private void dummyData() {
+        String[] user_name = {"MICHEAL SMITH","JOHN SMITH","PITER SMITH","ROSIN SMITH","MICHEAL SMITH"};
+
+
+        for (int i = 0; i < user_name.length; i++) {
+            HomeListModel nameItem = new HomeListModel();
+            nameItem.setName(user_name[i]);
+
+
+            HomeList.setEventinfo(nameItem);
 
         }
 
-        listView = (ListView) findViewById(R.id.list_home);
-        adapter=new ChatAdapter(this,nameList);
-        listView.setAdapter(adapter);
-
+        adapter = new ChatListAdapter(mContext,  HomeList.getAllEventDetailsInfos());
+        listview.setAdapter(adapter);
     }
 }

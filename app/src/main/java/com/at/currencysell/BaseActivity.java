@@ -3,6 +3,7 @@ package com.at.currencysell;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.IntentCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
@@ -14,6 +15,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.at.currencysell.slidermenu.SlidingMenu;
+import com.at.currencysell.utils.PersistentUser;
+import com.facebook.login.LoginManager;
 
 
 public class BaseActivity extends AppCompatActivity {
@@ -36,7 +39,7 @@ public class BaseActivity extends AppCompatActivity {
     private RelativeLayout rl_supporter;
     private RelativeLayout rl_share_app;
     private RelativeLayout rl_sharing_setting;
-    private RelativeLayout rl_Logout;
+    private TextView tv_sign_out;
 
 
     private LinearLayout ll_tab_home;
@@ -46,6 +49,7 @@ public class BaseActivity extends AppCompatActivity {
     private LinearLayout ll_tab_profile;
     private RelativeLayout li_settings;
     private TextView text_title;
+    private TextView tv_name;
 
 
     private ImageView img_scan;
@@ -90,6 +94,11 @@ public class BaseActivity extends AppCompatActivity {
         text_title = (TextView) findViewById(R.id.text_title);
 
 
+        // for naviagtion drower
+        tv_name = (TextView) this.findViewById(R.id.tv_name);
+        tv_sign_out = (TextView) findViewById(R.id.tv_sign_out);
+        tv_sign_out.setOnClickListener(listener);
+
         img_scan = (ImageView) findViewById(R.id.img_scan);
         img_scan.setOnClickListener(listener);
         img_search = (ImageView) findViewById(R.id.img_search);
@@ -109,6 +118,9 @@ public class BaseActivity extends AppCompatActivity {
         ll_tab_profile.setOnClickListener(listener);
 
 
+        // Set Persintition Data
+        tv_name.setText(PersistentUser.getUserName(mContext));
+
     }
 
 
@@ -121,9 +133,20 @@ public class BaseActivity extends AppCompatActivity {
                     slide_me.toggle();
                     break;
 
+                case R.id.tv_sign_out:
+
+                    PersistentUser.resetAllData(mContext);
+                    PersistentUser.clearCurrentUser(mContext);
+                    LoginManager.getInstance().logOut();
+                    Intent mIntent = new Intent(mContext, SignupFirstActivity.class);
+                    mIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | IntentCompat.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(mIntent);
+                    finish();
+                    break;
+
                 case R.id.ll_tab_home:
                     selecteddeselectedTab(0);
-                    Intent mIntent = new Intent(mContext, HomeActivity.class);
+                     mIntent = new Intent(mContext, HomeActivity.class);
                     startActivity(mIntent);
                     break;
 

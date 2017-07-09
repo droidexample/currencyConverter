@@ -22,7 +22,11 @@ import com.at.currencysell.utils.AlertMessage;
 import com.at.currencysell.utils.BaseUrl;
 import com.at.currencysell.utils.BusyDialog;
 import com.at.currencysell.utils.NetInfo;
+import com.at.currencysell.utils.PersistentUser;
 import com.at.currencysell.utils.WebUtil;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -64,9 +68,10 @@ public class LoginActivity extends AppCompatActivity {
 
             switch (view.getId()) {
                 case R.id.rl_login:
-                    Intent intent = new Intent(mContext, HomeActivity.class);
+                    valuationMethods();
+                    /*Intent intent = new Intent(mContext, HomeActivity.class);
                     startActivity(intent);
-                    finish();
+                    finish();*/
                     break;
                 case R.id.member_sign_up:
                     Intent in = new Intent(mContext, SignupActivity.class);
@@ -98,9 +103,6 @@ public class LoginActivity extends AppCompatActivity {
 
             return;
         } else {
-            Intent intent = new Intent(mContext, HomeActivity.class);
-            startActivity(intent);
-            finish();
             signIn(userEmail, userPass);
         }
 
@@ -123,36 +125,37 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(String response) {
 
                 mBusyDialog.dismis();
-                Log.w("Response", "are" + response);
+                Log.w("response", "are" + response);
 
-//                try {
-//                    JSONObject JSONresponse = new JSONObject(response.toString());
-//
-//                    int success = JSONresponse.getInt("success");
-//                    if (success == 1) {
-//                        JSONObject userData = JSONresponse.getJSONObject("user");
-//                        PersistentUser.setUSERNAME(mContext, userData.getString("user_name"));
-//                        PersistentUser.setUserEmail(mContext, userData.getString("email"));
-//                        PersistentUser.setUSERPIC(mContext, userData.getString("image_url"));
-//                        PersistentUser.setUserID(mContext, userData.getString("id"));
-//                        PersistentUser.setLogin(mContext);
-//                        Intent intent = new Intent(mContext, HomeActivity.class);
-//
-//                        startActivity(intent);
-//                        LoginActivity.this.finish();
-//                        Toast.makeText(mContext, "Login Successful", Toast.LENGTH_LONG).show();
-//                        PersistentUser.setLogin(mContext);
-//
-//
-//                    } else if (success == 0) {
-//
-//                        String error_message = JSONresponse.getString("message");
-//                        Toast.makeText(mContext, error_message, Toast.LENGTH_LONG).show();
-//
-//                    }
-//                } catch (JSONException e) {
-//                    Toast.makeText(mContext, e.toString(), Toast.LENGTH_LONG).show();
-//                }
+                try {
+                    JSONObject JSONresponse = new JSONObject(response);
+
+                    int success = JSONresponse.getInt("success");
+                    if (success == 1) {
+                        String success_message = JSONresponse.getString("message");
+                        JSONObject userData = JSONresponse.getJSONObject("result");
+                        PersistentUser.setUSERNAME(mContext, userData.getString("first_name"));
+                        PersistentUser.setUserEmail(mContext, userData.getString("email"));
+                        PersistentUser.setUSERPIC(mContext, userData.getString("picture"));
+                        PersistentUser.setUserID(mContext, userData.getString("user_id"));
+                        PersistentUser.setLogin(mContext);
+                        Intent intent = new Intent(mContext, HomeActivity.class);
+
+                        startActivity(intent);
+                        LoginActivity.this.finish();
+                        Toast.makeText(mContext, success_message, Toast.LENGTH_LONG).show();
+
+
+
+                    } else if (success == 0) {
+
+                        String error_message = JSONresponse.getString("message");
+                        Toast.makeText(mContext, error_message, Toast.LENGTH_LONG).show();
+
+                    }
+                } catch (JSONException e) {
+                    Toast.makeText(mContext, e.toString(), Toast.LENGTH_LONG).show();
+                }
 
 
             }
