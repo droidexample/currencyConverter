@@ -14,11 +14,11 @@ public class AllCurrencyList {
     public static Vector<Currency_Names> mAllCurrencyList = new Vector<Currency_Names>();
 
 
-    public static Vector<Currency_Names> getmAllDolorList() {
+    public static Vector<Currency_Names> getmAllCurrencyList() {
         return mAllCurrencyList;
     }
 
-    public static void setmAllDolorList(Vector<Currency_Names> mAllCurrencyList) {
+    public static void setmAllCurrencyList(Vector<Currency_Names> mAllCurrencyList) {
         AllCurrencyList.mAllCurrencyList = mAllCurrencyList;
     }
 
@@ -27,11 +27,11 @@ public class AllCurrencyList {
         return mAllCurrencyList.elementAt(postion);
     }
 
-    public static void setmDolorList(Currency_Names _mAllDolorList) {
-        AllCurrencyList.mAllCurrencyList.addElement(_mAllDolorList);
+    public static void setmCurrencyList(Currency_Names _mAllCurrencyList) {
+        AllCurrencyList.mAllCurrencyList.addElement(_mAllCurrencyList);
     }
 
-    public static void removeAlltopimage() {
+    public static void removeAllCurrencyList() {
         AllCurrencyList.mAllCurrencyList.removeAllElements();
 
     }

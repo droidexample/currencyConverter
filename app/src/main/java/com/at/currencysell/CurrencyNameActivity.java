@@ -156,6 +156,7 @@ public class CurrencyNameActivity extends AppCompatActivity {
 
     public void add_country_names()
     {
+        AllCurrencyList.removeAllCurrencyList();
         s_names=s_names.replace("{","");
         s_names=s_names.replace("}","");
         s_names=s_names.replace("\"","");
@@ -168,22 +169,22 @@ public class CurrencyNameActivity extends AppCompatActivity {
             String temp= stoke.nextElement().toString();
             String split[]= temp.split(":");
 
-            AllCurrencyList.setmDolorList(new Currency_Names(split[0], split[1]));
+            AllCurrencyList.setmCurrencyList(new Currency_Names(split[0], split[1]));
 
 
         }
 
 
-        Collections.sort(AllCurrencyList.getmAllDolorList(), new Comparator<Currency_Names>() {
+        Collections.sort(AllCurrencyList.getmAllCurrencyList(), new Comparator<Currency_Names>() {
             @Override
             public int compare(Currency_Names n1, Currency_Names n2) {
                 return n1.short_name.compareTo(n2.short_name);
             }
         });
 
-        adapter_listview = new CurrencyNameAdapter(this, R.layout.row_custom, AllCurrencyList.getmAllDolorList());
-
+        adapter_listview = new CurrencyNameAdapter(this, R.layout.row_custom, AllCurrencyList.getmAllCurrencyList());
         listview.setAdapter(adapter_listview);
+        adapter_listview.notifyDataSetChanged();
 
 
 
