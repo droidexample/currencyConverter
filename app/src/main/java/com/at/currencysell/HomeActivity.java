@@ -8,6 +8,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,7 +20,7 @@ public class HomeActivity extends BaseActivity {
     private LinearLayout ll_people_have;
     private ViewPager mViewPager;
     private TabsPagerAdapter mAdapter;
-    private ImageView image_currency;
+    private RelativeLayout rl_currency;
     private TextView tv_currency_name;
 
     @Override
@@ -41,8 +42,8 @@ public class HomeActivity extends BaseActivity {
 
     private void initUI() {
         tv_currency_name = (TextView) this.findViewById(R.id.tv_currency_name);
-        image_currency = (ImageView) this.findViewById(R.id.image_currency);
-        image_currency.setOnClickListener(listener);
+        rl_currency = (RelativeLayout) this.findViewById(R.id.rl_currency);
+        rl_currency.setOnClickListener(listener);
         ll_people_need = (LinearLayout) this.findViewById(R.id.ll_people_need);
         ll_people_need.setOnClickListener(listener);
         ll_people_have = (LinearLayout) this.findViewById(R.id.ll_people_have);
@@ -89,7 +90,7 @@ public class HomeActivity extends BaseActivity {
                     selecteddeselectedbutton(1);
 
                     break;
-                case R.id.image_currency:
+                case R.id.rl_currency:
                     Intent intent = new Intent(mContext,CurrencyNameActivity.class);
                    startActivityForResult(intent,1);
 
@@ -100,7 +101,7 @@ public class HomeActivity extends BaseActivity {
         }
     };
 
-    @Override
+   /* @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
@@ -111,7 +112,7 @@ public class HomeActivity extends BaseActivity {
             tv_currency_name.setText(currency);
 
         }
-    }
+    }*/
 
     public void selecteddeselectedbutton(int type) {
 

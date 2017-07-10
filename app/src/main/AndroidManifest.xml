@@ -79,7 +79,10 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity android:name=".CurrencyNameActivity"
             android:theme="@style/AppTheme.NoActionBar"
-           ></activity>
+            android:windowSoftInputMode="adjustPan"
+           >
+
+        </activity>
     </application>
 
 </manifest>

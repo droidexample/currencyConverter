@@ -4,9 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -18,6 +22,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.at.currencysell.adapter.CurrencyNameAdapter;
+import com.at.currencysell.holder.AllCurrencyList;
+
 import com.at.currencysell.model.Currency_Names;
 import com.at.currencysell.utils.AlertMessage;
 import com.at.currencysell.utils.NetInfo;
@@ -25,7 +31,6 @@ import com.at.currencysell.utils.NetInfo;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -39,9 +44,10 @@ public class CurrencyNameActivity extends AppCompatActivity {
 
     ListView listview                                           ;
     CurrencyNameAdapter adapter_listview                                   ;
-    public static ArrayList<Currency_Names> list_currency_names_data         ;
     String ulr_curency_namees;
     Context mContext;
+    private EditText edt_search;
+    private LinearLayout ll_back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,25 +62,52 @@ public class CurrencyNameActivity extends AppCompatActivity {
     private void initI(){
 
         listview = (ListView)this.findViewById(R.id.listview);
+        edt_search = (EditText) this.findViewById(R.id.edt_search);
 
-        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        // for scarch list
+        edt_search.addTextChangedListener(new TextWatcher() {
+
+            public void afterTextChanged(Editable s) {
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                adapter_listview.getFilter().filter(s.toString());
+
+
+            }
+        });
+
+      /*  listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-              ;
-                String currency_name = list_currency_names_data.get(position).short_name;
+
+
+                String currency_name = currency_names.getShort_name();
 
                 Intent intent = new Intent();
                 intent.putExtra("MESSAGE",currency_name);
                 setResult(1,intent);
                 finish();
             }
-        });
-        list_currency_names_data= new ArrayList<>();
+        });*/
+
         getCrrencyName();
+
+        ll_back = (LinearLayout)this.findViewById(R.id.ll_back);
+        ll_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CurrencyNameActivity.this.finish();
+            }
+        });
     }
 
     public void getCrrencyName() {
-        //apilayer api key
+
         String key= getResources().getString(R.string.Currencylayer_Key);
         ulr_curency_namees="http://www.apilayer.net/api/list?access_key="+key+"&format=1";
 
@@ -84,14 +117,11 @@ public class CurrencyNameActivity extends AppCompatActivity {
             return;
         }
 
-      /*  mBusyDialog = new BusyDialog(mContext, true, "Loading");
-        mBusyDialog.show();*/
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, ulr_curency_namees, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 
-              //  mBusyDialog.dismis();
                 Log.w("response", "are" + response);
 
                 try {
@@ -108,7 +138,6 @@ public class CurrencyNameActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-               // mBusyDialog.dismis();
                 Log.d("response", "are" + error);
 
             }
@@ -139,25 +168,24 @@ public class CurrencyNameActivity extends AppCompatActivity {
             String temp= stoke.nextElement().toString();
             String split[]= temp.split(":");
 
-            list_currency_names_data.add(new Currency_Names(split[0], split[1]));
-
+            AllCurrencyList.setmDolorList(new Currency_Names(split[0], split[1]));
 
 
         }
 
 
-        Collections.sort(list_currency_names_data, new Comparator<Currency_Names>() {
+        Collections.sort(AllCurrencyList.getmAllDolorList(), new Comparator<Currency_Names>() {
             @Override
             public int compare(Currency_Names n1, Currency_Names n2) {
                 return n1.short_name.compareTo(n2.short_name);
             }
         });
 
+        adapter_listview = new CurrencyNameAdapter(this, R.layout.row_custom, AllCurrencyList.getmAllDolorList());
 
-        adapter_listview= new CurrencyNameAdapter(CurrencyNameActivity.this,list_currency_names_data);
         listview.setAdapter(adapter_listview);
 
-        //pDialog.dismiss();
+
 
 
     }

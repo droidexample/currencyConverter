@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fff"
+    android:background="@drawable/ic_backround_image"
     xmlns:ads="http://schemas.android.com/apk/res-auto"
     android:id="@+id/parent_relative"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    >
 
 
     <RelativeLayout
@@ -15,65 +16,75 @@
 
         >
 
-
-
         <RelativeLayout
-            android:id="@+id/date_layout"
+            android:id="@+id/rl_header"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="16dp">
-            <!--  ListRow Left sied Thumbnail image -->
-            <LinearLayout android:id="@+id/thumbnail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="3dip"
-                android:layout_alignParentLeft="true"
+            android:layout_height="@android:dimen/app_icon_size"
+            android:background="@color/colorPrimary">
 
 
-                android:layout_marginRight="5dip">
+            <LinearLayout
+                android:id="@+id/ll_back"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical">
 
                 <ImageView
-                    android:id="@+id/imageView"
-                    android:layout_width="50dp"
-                    android:layout_height="40dp"
-                    android:src="@drawable/usd"
-                    />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:src="@drawable/ic_back" />
 
             </LinearLayout>
 
-            <!-- Title Of Song-->
             <TextView
-                android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/thumbnail"
-                android:layout_toRightOf="@+id/thumbnail"
-                android:text="USD "
-                android:textColor="#040404"
-                android:typeface="sans"
-                android:layout_marginTop="5dp"
-                android:textSize="13dip"
-                android:textStyle="bold"/>
+                android:layout_centerInParent="true"
+                android:text="Currency List"
+                android:textColor="@color/white"
+                android:textSize="@dimen/large_text"
+                android:textAllCaps="true"/>
 
-            <!-- Artist Name -->
-            <TextView
-                android:id="@+id/description"
-                android:layout_width="fill_parent"
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/rl_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="16dp"
+            android:layout_below="@+id/rl_header">
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/title"
-                android:textColor="#343434"
-                android:textSize="12dip"
-                android:layout_marginTop="1dip"
-                android:layout_toRightOf="@+id/thumbnail"
-                android:text="United States Dollar" />
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="60dp"
+                android:background="@drawable/button_background_edittext">
 
-            <!-- Rightend Duration -->
+                <EditText
+                    android:id="@+id/edt_search"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/button_color_editext"
+                    android:textAlignment="center"
+                    android:padding="10dp"
+                    android:background="@android:color/transparent"
+                    android:textColorHint="@color/white"
+                    android:textColor="@color/white"/>
+            </LinearLayout>
 
-
-            <!-- Rightend Arrow -->
-
-
-
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp"
+                android:src="@drawable/ic_search" />
 
         </RelativeLayout>
 
@@ -81,7 +92,7 @@
             android:id="@+id/listview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/date_layout">
+            android:layout_below="@+id/rl_layout">
 
         </ListView>
 
@@ -95,4 +106,4 @@
 
 
 
-</RelativeLayout>
+</LinearLayout>
