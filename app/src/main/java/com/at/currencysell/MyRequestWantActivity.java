@@ -98,6 +98,8 @@ public class MyRequestWantActivity extends AppCompatActivity {
 
 
     private void dummyData() {
+
+        AllDolorList.removeAlltopimage();
         String[] currency_short_form = {"usd", "euro", "jpy", "pound", "cad", "mxn", "hkd"};
         String[] currency_full_form = {"Us Dollar", "Euro", "Japanese Yen", "UK", "Canadian Dollar", "Mexican Peso", "Hong Kong"};
         int[] images = {R.drawable.ic_usa, R.drawable.ic_eur_img, R.drawable.ic_japan, R.drawable.ic_uk, R.drawable.ic_franch, R.drawable.ic_usa, R.drawable.ic_uk};

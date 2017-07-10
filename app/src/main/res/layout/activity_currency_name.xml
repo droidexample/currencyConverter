@@ -75,7 +75,8 @@
                     android:padding="10dp"
                     android:background="@android:color/transparent"
                     android:textColorHint="@color/white"
-                    android:textColor="@color/white"/>
+                    android:textColor="@color/white"
+                    android:singleLine="true"/>
             </LinearLayout>
 
             <ImageView
@@ -92,7 +93,8 @@
             android:id="@+id/listview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/rl_layout">
+            android:layout_below="@+id/rl_layout"
+            >
 
         </ListView>
 

@@ -6,19 +6,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.at.currencysell.MyRequestWantActivity;
 import com.at.currencysell.R;
 import com.at.currencysell.holder.AllCurrencyList;
-import com.at.currencysell.holder.AllDolorList;
 import com.at.currencysell.model.Currency_Names;
-import com.at.currencysell.model.MyReqestActiveMoel;
 
-import java.util.ArrayList;
 import java.util.Vector;
 
 public class CurrencyNameAdapter extends ArrayAdapter<Currency_Names> {
@@ -94,7 +89,7 @@ public class CurrencyNameAdapter extends ArrayAdapter<Currency_Names> {
 		
 		if (convertView == null) {
 
-			convertView = l_Inflater.inflate(R.layout.row_custom, null);
+			convertView = l_Inflater.inflate(R.layout.row_item_currency_name, null);
 			holder      = new View_Holder();
 
 			holder.short_title= (TextView)convertView.findViewById(R.id.title);
@@ -144,7 +139,7 @@ public class CurrencyNameAdapter extends ArrayAdapter<Currency_Names> {
 		LayoutInflater mInflater = (LayoutInflater) activity.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 		final Currency_Names listModel = AllCurrencyList.getDolorList(position);
 		if (convertView == null) {
-			convertView = mInflater.inflate(R.layout.row_custom, null);
+			convertView = mInflater.inflate(R.layout.row_item_currency_name, null);
 			holder = new ViewHolder();
 
 			holder.short_title= (TextView)convertView.findViewById(R.id.title);

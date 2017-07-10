@@ -14,6 +14,7 @@ public class PersistentUser {
     private static final String USEREMAIL = "useremail";
     private static final String JSONUSER = "userdate";
     private static final String USERID = "uid";
+    private static final String CURRENCYRNAME = "currencyname";
 
 
     public static void setUSERNAME(final Context ctx, final String logindata) {
@@ -90,6 +91,18 @@ public class PersistentUser {
         ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(ctx, "user_prefs", 0);
         complexPreferences.clearObject();
         complexPreferences.commit();
+    }
+
+    public static void setCurrencyNAME(final Context ctx, final String currencydata) {
+        final SharedPreferences prefs = ctx.getSharedPreferences(
+                PersistentUser.PREFS_FILE_NAME, Context.MODE_PRIVATE);
+        final Editor editor = prefs.edit();
+        editor.putString(PersistentUser.CURRENCYRNAME, currencydata);
+        editor.commit();
+    }
+    public static String getCurrencyNAME(final Context ctx) {
+        return ctx.getSharedPreferences(PREFS_FILE_NAME, Context.MODE_PRIVATE)
+                .getString(CURRENCYRNAME, "");
     }
 
     public static void resetAllData(Context c) {
