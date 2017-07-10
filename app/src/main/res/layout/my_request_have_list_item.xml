@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorPrimary"
     android:orientation="vertical">
 
@@ -30,15 +31,15 @@
                 android:textAllCaps="true"
                 android:textColor="@color/white"
                 android:textSize="@dimen/large_text" />
-
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/currency_image"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="60dp"
+                android:layout_height="50dp"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/bdt"
                 android:layout_centerInParent="true"
-                android:src="@drawable/ic_eur_img"
-
-                />
+                app:border_color="@color/colorPrimary"
+                app:border_width="5dp" />
 
             <TextView
                 android:id="@+id/full_name"
@@ -46,8 +47,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:layout_marginTop="10dp"
-                android:layout_toRightOf="@+id/currency_image"
                 android:singleLine="true"
                 android:text="USD"
                 android:textColor="@color/white"

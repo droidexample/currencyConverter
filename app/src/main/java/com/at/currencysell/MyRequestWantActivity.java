@@ -17,13 +17,22 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.at.currencysell.adapter.CurrencyNameAdapter;
+import com.at.currencysell.holder.AllCurrencyList;
 import com.at.currencysell.holder.AllDolorList;
+import com.at.currencysell.model.Currency_Names;
 import com.at.currencysell.model.MyReqestActiveMoel;
+import com.at.currencysell.utils.PersistentUser;
 
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.StringTokenizer;
 import java.util.Vector;
 
 public class MyRequestWantActivity extends AppCompatActivity {
@@ -37,6 +46,9 @@ public class MyRequestWantActivity extends AppCompatActivity {
     private TextView tv_from_currency;
     private TextView tv_to_currency;
     private RelativeLayout rl_convert;
+    String s_names = null;
+    private LinearLayout ll_back;
+
 
 
     @Override
@@ -91,48 +103,73 @@ public class MyRequestWantActivity extends AppCompatActivity {
             }
         });
 
+        ll_back = (LinearLayout) this.findViewById(R.id.ll_back);
+        ll_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MyRequestWantActivity.this.finish();
+            }
+        });
 
-        dummyData();
+
+        add_country_names();
 
     }
 
 
-    private void dummyData() {
 
-        AllDolorList.removeAlltopimage();
-        String[] currency_short_form = {"usd", "euro", "jpy", "pound", "cad", "mxn", "hkd"};
-        String[] currency_full_form = {"Us Dollar", "Euro", "Japanese Yen", "UK", "Canadian Dollar", "Mexican Peso", "Hong Kong"};
-        int[] images = {R.drawable.ic_usa, R.drawable.ic_eur_img, R.drawable.ic_japan, R.drawable.ic_uk, R.drawable.ic_franch, R.drawable.ic_usa, R.drawable.ic_uk};
+    public void add_country_names() {
 
-        for (int i = 0; i < currency_short_form.length; i++) {
-            MyReqestActiveMoel nameItem = new MyReqestActiveMoel();
-            nameItem.setCurrency_name(currency_short_form[i]);
-            nameItem.setCurrency_full_name(currency_full_form[i]);
-            nameItem.setImage(images[i]);
+        s_names = PersistentUser.getCurrencyNAME(mContext);
+        AllCurrencyList.removeAllCurrencyList();
+        s_names = s_names.replace("{", "");
+        s_names = s_names.replace("}", "");
+        s_names = s_names.replace("\"", "");
 
-            AllDolorList.setmDolorList(nameItem);
+        StringTokenizer stoke = new StringTokenizer(s_names, ",");
+
+        while (stoke.hasMoreElements()) {
+
+            String temp = stoke.nextElement().toString();
+            String split[] = temp.split(":");
+
+            AllCurrencyList.setmCurrencyList(new Currency_Names(split[0], split[1]));
+
 
         }
 
-        mDolorListAdapter = new DolorListAdapter(this, R.layout.my_request_have_list_item, AllDolorList.getmAllDolorList());
+
+        Collections.sort(AllCurrencyList.getmAllCurrencyList(), new Comparator<Currency_Names>() {
+            @Override
+            public int compare(Currency_Names n1, Currency_Names n2) {
+                return n1.short_name.compareTo(n2.short_name);
+            }
+        });
+
+
+        mDolorListAdapter = new DolorListAdapter(this, R.layout.my_request_have_list_item, AllCurrencyList.getmAllCurrencyList());
         listView.setAdapter(mDolorListAdapter);
+        mDolorListAdapter.notifyDataSetChanged();
+
+
     }
 
 
-    class DolorListAdapter extends ArrayAdapter<MyReqestActiveMoel> {
-        Context mContext;
-        private Vector<MyReqestActiveMoel> originalList;
-        private Vector<MyReqestActiveMoel> chatList;
+    class DolorListAdapter extends ArrayAdapter<Currency_Names> {
+        public Activity activity;
+        private Vector<Currency_Names> originalList;
+        private Vector<Currency_Names> chatList;
         private CityFilter filter;
+        int resId;
 
 
-        public DolorListAdapter(Context context, int textViewResourceId, Vector<MyReqestActiveMoel> cityLists) {
-            super(context, textViewResourceId, cityLists);
-            this.chatList = new Vector<MyReqestActiveMoel>();
-            this.originalList = new Vector<MyReqestActiveMoel>();
+        public DolorListAdapter(Activity a, int textViewResourceId, Vector<Currency_Names> cityLists) {
+            super(a, textViewResourceId, cityLists);
+            this.chatList = new Vector<Currency_Names>();
+            this.originalList = new Vector<Currency_Names>();
             this.chatList.addAll(cityLists);
             this.originalList.addAll(cityLists);
-            this.mContext = context;
+            this.activity	 =	a;
 
         }
 
@@ -148,20 +185,35 @@ public class MyRequestWantActivity extends AppCompatActivity {
         public View getView(final int position, View convertView, ViewGroup parent) {
             final ViewHolder holder;
             LayoutInflater mInflater = (LayoutInflater) mContext.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-            final MyReqestActiveMoel listModel = AllDolorList.getDolorList(position);
+            final Currency_Names listModel = AllCurrencyList.getDolorList(position);
             if (convertView == null) {
                 convertView = mInflater.inflate(R.layout.my_request_have_list_item, null);
                 holder = new ViewHolder();
 
                 holder.currency_name = (TextView) convertView.findViewById(R.id.currency_name);
                 holder.full_name = (TextView) convertView.findViewById(R.id.full_name);
-                holder.image = (ImageView) convertView.findViewById(R.id.currency_image);
+                holder.imageView = (ImageView) convertView.findViewById(R.id.currency_image);
                 convertView.setTag(holder);
             } else {
                 holder = (ViewHolder) convertView.getTag();
             }
-            holder.currency_name.setText(listModel.getCurrency_name());
-            holder.full_name.setText(listModel.getCurrency_full_name());
+            holder.currency_name.setText(listModel.getShort_name());
+            holder.full_name.setText(listModel.getShort_name());
+
+            resId = activity.getResources().getIdentifier(listModel.getShort_name().toLowerCase(), "drawable",activity.getPackageName());
+
+
+            if(listModel.getShort_name().contains("TRY"))
+            {
+                resId = activity.getResources().getIdentifier("tnd", "drawable",activity.getPackageName());
+                holder.imageView.setImageResource(resId);
+            }else if(resId==0)
+            {
+                resId = activity.getResources().getIdentifier("xdr", "drawable",activity.getPackageName());
+
+                holder.imageView.setImageResource(resId);
+            }
+            holder.imageView.setImageResource(resId);
 
 
             holder.currency_name.setOnClickListener(new View.OnClickListener() {
@@ -169,8 +221,8 @@ public class MyRequestWantActivity extends AppCompatActivity {
                 public void onClick(View view) {
 
                     rl_convert.setVisibility(View.VISIBLE);
-                    tv_from_currency.setText(listModel.getCurrency_name());
-                    tv_to_currency.setText(listModel.getCurrency_name());
+                    tv_from_currency.setText(listModel.getShort_name());
+                    tv_to_currency.setText(listModel.getShort_name());
 
 
                 }
@@ -180,7 +232,7 @@ public class MyRequestWantActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     rl_convert.setVisibility(View.VISIBLE);
-                    tv_to_currency.setText(listModel.getCurrency_full_name());
+                    tv_to_currency.setText(listModel.getShort_name());
 
                 }
             });
@@ -193,7 +245,7 @@ public class MyRequestWantActivity extends AppCompatActivity {
         class ViewHolder {
             TextView currency_name;
             TextView full_name;
-            ImageView image;
+            ImageView imageView;
 
         }
 
@@ -205,11 +257,11 @@ public class MyRequestWantActivity extends AppCompatActivity {
                 constraint = constraint.toString().toLowerCase();
                 FilterResults result = new FilterResults();
                 if (constraint != null && constraint.toString().length() > 0) {
-                    Vector<MyReqestActiveMoel> filteredItems = new Vector<MyReqestActiveMoel>();
+                    Vector<Currency_Names> filteredItems = new Vector<Currency_Names>();
 
                     for (int i = 0, l = originalList.size(); i < l; i++) {
-                        MyReqestActiveMoel country = originalList.get(i);
-                        if (country.getCurrency_name().toString().toLowerCase().contains(constraint)) {
+                        Currency_Names country = originalList.get(i);
+                        if (country.getShort_name().toString().toLowerCase().contains(constraint)) {
                             filteredItems.add(country);
                         }
                     }
@@ -228,7 +280,7 @@ public class MyRequestWantActivity extends AppCompatActivity {
             @Override
             protected void publishResults(CharSequence constraint,
                                           FilterResults results) {
-                chatList = (Vector<MyReqestActiveMoel>) results.values;
+                chatList = (Vector<Currency_Names>) results.values;
                 notifyDataSetChanged();
                 clear();
                 for (int i = 0, l = chatList.size(); i < l; i++)

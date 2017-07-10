@@ -18,14 +18,6 @@ import java.util.Vector;
 
 public class CurrencyNameAdapter extends ArrayAdapter<Currency_Names> {
 
-	
-	/*public LayoutInflater l_Inflater;
-	public ArrayList<Currency_Names> list_curency_names;
-
-	*/
-
-
-	Context mContext;
 	private Vector<Currency_Names> originalList;
 	private Vector<Currency_Names> chatList;
 	private CityFilter filter;
@@ -53,85 +45,6 @@ public class CurrencyNameAdapter extends ArrayAdapter<Currency_Names> {
 	}
 
 
-	
-	/*public CurrencyNameAdapter(Activity a , ArrayList<Currency_Names> list ) {
-	
-	 	this.activity	 =	a;
-
-		this.list_curency_names	 =	list;
-
-	 	this.l_Inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-	
-	 
-
-	 
-	}*/
-	
-	
-	/*public int getCount() {
-		// TODO Auto-generated method stub
-		return list_curency_names.size();
-	}
-
-	public Object getItem(int position) {
-		// TODO Auto-generated method stub
-		return list_curency_names.get(position);
-	}
-
-	public long getItemId(int position) {
-		// TODO Auto-generated method stub
-		return position;
-	}*/
-
-	/*public View getView(final int position, View convertView, ViewGroup parent) {
-		
-		final View_Holder holder;
-		
-		if (convertView == null) {
-
-			convertView = l_Inflater.inflate(R.layout.row_item_currency_name, null);
-			holder      = new View_Holder();
-
-			holder.short_title= (TextView)convertView.findViewById(R.id.title);
-			holder.long_title= (TextView)convertView.findViewById(R.id.description);
-			holder.imageView= (ImageView) convertView.findViewById(R.id.imageView);
-
-			convertView.setTag(holder);
-		} else {
-
-			holder = (View_Holder) convertView.getTag();
-
-		}
-
-		holder.short_title.setText(list_curency_names.get(position).short_name);
-		holder.long_title.setText(list_curency_names.get(position).abrivation);
-
-
-		resId = activity.getResources().getIdentifier(list_curency_names.get(position).short_name.toLowerCase(), "drawable",activity.getPackageName());
-
-
-		if(list_curency_names.get(position).short_name.contains("TRY"))
-		{
-			resId = activity.getResources().getIdentifier("tnd", "drawable",activity.getPackageName());
-			holder.imageView.setImageResource(resId);
-		}else if(resId==0)
-		{
-			resId = activity.getResources().getIdentifier("xdr", "drawable",activity.getPackageName());
-
-			holder.imageView.setImageResource(resId);
-		}
-
-
-
-
-
-		holder.imageView.setImageResource(resId);
-
-	
-		return convertView;
-		
-		 
-	}*/
 
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
@@ -165,14 +78,7 @@ public class CurrencyNameAdapter extends ArrayAdapter<Currency_Names> {
 
 			holder.imageView.setImageResource(resId);
 		}
-
-
-
-
-
 		holder.imageView.setImageResource(resId);
-
-
 
 		return convertView;
 
