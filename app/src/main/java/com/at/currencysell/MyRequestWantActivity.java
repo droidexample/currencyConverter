@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,13 +22,9 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.at.currencysell.adapter.CurrencyNameAdapter;
 import com.at.currencysell.holder.AllCurrencyList;
-import com.at.currencysell.holder.AllDolorList;
 import com.at.currencysell.model.Currency_Names;
-import com.at.currencysell.model.MyReqestActiveMoel;
 import com.at.currencysell.utils.PersistentUser;
 
 import java.util.Collections;
@@ -113,6 +110,8 @@ public class MyRequestWantActivity extends AppCompatActivity {
 
 
         add_country_names();
+        String rates = PersistentUser.getCurrencyRate(mContext);
+        Log.w("rates", "are" + rates);
 
     }
 

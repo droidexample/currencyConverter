@@ -15,6 +15,7 @@ public class PersistentUser {
     private static final String JSONUSER = "userdate";
     private static final String USERID = "uid";
     private static final String CURRENCYRNAME = "currencyname";
+    private static final String CURRENCYRATE = "currencyrate";
 
 
     public static void setUSERNAME(final Context ctx, final String logindata) {
@@ -103,6 +104,18 @@ public class PersistentUser {
     public static String getCurrencyNAME(final Context ctx) {
         return ctx.getSharedPreferences(PREFS_FILE_NAME, Context.MODE_PRIVATE)
                 .getString(CURRENCYRNAME, "");
+    }
+
+    public static void setCurrencyRate(final Context ctx, final String currencydata) {
+        final SharedPreferences prefs = ctx.getSharedPreferences(
+                PersistentUser.PREFS_FILE_NAME, Context.MODE_PRIVATE);
+        final Editor editor = prefs.edit();
+        editor.putString(PersistentUser.CURRENCYRATE, currencydata);
+        editor.commit();
+    }
+    public static String getCurrencyRate(final Context ctx) {
+        return ctx.getSharedPreferences(PREFS_FILE_NAME, Context.MODE_PRIVATE)
+                .getString(CURRENCYRATE, "");
     }
 
     public static void resetAllData(Context c) {

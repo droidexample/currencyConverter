@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -24,6 +25,8 @@ import com.android.volley.toolbox.Volley;
 import com.at.currencysell.adapter.CurrencyNameAdapter;
 import com.at.currencysell.holder.AllCurrencyList;
 
+import com.at.currencysell.holder.AllCurrencyRateList;
+import com.at.currencysell.model.CurrencyRatesModel;
 import com.at.currencysell.model.Currency_Names;
 import com.at.currencysell.utils.AlertMessage;
 import com.at.currencysell.utils.NetInfo;
@@ -32,22 +35,29 @@ import com.at.currencysell.utils.PersistentUser;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.StringTokenizer;
 
 public class CurrencyNameActivity extends AppCompatActivity {
 
-    private JSONObject jsonObj_names = null;
-    private String s_names = null;
+    public JSONObject jsonObj_names = null, jsonObj_rates=null;
+    String s_names, s_rates = null;
     private ListView listview;
     private CurrencyNameAdapter adapter_listview;
     private String ulr_curency_namees;
     private Context mContext;
     private EditText edt_search;
     private LinearLayout ll_back;
+
+    public static final String BASE_URL = "http://apilayer.net/api/";
+    public static final String ENDPOINT = "live";
+    String url_currency_rates;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +103,7 @@ public class CurrencyNameActivity extends AppCompatActivity {
         });
 
         doWebRequestforCrrencyName();
+        doWebRequestforCrrencyRates();
 
         ll_back = (LinearLayout) this.findViewById(R.id.ll_back);
         ll_back.setOnClickListener(new View.OnClickListener() {
@@ -151,6 +162,54 @@ public class CurrencyNameActivity extends AppCompatActivity {
     }
 
 
+    public void doWebRequestforCrrencyRates() {
+
+        String key = getResources().getString(R.string.Currencylayer_Key);
+        url_currency_rates = BASE_URL + ENDPOINT + "?access_key=" + key;
+
+
+        if (!NetInfo.isOnline(mContext)) {
+            AlertMessage.showMessage(mContext, "Status", "Please check internet Connection");
+            return;
+        }
+
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url_currency_rates, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                Log.w("response", "are" + response);
+
+                try {
+                    jsonObj_rates = new JSONObject(response);
+                    s_rates = jsonObj_rates.getJSONObject("quotes").toString();
+                    PersistentUser.setCurrencyRate(mContext,s_rates);
+                    Log.w("s_rates ",""+s_rates);
+
+                } catch (JSONException e) {
+                    Toast.makeText(mContext, e.toString(), Toast.LENGTH_LONG).show();
+                }
+                add_currency_rates();
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.w("response", "are" + error);
+
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(mContext);
+        requestQueue.add(stringRequest);
+    }
+
+
     public void add_country_names() {
         AllCurrencyList.removeAllCurrencyList();
         s_names = s_names.replace("{", "");
@@ -180,6 +239,45 @@ public class CurrencyNameActivity extends AppCompatActivity {
         adapter_listview = new CurrencyNameAdapter(this, R.layout.row_item_currency_name, AllCurrencyList.getmAllCurrencyList());
         listview.setAdapter(adapter_listview);
         adapter_listview.notifyDataSetChanged();
+
+
+    }
+
+    public void add_currency_rates()
+    {
+        s_rates=s_rates.replace("{","");
+        s_rates=s_rates.replace("}","");
+        s_rates=s_rates.replace("\"","");
+
+        StringTokenizer stok= new StringTokenizer(s_rates,",");
+
+        while(stok.hasMoreElements())
+        {
+
+            String temp= stok.nextElement().toString();
+
+            String split[]= temp.split(":");
+
+
+            double amount = Double.parseDouble(split[1]);
+
+            DecimalFormat df1 = new DecimalFormat("#.###",new DecimalFormatSymbols(Locale.US));
+
+            String refinedNumber = df1.format(amount);
+
+            split[1] = String.valueOf(refinedNumber);
+
+
+            AllCurrencyRateList.setmCurrencyRateList(new CurrencyRatesModel(split[0], split[1]));
+
+        }
+
+        Collections.sort(AllCurrencyRateList.getmAllCurrencyRateList(), new Comparator<CurrencyRatesModel>() {
+            @Override
+            public int compare(CurrencyRatesModel r1,CurrencyRatesModel r2) {
+                return r1.title.compareTo(r2.title);
+            }
+        });
 
 
     }
