@@ -55,7 +55,12 @@ public class HomeAdapter extends BaseAdapter {
             convertView = l_Inflater.inflate(R.layout.row_item_home, null);
             holder = new ViewHolder();
             holder.tv_user_name = (TextView) convertView.findViewById(R.id.tv_user_name);
-
+            holder.tv_end_date = (TextView) convertView.findViewById(R.id.tv_end_date);
+            holder.tv_location = (TextView) convertView.findViewById(R.id.tv_location);
+            holder.tv_want_currency = (TextView) convertView.findViewById(R.id.tv_want_currency);
+            holder.tv_want_amount = (TextView) convertView.findViewById(R.id.tv_want_amount);
+            holder.tv_pay_currency = (TextView) convertView.findViewById(R.id.tv_pay_currency);
+            holder.tv_pay_amount = (TextView) convertView.findViewById(R.id.tv_pay_amount);
             convertView.setTag(holder);
 
 
@@ -63,6 +68,12 @@ public class HomeAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
         holder.tv_user_name.setText(lineitems.getName());
+        holder.tv_end_date.setText(lineitems.getEnd_date());
+        holder.tv_location.setText(lineitems.getLocation());
+        holder.tv_want_currency.setText(lineitems.getWant_currency());
+        holder.tv_want_amount.setText(lineitems.getWant_amount());
+        holder.tv_pay_currency.setText(lineitems.getPay_currency());
+        holder.tv_pay_amount.setText(lineitems.getPay_amount());
 
 
 //        mAQuery.id(holder.im_eventImage).image(lineitems.getUser_img(), true, true, 0, R.drawable.noimage);
@@ -75,6 +86,12 @@ public class HomeAdapter extends BaseAdapter {
 
     class ViewHolder {
         private TextView tv_user_name;
+        private TextView tv_end_date;
+        private TextView tv_location;
+        private TextView tv_want_currency;
+        private TextView tv_want_amount;
+        private TextView tv_pay_currency;
+        private TextView tv_pay_amount;
         private ImageView im_eventImage;
 
     }

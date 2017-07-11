@@ -21,9 +21,10 @@ public class TabsPagerAdapter extends FragmentPagerAdapter {
     public android.support.v4.app.Fragment getItem(int index) {
         switch (index) {
             case 0:
-                return new FragmentPeopleHave();
-            case 1:
                 return new FragmentPeopleNeed();
+
+            case 1:
+                return new FragmentPeopleHave();
 
         }
         return null;

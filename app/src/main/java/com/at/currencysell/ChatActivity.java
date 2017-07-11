@@ -46,11 +46,11 @@ public class ChatActivity extends BaseActivity {
             nameItem.setName(user_name[i]);
 
 
-            HomeList.setEventinfo(nameItem);
+            HomeList.setPeopleHaveinfo(nameItem);
 
         }
 
-        adapter = new ChatListAdapter(mContext,  HomeList.getAllEventDetailsInfos());
+        adapter = new ChatListAdapter(mContext,  HomeList.getAllPeopleHave());
         listview.setAdapter(adapter);
     }
 }
