@@ -22,6 +22,8 @@ public class HomeActivity extends BaseActivity {
     private TabsPagerAdapter mAdapter;
     private RelativeLayout rl_currency;
     private TextView tv_currency_name;
+    private ImageView img_flag;
+    private int resId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +51,7 @@ public class HomeActivity extends BaseActivity {
         ll_people_have = (LinearLayout) this.findViewById(R.id.ll_people_have);
         ll_people_have.setOnClickListener(listener);
 
+        img_flag=(ImageView)this.findViewById(R.id.img_flag);
         ll_people_need.setSelected(true);
 
         //=============View page for sliding============
@@ -101,7 +104,7 @@ public class HomeActivity extends BaseActivity {
         }
     };
 
-   /* @Override
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
@@ -110,9 +113,11 @@ public class HomeActivity extends BaseActivity {
             String currency=data.getStringExtra("MESSAGE");
             Toast.makeText(mContext,currency,Toast.LENGTH_LONG).show();
             tv_currency_name.setText(currency);
+            resId = mContext.getResources().getIdentifier(currency.toLowerCase(), "drawable",mContext.getPackageName());
+            img_flag.setImageResource(resId);
 
         }
-    }*/
+    }
 
     public void selecteddeselectedbutton(int type) {
 

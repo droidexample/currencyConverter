@@ -1,12 +1,14 @@
 package com.at.currencysell;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -38,12 +40,12 @@ import java.util.StringTokenizer;
 
 public class CurrencyNameActivity extends AppCompatActivity {
 
-    public JSONObject jsonObj_names = null;
-    String s_names = null;
-    ListView listview;
-    CurrencyNameAdapter adapter_listview;
-    String ulr_curency_namees;
-    Context mContext;
+    private JSONObject jsonObj_names = null;
+    private String s_names = null;
+    private ListView listview;
+    private CurrencyNameAdapter adapter_listview;
+    private String ulr_curency_namees;
+    private Context mContext;
     private EditText edt_search;
     private LinearLayout ll_back;
 
@@ -79,19 +81,16 @@ public class CurrencyNameActivity extends AppCompatActivity {
             }
         });
 
-      /*  listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-
-                String currency_name = currency_names.getShort_name();
-
                 Intent intent = new Intent();
-                intent.putExtra("MESSAGE",currency_name);
+                intent.putExtra("MESSAGE",AllCurrencyList.getDolorList(position).getShort_name());
                 setResult(1,intent);
                 finish();
             }
-        });*/
+        });
 
         doWebRequestforCrrencyName();
 
