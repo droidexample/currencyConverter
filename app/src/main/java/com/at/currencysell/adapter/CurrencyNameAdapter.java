@@ -105,7 +105,7 @@ public class CurrencyNameAdapter extends ArrayAdapter<Currency_Names> {
 
 				for (int i = 0, l = originalList.size(); i < l; i++) {
 					Currency_Names country = originalList.get(i);
-					if (country.getShort_name().toString().toLowerCase().contains(constraint)) {
+					if (country.getAbrivation().toString().toLowerCase().contains(constraint)) {
 
 						filteredItems.add(country);
 					}

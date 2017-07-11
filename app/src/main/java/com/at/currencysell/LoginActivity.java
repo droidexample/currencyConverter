@@ -89,6 +89,9 @@ public class LoginActivity extends AppCompatActivity {
 
     public void valuationMethods() {
 
+
+        et_email.setText("tareq236@gmail.com");
+        et_password.setText("123456");
         userEmail = et_email.getText().toString();
         userPass = et_password.getText().toString();
 
@@ -144,7 +147,6 @@ public class LoginActivity extends AppCompatActivity {
                         startActivity(intent);
                         LoginActivity.this.finish();
                         Toast.makeText(mContext, success_message, Toast.LENGTH_LONG).show();
-
 
 
                     } else if (success == 0) {
