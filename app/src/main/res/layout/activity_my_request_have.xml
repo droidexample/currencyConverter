@@ -106,12 +106,15 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/large_text" />
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/currency_image"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_centerInParent="true"
-                android:src="@drawable/eur" />
+                android:src="@drawable/eur"
+
+                />
+
 
             <TextView
                 android:id="@+id/tv_to_currency"

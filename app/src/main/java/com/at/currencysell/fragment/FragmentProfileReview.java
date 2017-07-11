@@ -34,7 +34,7 @@ public class FragmentProfileReview extends Fragment {
     }
 
     private void initUI(View view) {
-        listview = (ListView) view.findViewById(R.id.list_home);
+        listview = (ListView) view.findViewById(R.id.list);
         dummyData();
 
     }
@@ -48,11 +48,11 @@ public class FragmentProfileReview extends Fragment {
             nameItem.setName(names[i]);
 
 
-            HomeList.setEventinfo(nameItem);
+            HomeList.setPeopleHaveinfo(nameItem);
 
         }
 
-        adapter = new ProfileAdapter(mContext,  HomeList.getAllEventDetailsInfos());
+        adapter = new ProfileAdapter(mContext, HomeList.getAllPeopleHave());
         listview.setAdapter(adapter);
     }
 
