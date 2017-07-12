@@ -15,8 +15,18 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.at.currencysell.model.UserModel;
+import com.at.currencysell.utils.AlertMessage;
+import com.at.currencysell.utils.BaseUrl;
 import com.at.currencysell.utils.BusyDialog;
+import com.at.currencysell.utils.NetInfo;
 import com.at.currencysell.utils.PersistentUser;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -34,6 +44,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SignupFirstActivity extends AppCompatActivity {
     private LinearLayout ll_email_login;
@@ -43,10 +55,12 @@ public class SignupFirstActivity extends AppCompatActivity {
     private CallbackManager callbackManager;
     URL profile_pic;
     UserModel user;
-    private String fullname;
+    private String firstname;
     private String email;
     BusyDialog mBusyDialog;
     private LoginButton loginButton;
+    private String login_type = "2";
+    private String social_status = "fab1234#$%dfs";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -177,14 +191,10 @@ public class SignupFirstActivity extends AppCompatActivity {
                                 Toast.makeText(mContext,e.toString(),Toast.LENGTH_LONG).show();
                             }
 
-                            fullname = user.name;
+                            firstname = user.name;
                             email = user.email;
-                            Toast.makeText(mContext,"welcome "+fullname+email,Toast.LENGTH_LONG).show();
-                            Intent intent = new Intent(mContext, HomeActivity.class);
-                            startActivity(intent);
-                            SignupFirstActivity.this.finish();
+                            doWebRequestForFbLogin(firstname,firstname,email,login_type,social_status);
 
-                           // new UploadFileToServer().execute();
 
 
                         }
@@ -215,5 +225,77 @@ public class SignupFirstActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         callbackManager.onActivityResult(requestCode, resultCode, data);
 
+    }
+
+    public void doWebRequestForFbLogin(final String first,final String last,final String mail, final String logintype,final String social_status) {
+
+        if (!NetInfo.isOnline(mContext)) {
+            AlertMessage.showMessage(mContext, "Status", "Please check internet Connection");
+            return;
+        }
+
+        mBusyDialog = new BusyDialog(mContext, true, "Loading");
+        mBusyDialog.show();
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, BaseUrl.HttpUrl + "registration", new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                mBusyDialog.dismis();
+                Log.w("response", "are" + response);
+                try {
+                    JSONObject JSONresponse = new JSONObject(response);
+
+                    int success = JSONresponse.getInt("success");
+                    if (success == 1) {
+                        JSONObject userData = JSONresponse.getJSONObject("result");
+                        PersistentUser.setUSERNAME(mContext, userData.getString("first_name"));
+                        PersistentUser.setUserEmail(mContext, userData.getString("email"));
+                        PersistentUser.setUSERPIC(mContext, profile_pic.toString());
+                        PersistentUser.setUserID(mContext, userData.getString("user_id"));
+                        PersistentUser.setLogin(mContext);
+
+                        Intent intent = new Intent(mContext, HomeActivity.class);
+                        startActivity(intent);
+                        SignupFirstActivity.this.finish();
+
+
+                        Toast.makeText(mContext, "" + JSONresponse.getString("message"), Toast.LENGTH_LONG).show();
+
+
+                    } else {
+                        Toast.makeText(mContext, "" + JSONresponse.getInt("message"), Toast.LENGTH_LONG).show();
+
+                    }
+
+                } catch (JSONException sd) {
+                    Toast.makeText(mContext, sd.toString(), Toast.LENGTH_LONG).show();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                mBusyDialog.dismis();
+                Log.w("response", "are" + error);
+
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+
+                params.put("api_key", BaseUrl.Api_key);
+                params.put("first_name", first);
+                params.put("last_name", last);
+                params.put("email", mail);
+                params.put("login_type", logintype);
+                params.put("social_status", social_status);
+
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(mContext);
+        requestQueue.add(stringRequest);
     }
 }

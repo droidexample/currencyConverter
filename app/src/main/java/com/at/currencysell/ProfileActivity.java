@@ -1,5 +1,6 @@
 package com.at.currencysell;
 
+import android.content.Intent;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.view.View;
@@ -25,6 +26,8 @@ public class ProfileActivity extends BaseActivity {
     private ViewPager mViewPager;
     private TabsPagerAdapterProfile mAdapter;
 
+    private LinearLayout ll_edit_profile;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +50,8 @@ public class ProfileActivity extends BaseActivity {
         ll_rates = (LinearLayout) this.findViewById(R.id.ll_rates);
         ll_rates.setOnClickListener(listener);
         ll_review.setSelected(true);
+        ll_edit_profile = (LinearLayout) this.findViewById(R.id.ll_edit_profile);
+        ll_edit_profile.setOnClickListener(listener);
 
         listView = (ListView) findViewById(R.id.list_home);
 
@@ -83,6 +88,10 @@ public class ProfileActivity extends BaseActivity {
                     break;
                 case R.id.ll_rates:
                     selecteddeselectedbutton(1);
+                    break;
+                case R.id.ll_edit_profile:
+                    Intent intent = new Intent(mContext, ProfileUpdateActivity.class);
+                    startActivity(intent);
                     break;
 
             }

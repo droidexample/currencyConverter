@@ -3,6 +3,7 @@ package com.at.currencysell;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.IntentCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -90,8 +91,8 @@ public class LoginActivity extends AppCompatActivity {
     public void valuationMethods() {
 
 
-        et_email.setText("tareq236@gmail.com");
-        et_password.setText("123456");
+      /*  et_email.setText("tareq236@gmail.com");
+        et_password.setText("123456");*/
         userEmail = et_email.getText().toString();
         userPass = et_password.getText().toString();
 
@@ -139,11 +140,12 @@ public class LoginActivity extends AppCompatActivity {
                         JSONObject userData = JSONresponse.getJSONObject("result");
                         PersistentUser.setUSERNAME(mContext, userData.getString("first_name"));
                         PersistentUser.setUserEmail(mContext, userData.getString("email"));
-                        PersistentUser.setUSERPIC(mContext, userData.getString("picture"));
+                       // PersistentUser.setUSERPIC(mContext, userData.getString("picture"));
                         PersistentUser.setUserID(mContext, userData.getString("user_id"));
+                        PersistentUser.setUSERDATA(mContext, ""+userData);
                         PersistentUser.setLogin(mContext);
                         Intent intent = new Intent(mContext, HomeActivity.class);
-
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | IntentCompat.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent);
                         LoginActivity.this.finish();
                         Toast.makeText(mContext, success_message, Toast.LENGTH_LONG).show();

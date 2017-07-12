@@ -16,6 +16,18 @@ public class PersistentUser {
     private static final String USERID = "uid";
     private static final String CURRENCYRNAME = "currencyname";
     private static final String CURRENCYRATE = "currencyrate";
+    private static final String USERDATA = "userdata";
+
+    public static String getUSERDATA(final Context ctx) {
+        return ctx.getSharedPreferences(PersistentUser.PREFS_FILE_NAME, Context.MODE_PRIVATE).getString(PersistentUser.USERDATA, "");
+    }
+
+    public static void setUSERDATA(final Context ctx, final String USERDATA) {
+        final SharedPreferences prefs = ctx.getSharedPreferences(PersistentUser.PREFS_FILE_NAME, Context.MODE_PRIVATE);
+        final Editor editor = prefs.edit();
+        editor.putString(PersistentUser.USERDATA, USERDATA);
+        editor.commit();
+    }
 
 
     public static void setUSERNAME(final Context ctx, final String logindata) {

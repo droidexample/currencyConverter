@@ -46,6 +46,7 @@
 
     <string name="review_text">REVIEW</string>
     <string name="rates_text">RATES</string>
+    <string name="update_text">Update</string>
 
     <!--can page-->
     <string name="confirmed_text">CONFIRMED</string>

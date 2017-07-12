@@ -11,10 +11,10 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -51,9 +51,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SignupActivity extends AppCompatActivity {
+public class ProfileUpdateActivity extends AppCompatActivity {
     private LinearLayout ll_back_sign_up;
-    private LinearLayout ll_member_login;
     Context mContext;
 
     private ImageView addPhoto;
@@ -65,27 +64,23 @@ public class SignupActivity extends AppCompatActivity {
     private static final String JPEG_FILE_SUFFIX = ".png";
     private AlbumStorageDirFactory mAlbumStorageDirFactory = null;
 
-    private EditText et_full_name;
-    private EditText et_user_name;
+    private EditText et_first_name;
+    private EditText et_last_name;
     private EditText et_email;
-    private EditText et_password;
-    private EditText et_confirm_password;
 
     private String firstname;
     private String lastname;
     private String email;
-    private String password;
-    private String confirmpassword;
-    private LinearLayout ll_sign_up;
+    private String user_id;
+
+    private LinearLayout ll_update;
     BusyDialog mBusyDialog;
 
-    private String login_type = "1";
-    private String social_status = " ";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_up);
+        setContentView(R.layout.activity_profile_update);
         mContext = this;
 
         initUI();
@@ -117,15 +112,25 @@ public class SignupActivity extends AppCompatActivity {
         ll_back_sign_up.setOnClickListener(listener);
         addPhoto = (ImageView) findViewById(R.id.add_photo);
         addPhoto.setOnClickListener(listener);
-        et_full_name = (EditText) findViewById(R.id.et_full_name);
-        et_user_name = (EditText) findViewById(R.id.et_user_name);
+        et_first_name = (EditText) findViewById(R.id.et_first_name);
+        et_last_name = (EditText) findViewById(R.id.et_last_name);
         et_email = (EditText) findViewById(R.id.et_email);
-        et_password = (EditText) findViewById(R.id.et_password);
-        et_confirm_password = (EditText) findViewById(R.id.et_confirm_password);
-        ll_member_login = (LinearLayout)this.findViewById(R.id.ll_member_login);
-        ll_member_login.setOnClickListener(listener);
-        ll_sign_up = (LinearLayout)this.findViewById(R.id.ll_sign_up);
-        ll_sign_up.setOnClickListener(listener);
+
+        ll_update = (LinearLayout)this.findViewById(R.id.ll_update);
+        ll_update.setOnClickListener(listener);
+
+        user_id = PersistentUser.getUserID(mContext);
+
+        try {
+            JSONObject JsonUser = new JSONObject(PersistentUser.getUSERDATA(mContext));
+            et_first_name.setText("" + JsonUser.getString("first_name"));
+            et_last_name.setText("" + JsonUser.getString("last_name"));
+            et_email.setText("" + JsonUser.getString("email"));
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+
+        }
     }
 
     View.OnClickListener listener = new View.OnClickListener() {
@@ -135,17 +140,13 @@ public class SignupActivity extends AppCompatActivity {
             switch (view.getId()) {
 
                 case R.id.ll_back_sign_up:
-                    SignupActivity.this.finish();
+                    ProfileUpdateActivity.this.finish();
                     break;
                 case R.id.add_photo:
                     alertshow();
                     break;
-                case R.id.ll_sign_up:
-                    signUp();
-                    break;
-                case R.id.ll_member_login:
-                    Intent  intent = new Intent(mContext,LoginActivity.class);
-                    startActivity(intent);
+                case R.id.ll_update:
+                    updateProfile();
                     break;
 
             }
@@ -153,54 +154,32 @@ public class SignupActivity extends AppCompatActivity {
         }
     };
 
-    public void signUp() {
+    public void updateProfile() {
 
 
-        firstname = et_full_name.getText().toString();
-        lastname = et_user_name.getText().toString();
+        firstname = et_first_name.getText().toString();
+        lastname = et_last_name.getText().toString();
         email = et_email.getText().toString();
-        password = et_password.getText().toString();
-        confirmpassword = et_confirm_password.getText().toString();
-
-        Log.w("Data",firstname+lastname+email+password);
 
 
         if (Apath.equalsIgnoreCase("1")) {
             Toast.makeText(mContext, "Please  select an image", Toast.LENGTH_LONG).show();
             return;
         } else if (firstname.equalsIgnoreCase("")) {
-            Toast.makeText(mContext, "Please Enter Your Full Name", Toast.LENGTH_LONG).show();
+            Toast.makeText(mContext, "Please Enter Your First Name", Toast.LENGTH_LONG).show();
             return;
         } else if (lastname.equalsIgnoreCase("")) {
             Toast.makeText(mContext, "Please Enter Your Last Name", Toast.LENGTH_LONG).show();
             return;
-        } else if (email.equalsIgnoreCase("")) {
-            Toast.makeText(mContext, "Email Should not be blank", Toast.LENGTH_LONG).show();
-            return;
-        } else if (!WebUtil.isValidEmailAddress(email)) {
-            Toast.makeText(mContext, "Email should be correct format", Toast.LENGTH_LONG).show();
-            return;
-        } else if (password.equalsIgnoreCase("")) {
-            Toast.makeText(mContext, "Please Enter Your Password", Toast.LENGTH_LONG).show();
-
-            return;
-        } else if (!(confirmpassword.equalsIgnoreCase(password))) {
-            Toast.makeText(mContext, "Your password not match", Toast.LENGTH_LONG).show();
-
-            return;
-        } else if (password.length() < 6) {
-            Toast.makeText(mContext, "Password minimum length 6 ", Toast.LENGTH_LONG).show();
-
-            return;
         }  else {
 
             //new UploadFileToServer().execute();
-           doWebRequestForsignUp(firstname,lastname,email,password,login_type,social_status);
+           doWebRequestForsignUp(firstname,lastname,email,user_id);
 
 
         }
     }
-
+/*
     private class UploadFileToServer extends AsyncTask<Object, String, Object> {
 
         String response = "";
@@ -275,7 +254,7 @@ public class SignupActivity extends AppCompatActivity {
 
                     Intent intent = new Intent(mContext, HomeActivity.class);
                     startActivity(intent);
-                    SignupActivity.this.finish();
+                    ProfileUpdateActivity.this.finish();
 
                     Toast.makeText(mContext, "" + "Registered successfully", Toast.LENGTH_LONG).show();
 
@@ -292,9 +271,9 @@ public class SignupActivity extends AppCompatActivity {
 
         }
 
-    }
+    }*/
 
-    public void doWebRequestForsignUp(final String first,final String last,final String mail, final String pass,final String logintype,final String social_status) {
+    public void doWebRequestForsignUp(final String first,final String last,final String mail,final String user_id) {
 
         if (!NetInfo.isOnline(mContext)) {
             AlertMessage.showMessage(mContext, "Status", "Please check internet Connection");
@@ -304,7 +283,7 @@ public class SignupActivity extends AppCompatActivity {
         mBusyDialog = new BusyDialog(mContext, true, "Loading");
         mBusyDialog.show();
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, BaseUrl.HttpUrl + "registration", new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, BaseUrl.HttpUrl + "update-profile", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 
@@ -324,10 +303,10 @@ public class SignupActivity extends AppCompatActivity {
 
                         Intent intent = new Intent(mContext, HomeActivity.class);
                         startActivity(intent);
-                        SignupActivity.this.finish();
+                        ProfileUpdateActivity.this.finish();
 
 
-                        Toast.makeText(mContext, "" + JSONresponse.getInt("message"), Toast.LENGTH_LONG).show();
+                        Toast.makeText(mContext, "" + JSONresponse.getString("message"), Toast.LENGTH_LONG).show();
 
 
                     } else {
@@ -356,9 +335,7 @@ public class SignupActivity extends AppCompatActivity {
                 params.put("first_name", first);
                 params.put("last_name", last);
                 params.put("email", mail);
-                params.put("password", pass);
-                params.put("login_type", logintype);
-                params.put("social_status", social_status);
+                params.put("user_id",user_id);
 
                 return params;
             }
@@ -490,7 +467,7 @@ public class SignupActivity extends AppCompatActivity {
                     break;
 
                 } else {
-                    Toast.makeText(SignupActivity.this, "Error", Toast.LENGTH_LONG).show();
+                    Toast.makeText(ProfileUpdateActivity.this, "Error", Toast.LENGTH_LONG).show();
                 }
 
         }

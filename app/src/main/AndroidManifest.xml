@@ -65,7 +65,8 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ProfileActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            />
         <activity android:name=".FavouriteCurrencyActivity" />
 
         <meta-data
@@ -83,6 +84,9 @@
            >
 
         </activity>
+        <activity android:name=".ProfileUpdateActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan"></activity>
     </application>
 
 </manifest>

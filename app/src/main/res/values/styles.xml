@@ -14,6 +14,10 @@
         <item name="colorControlNormal">@color/white</item>
     </style>
 
+    <style name="RatingBar" parent="Theme.AppCompat">
+        <item name="colorControlNormal">#F4DF36</item>
+        <item name="colorControlActivated">#F4DF36</item>
+    </style>
 
 
 </resources>

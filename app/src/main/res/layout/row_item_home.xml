@@ -151,15 +151,22 @@
                         style="?android:attr/ratingBarStyleSmall"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:isIndicator="true"
                         android:numStars="5"
-                        android:stepSize="1.0" />
+                        android:rating="3"
+                        android:stepSize="1.0"
+                        android:scaleX=".8"
+                        android:scaleY=".8"
+                        android:transformPivotX="0dp"
+                        android:transformPivotY="0dp"
+                        android:theme="@style/RatingBar"
+                        android:layout_marginTop="10dp"
+                        />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:layout_marginTop="10dp"
+
                         >
                         <ImageView
                             android:layout_width="20dp"
