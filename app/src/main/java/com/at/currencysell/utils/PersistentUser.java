@@ -77,9 +77,13 @@ public class PersistentUser {
 
     public static void setLogin(Context c) {
 
-        final SharedPreferences prefs = c.getSharedPreferences(PREFS_FILE_NAME,
-                Context.MODE_PRIVATE);
+        final SharedPreferences prefs = c.getSharedPreferences(PREFS_FILE_NAME, Context.MODE_PRIVATE);
         prefs.edit().putBoolean("LOGIN", true).commit();
+    }
+
+    public static boolean isLogged(Context c) {
+        final SharedPreferences prefs = c.getSharedPreferences(PREFS_FILE_NAME, Context.MODE_PRIVATE);
+        return prefs.getBoolean("LOGIN", false);
     }
 
     public static void logOut(Context c) {
@@ -91,16 +95,14 @@ public class PersistentUser {
     }
 
 
-
-    public static void setCurrentUser(UserModel currentUser, Context ctx){
+    public static void setCurrentUser(UserModel currentUser, Context ctx) {
         ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(ctx, "user_prefs", 0);
         complexPreferences.putObject("current_user_value", currentUser);
         complexPreferences.commit();
     }
 
 
-
-    public static void clearCurrentUser( Context ctx){
+    public static void clearCurrentUser(Context ctx) {
         ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(ctx, "user_prefs", 0);
         complexPreferences.clearObject();
         complexPreferences.commit();
@@ -113,6 +115,7 @@ public class PersistentUser {
         editor.putString(PersistentUser.CURRENCYRNAME, currencydata);
         editor.commit();
     }
+
     public static String getCurrencyNAME(final Context ctx) {
         return ctx.getSharedPreferences(PREFS_FILE_NAME, Context.MODE_PRIVATE)
                 .getString(CURRENCYRNAME, "");
@@ -125,10 +128,12 @@ public class PersistentUser {
         editor.putString(PersistentUser.CURRENCYRATE, currencydata);
         editor.commit();
     }
+
     public static String getCurrencyRate(final Context ctx) {
         return ctx.getSharedPreferences(PREFS_FILE_NAME, Context.MODE_PRIVATE)
                 .getString(CURRENCYRATE, "");
     }
+
 
     public static void resetAllData(Context c) {
         setUSERNAME(c, "");

@@ -140,7 +140,7 @@ public class LoginActivity extends AppCompatActivity {
                         JSONObject userData = JSONresponse.getJSONObject("result");
                         PersistentUser.setUSERNAME(mContext, userData.getString("first_name"));
                         PersistentUser.setUserEmail(mContext, userData.getString("email"));
-                       // PersistentUser.setUSERPIC(mContext, userData.getString("picture"));
+                        PersistentUser.setUSERPIC(mContext, userData.getString("picture"));
                         PersistentUser.setUserID(mContext, userData.getString("user_id"));
                         PersistentUser.setUSERDATA(mContext, ""+userData);
                         PersistentUser.setLogin(mContext);
