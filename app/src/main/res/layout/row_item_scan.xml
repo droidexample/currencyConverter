@@ -29,14 +29,28 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
 
-                <RelativeLayout
+                    <com.github.siyamed.shapeimageview.CircularImageView
+                        android:id="@+id/add_photo"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center"
+                        android:adjustViewBounds="true"
+                        android:layout_alignParentLeft="true"
+                        android:scaleType="centerCrop"
+                        android:layout_margin="5dp"
+                        android:src="@drawable/person"
+                        app:siBorderColor="@color/white"
+                        app:siBorderWidth="3dp"
+                        android:layout_marginTop="15dp"/>
+
+               <!-- <RelativeLayout
                     android:id="@+id/rl_circle_image"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:gravity="center"
                     android:layout_gravity="center"
                     android:background="@drawable/bg_rounded_profile"
-                    android:layout_margin="5dp"
+
                     >
 
                     <com.at.currencysell.utils.RoundedImageView
@@ -52,12 +66,12 @@
 
 
 
-                </RelativeLayout>
+                </RelativeLayout>-->
                     <TextView
                         android:id="@+id/txt_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/rl_circle_image"
+                        android:layout_below="@+id/add_photo"
                         android:text="John Smith"
                         android:textColor="@color/white"/>
 

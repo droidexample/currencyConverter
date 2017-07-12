@@ -19,13 +19,26 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <RelativeLayout
+
+            <com.github.siyamed.shapeimageview.CircularImageView
+                android:id="@+id/add_photo"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:adjustViewBounds="true"
+                android:layout_alignParentLeft="true"
+                android:scaleType="centerCrop"
+                android:layout_margin="5dp"
+                android:src="@drawable/person"
+                app:siBorderColor="@color/white"
+                app:siBorderWidth="3dp" />
+          <!--  <RelativeLayout
                 android:id="@+id/rl_circle_image"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_alignParentLeft="true"
+
                 android:background="@drawable/bg_rounded_profile"
-                android:layout_margin="5dp"
+
                 >
 
                 <com.at.currencysell.utils.RoundedImageView
@@ -33,18 +46,18 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_centerInParent="true"
-                    android:layout_gravity="center"
+
                     android:adjustViewBounds="true"
                     android:scaleType="centerCrop"
                     android:src="@drawable/ic_pro_pic"
                     />
 
-            </RelativeLayout>
+            </RelativeLayout>-->
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_toRightOf="@+id/rl_circle_image"
+                android:layout_toRightOf="@+id/add_photo"
                 android:layout_centerVertical="true"
                 android:layout_marginBottom="10dp"
                 >

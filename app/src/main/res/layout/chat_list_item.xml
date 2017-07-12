@@ -21,7 +21,21 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-        <RelativeLayout
+
+        <com.github.siyamed.shapeimageview.CircularImageView
+            android:id="@+id/add_photo"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:layout_margin="5dp"
+            android:src="@drawable/person"
+            app:siBorderColor="@color/white"
+            app:siBorderWidth="3dp"
+            android:layout_marginTop="15dp"/>
+     <!--   <RelativeLayout
             android:id="@+id/rl_circle_image"
             android:layout_width="50dp"
             android:layout_height="50dp"
@@ -42,7 +56,7 @@
                 android:src="@drawable/ic_pro_pic"
                 />
 
-        </RelativeLayout>
+        </RelativeLayout>-->
 
         <RelativeLayout
             android:layout_width="match_parent"
