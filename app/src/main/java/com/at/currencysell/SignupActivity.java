@@ -11,10 +11,11 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.content.IntentCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -22,13 +23,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.at.currencysell.utils.AlbumStorageDirFactory;
 import com.at.currencysell.utils.AlertMessage;
 import com.at.currencysell.utils.BaseAlbumDirFactory;
@@ -48,8 +42,6 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 public class SignupActivity extends AppCompatActivity {
     private LinearLayout ll_back_sign_up;
@@ -112,8 +104,8 @@ public class SignupActivity extends AppCompatActivity {
         }
     }
 
-    private void initUI(){
-        ll_back_sign_up = (LinearLayout)this.findViewById(R.id.ll_back_sign_up);
+    private void initUI() {
+        ll_back_sign_up = (LinearLayout) this.findViewById(R.id.ll_back_sign_up);
         ll_back_sign_up.setOnClickListener(listener);
         addPhoto = (ImageView) findViewById(R.id.add_photo);
         addPhoto.setOnClickListener(listener);
@@ -122,9 +114,9 @@ public class SignupActivity extends AppCompatActivity {
         et_email = (EditText) findViewById(R.id.et_email);
         et_password = (EditText) findViewById(R.id.et_password);
         et_confirm_password = (EditText) findViewById(R.id.et_confirm_password);
-        ll_member_login = (LinearLayout)this.findViewById(R.id.ll_member_login);
+        ll_member_login = (LinearLayout) this.findViewById(R.id.ll_member_login);
         ll_member_login.setOnClickListener(listener);
-        ll_sign_up = (LinearLayout)this.findViewById(R.id.ll_sign_up);
+        ll_sign_up = (LinearLayout) this.findViewById(R.id.ll_sign_up);
         ll_sign_up.setOnClickListener(listener);
     }
 
@@ -144,7 +136,7 @@ public class SignupActivity extends AppCompatActivity {
                     signUp();
                     break;
                 case R.id.ll_member_login:
-                    Intent  intent = new Intent(mContext,LoginActivity.class);
+                    Intent intent = new Intent(mContext, LoginActivity.class);
                     startActivity(intent);
                     break;
 
@@ -162,7 +154,7 @@ public class SignupActivity extends AppCompatActivity {
         password = et_password.getText().toString();
         confirmpassword = et_confirm_password.getText().toString();
 
-        Log.w("Data",firstname+lastname+email+password);
+        Log.w("Data", firstname + lastname + email + password);
 
 
         if (Apath.equalsIgnoreCase("1")) {
@@ -192,14 +184,108 @@ public class SignupActivity extends AppCompatActivity {
             Toast.makeText(mContext, "Password minimum length 6 ", Toast.LENGTH_LONG).show();
 
             return;
-        }  else {
+        } else {
 
             new UploadFileToServer().execute();
-          // doWebRequestForsignUp(firstname,lastname,email,password,login_type,social_status);
+            // doWebRequestForsignUp(firstname,lastname,email,password,login_type,social_status);
 
 
         }
     }
+
+//    private class UploadFileToServer extends AsyncTask<Object, String, Object> {
+//
+//        String response = "";
+//
+//
+//        @Override
+//        protected void onPreExecute() {
+//            // setting progress bar to zero
+//
+//
+//            if (!NetInfo.isOnline(mContext)) {
+//                AlertMessage.showMessage(mContext, "Status", "Please check internet Connection");
+//                return;
+//            }
+//
+//            mBusyDialog = new BusyDialog(mContext, true, "Loading");
+//            mBusyDialog.show();
+//
+//            super.onPreExecute();
+//        }
+//
+//
+//        @Override
+//        protected Object doInBackground(Object... params) {
+//            // TODO Auto-generated method stub
+//            try {
+//
+//                String ulr = BaseUrl.HttpUrl + "registration";
+//                MultipartUtility body = new MultipartUtility(ulr);
+//                body.addFormField("first_name", "" + firstname);
+//                body.addFormField("last_name", "" + lastname);
+//                body.addFormField("email", "" + email);
+//                body.addFormField("password", "" + password);
+//                body.addFilePart("picture", Apath);
+//                body.addFilePart("api_key", BaseUrl.Api_key);
+//                body.addFormField("login_type", "" + login_type);
+//                body.addFormField("social_status", "" + social_status);
+//                response = body.finish();
+//
+//
+//                mBusyDialog.dismis();
+//            } catch (Exception e) {
+//                Log.w("Exception", e.getMessage());
+//                // TODO Auto-generated catch block
+//                mBusyDialog.dismis();
+//
+//                e.printStackTrace();
+//            }
+//            return null;
+//        }
+//
+//
+//        @Override
+//        protected void onPostExecute(Object result) {
+//            super.onPostExecute(result);
+//
+//            mBusyDialog.dismis();
+//
+//            Log.w("response", "are" + response);
+//
+//            try {
+//                JSONObject JSONresponse = new JSONObject(response);
+//
+//                int success = JSONresponse.getInt("success");
+//                if (success == 1) {
+//                    JSONObject userData = JSONresponse.getJSONObject("result");
+//                    PersistentUser.setUSERNAME(mContext, userData.getString("first_name"));
+//                    PersistentUser.setUserEmail(mContext, userData.getString("email"));
+//                    PersistentUser.setUSERPIC(mContext, userData.getString("picture"));
+//                    PersistentUser.setUserID(mContext, userData.getString("user_id"));
+//                    PersistentUser.setLogin(mContext);
+//
+//                    Intent intent = new Intent(mContext, HomeActivity.class);
+//                    startActivity(intent);
+//                    SignupActivity.this.finish();
+//
+//                    Toast.makeText(mContext, "" + JSONresponse.getString("message"), Toast.LENGTH_LONG).show();
+//
+//
+//                } else {
+//                    Toast.makeText(mContext, "" + JSONresponse.getInt("message"), Toast.LENGTH_LONG).show();
+//
+//                }
+//
+//            } catch (JSONException sd) {
+//                Toast.makeText(mContext, sd.toString(), Toast.LENGTH_LONG).show();
+//            }
+//
+//
+//        }
+//
+//    }
+
 
     private class UploadFileToServer extends AsyncTask<Object, String, Object> {
 
@@ -228,16 +314,19 @@ public class SignupActivity extends AppCompatActivity {
             // TODO Auto-generated method stub
             try {
 
+                Log.w("Image url", "are" + Apath);
+                Log.w("firstname ", "are" + firstname);
+                Log.w("last_name ", "are" + lastname);
+
                 String ulr = BaseUrl.HttpUrl + "registration";
                 MultipartUtility body = new MultipartUtility(ulr);
+                body.addFormField("api_key", BaseUrl.Api_key);
                 body.addFormField("first_name", "" + firstname);
                 body.addFormField("last_name", "" + lastname);
                 body.addFormField("email", "" + email);
                 body.addFormField("password", "" + password);
-                body.addFilePart("picture", Apath);
-                body.addFilePart("api_key", BaseUrl.Api_key);
-                body.addFormField("login_type", "" + login_type);
-                body.addFormField("social_status", "" + social_status);
+                body.addFormField("login_type", "1");
+                body.addFilePart("image_url", Apath);
                 response = body.finish();
 
 
@@ -266,18 +355,21 @@ public class SignupActivity extends AppCompatActivity {
 
                 int success = JSONresponse.getInt("success");
                 if (success == 1) {
-                    JSONObject userData = JSONresponse.getJSONObject("result");
-                    PersistentUser.setUSERNAME(mContext, userData.getString("first_name"));
+                    JSONObject userData = JSONresponse.getJSONObject("user");
+                    PersistentUser.setUSERNAME(mContext, userData.getString("name"));
                     PersistentUser.setUserEmail(mContext, userData.getString("email"));
-                    PersistentUser.setUSERPIC(mContext, userData.getString("picture"));
-                    PersistentUser.setUserID(mContext, userData.getString("user_id"));
+                    PersistentUser.setUSERPIC(mContext, userData.getString("image_url"));
+                    PersistentUser.setUserID(mContext, userData.getString("id"));
                     PersistentUser.setLogin(mContext);
 
                     Intent intent = new Intent(mContext, HomeActivity.class);
-                    startActivity(intent);
-                    SignupActivity.this.finish();
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | IntentCompat.FLAG_ACTIVITY_CLEAR_TASK);
 
-                    Toast.makeText(mContext, "" + JSONresponse.getString("message"), Toast.LENGTH_LONG).show();
+                    startActivity(intent);
+
+                    PersistentUser.setLogin(mContext);
+
+                    Toast.makeText(mContext, "" + "Registered successfully", Toast.LENGTH_LONG).show();
 
 
                 } else {
@@ -292,79 +384,6 @@ public class SignupActivity extends AppCompatActivity {
 
         }
 
-    }
-
-    public void doWebRequestForsignUp(final String first,final String last,final String mail, final String pass,final String logintype,final String social_status) {
-
-        if (!NetInfo.isOnline(mContext)) {
-            AlertMessage.showMessage(mContext, "Status", "Please check internet Connection");
-            return;
-        }
-
-        mBusyDialog = new BusyDialog(mContext, true, "Loading");
-        mBusyDialog.show();
-
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, BaseUrl.HttpUrl + "registration", new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-
-                mBusyDialog.dismis();
-                Log.w("response", "are" + response);
-                try {
-                    JSONObject JSONresponse = new JSONObject(response);
-
-                    int success = JSONresponse.getInt("success");
-                    if (success == 1) {
-                        JSONObject userData = JSONresponse.getJSONObject("result");
-                        PersistentUser.setUSERNAME(mContext, userData.getString("first_name"));
-                        PersistentUser.setUserEmail(mContext, userData.getString("email"));
-                        PersistentUser.setUSERPIC(mContext, userData.getString("picture"));
-                        PersistentUser.setUserID(mContext, userData.getString("user_id"));
-                        PersistentUser.setLogin(mContext);
-
-                        Intent intent = new Intent(mContext, HomeActivity.class);
-                        startActivity(intent);
-                        SignupActivity.this.finish();
-
-
-                        Toast.makeText(mContext, "" + JSONresponse.getInt("message"), Toast.LENGTH_LONG).show();
-
-
-                    } else {
-                        Toast.makeText(mContext, "" + JSONresponse.getInt("message"), Toast.LENGTH_LONG).show();
-
-                    }
-
-                } catch (JSONException sd) {
-                    Toast.makeText(mContext, sd.toString(), Toast.LENGTH_LONG).show();
-                }
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                mBusyDialog.dismis();
-                Log.w("response", "are" + error);
-
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
-
-                params.put("api_key", BaseUrl.Api_key);
-                params.put("first_name", first);
-                params.put("last_name", last);
-                params.put("email", mail);
-                params.put("password", pass);
-                params.put("login_type", logintype);
-                params.put("social_status", social_status);
-
-                return params;
-            }
-        };
-        RequestQueue requestQueue = Volley.newRequestQueue(mContext);
-        requestQueue.add(stringRequest);
     }
 
 
@@ -478,7 +497,6 @@ public class SignupActivity extends AppCompatActivity {
                     Uri selectedImageUri = data.getData();
                     File file = new File(getRealPathFromURI(selectedImageUri));
                     Apath = file.getAbsolutePath();
-                    Log.w("ApathB", "" + Apath);
                     File imgFile = new File(Apath);
                     if (imgFile.exists()) {
 

@@ -52,8 +52,6 @@ public class MultipartUtility {
 
     }
 
-
-
     /**
      * Adds a upload file section to the request
      *
