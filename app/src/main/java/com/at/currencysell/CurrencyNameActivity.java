@@ -85,7 +85,15 @@ public class CurrencyNameActivity extends AppCompatActivity {
 
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-                adapter_listview.getFilter().filter(s.toString());
+                try {
+                  adapter_listview.getFilter().filter(s.toString());
+
+                }catch (Exception e)
+                {
+                    Toast.makeText(mContext, e.toString(), Toast.LENGTH_LONG).show();
+                }
+
+
 
 
             }

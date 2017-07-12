@@ -194,8 +194,8 @@ public class SignupActivity extends AppCompatActivity {
             return;
         }  else {
 
-            //new UploadFileToServer().execute();
-           doWebRequestForsignUp(firstname,lastname,email,password,login_type,social_status);
+            new UploadFileToServer().execute();
+          // doWebRequestForsignUp(firstname,lastname,email,password,login_type,social_status);
 
 
         }
@@ -277,7 +277,7 @@ public class SignupActivity extends AppCompatActivity {
                     startActivity(intent);
                     SignupActivity.this.finish();
 
-                    Toast.makeText(mContext, "" + "Registered successfully", Toast.LENGTH_LONG).show();
+                    Toast.makeText(mContext, "" + JSONresponse.getString("message"), Toast.LENGTH_LONG).show();
 
 
                 } else {
