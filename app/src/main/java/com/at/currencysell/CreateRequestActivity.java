@@ -1,11 +1,14 @@
 package com.at.currencysell;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class CreateRequestActivity extends AppCompatActivity {
     private RelativeLayout rl_create_request;
@@ -17,10 +20,12 @@ public class CreateRequestActivity extends AppCompatActivity {
     private TextView tv_expiry_date;
     private TextView tv_exchane_location;
     private TextView tv_remarks;
+    private Context mContext;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_request);
+        mContext = this;
         iniUI();
     }
 
@@ -44,5 +49,15 @@ public class CreateRequestActivity extends AppCompatActivity {
             }
         });
 
+        Intent intent = getIntent();
+        String rate = intent.getStringExtra("RATE");
+        Toast.makeText(mContext,"Rate"+rate,Toast.LENGTH_LONG).show();
+
     }
+
+
+
+
+
+
 }

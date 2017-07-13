@@ -46,7 +46,7 @@ import java.util.Date;
 public class SignupActivity extends AppCompatActivity {
     private LinearLayout ll_back_sign_up;
     private LinearLayout ll_member_login;
-    Context mContext;
+    private Context mContext;
 
     private ImageView addPhoto;
     private static final int RESULT_LOAD_IMAGE = 1;
@@ -154,7 +154,6 @@ public class SignupActivity extends AppCompatActivity {
         password = et_password.getText().toString();
         confirmpassword = et_confirm_password.getText().toString();
 
-        Log.w("Data", firstname + lastname + email + password);
 
 
         if (Apath.equalsIgnoreCase("1")) {
@@ -233,7 +232,7 @@ public class SignupActivity extends AppCompatActivity {
                 body.addFormField("email", "" + email);
                 body.addFormField("password", "" + password);
                 body.addFormField("login_type", "1");
-                body.addFilePart("image_url", Apath);
+                body.addFilePart("picture", Apath);
                 response = body.finish();
 
 
@@ -262,11 +261,11 @@ public class SignupActivity extends AppCompatActivity {
 
                 int success = JSONresponse.getInt("success");
                 if (success == 1) {
-                    JSONObject userData = JSONresponse.getJSONObject("user");
-                    PersistentUser.setUSERNAME(mContext, userData.getString("name"));
+                    JSONObject userData = JSONresponse.getJSONObject("result");
+                    PersistentUser.setUSERNAME(mContext, userData.getString("first_name"));
                     PersistentUser.setUserEmail(mContext, userData.getString("email"));
-                    PersistentUser.setUSERPIC(mContext, userData.getString("image_url"));
-                    PersistentUser.setUserID(mContext, userData.getString("id"));
+                    PersistentUser.setUSERPIC(mContext, userData.getString("picture"));
+                    PersistentUser.setUserID(mContext, userData.getString("user_id"));
                     PersistentUser.setLogin(mContext);
 
                     Intent intent = new Intent(mContext, HomeActivity.class);
@@ -274,7 +273,6 @@ public class SignupActivity extends AppCompatActivity {
 
                     startActivity(intent);
 
-                    PersistentUser.setLogin(mContext);
 
                     Toast.makeText(mContext, "" + "Registered successfully", Toast.LENGTH_LONG).show();
 

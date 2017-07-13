@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.android.volley.AuthFailureError;
@@ -45,6 +46,7 @@ public class FragmentPeopleHave extends Fragment {
     private Context mContext;
     private HomeAdapter adapter;
     private ListView listview;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -95,6 +97,7 @@ public class FragmentPeopleHave extends Fragment {
                         model.setWant_amount(m.getString("have_amount"));
                         model.setPay_currency(m.getString("sell_crr"));
                         model.setPay_amount(m.getString("sell_amount"));
+                        model.setImage_url(m.getString("image"));
                         PeopleHaveList.setPeopleHaveinfo(model);
 
                     }

@@ -17,7 +17,7 @@ public class HomeList {
     public static void setAllPeopleHave(Vector<HomeListModel> allPeopleHave) {
         HomeList.allPeopleHaveList = allPeopleHave;
     }
-    public static HomeListModel getEventEventDetailsInfos(int pos) {
+    public static HomeListModel getmAllPeopleHave(int pos) {
         return allPeopleHaveList.elementAt(pos);
     }
     public static void setPeopleHaveinfo(HomeListModel _alldonorList) {

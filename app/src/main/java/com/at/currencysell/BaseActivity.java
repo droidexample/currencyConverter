@@ -14,6 +14,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+
+import com.androidquery.AQuery;
 import com.at.currencysell.slidermenu.SlidingMenu;
 import com.at.currencysell.utils.PersistentUser;
 import com.facebook.login.LoginManager;
@@ -33,12 +35,6 @@ public class BaseActivity extends AppCompatActivity {
     private RelativeLayout rl_suggestion_to_do;
     private RelativeLayout rl_give_suggestion;
     private RelativeLayout rl_suggestion_volunteer_work;
-    private RelativeLayout rl_suggestion_improve_app;
-    private RelativeLayout rl_gallery;
-    private RelativeLayout rl_about;
-    private RelativeLayout rl_supporter;
-    private RelativeLayout rl_share_app;
-    private RelativeLayout rl_sharing_setting;
     private TextView tv_sign_out;
 
 
@@ -47,14 +43,16 @@ public class BaseActivity extends AppCompatActivity {
     private RelativeLayout rl_tab_add;
     private LinearLayout ll_tab_chat;
     private LinearLayout ll_tab_profile;
-    private RelativeLayout li_settings;
     private TextView text_title;
     private TextView tv_name;
+    ImageView user_profile_photo;
 
 
     private ImageView img_scan;
     private ImageView img_search;
     private RelativeLayout rl_search;
+    private AQuery mAQuery;
+
 
 
     @Override
@@ -62,6 +60,8 @@ public class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base);
         mContext = this;
+
+        mAQuery = new AQuery(mContext);
         if (android.os.Build.VERSION.SDK_INT >= 21) {
             Window window = getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -92,6 +92,7 @@ public class BaseActivity extends AppCompatActivity {
         slide_me.setSlidingEnabled(true);
         frameLayout = (FrameLayout) findViewById(R.id.content_frame);
         text_title = (TextView) findViewById(R.id.text_title);
+        user_profile_photo = (ImageView)findViewById(R.id.user_profile_photo);
 
 
         // for naviagtion drower
@@ -120,6 +121,7 @@ public class BaseActivity extends AppCompatActivity {
 
         // Set Persintition Data
         tv_name.setText(PersistentUser.getUserName(mContext));
+        mAQuery.id(user_profile_photo).image(PersistentUser.getUSERPIC(mContext), true, true);
 
     }
 

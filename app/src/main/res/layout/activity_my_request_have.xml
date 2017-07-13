@@ -156,9 +156,10 @@
 
 
         <RelativeLayout
-            android:id="@+id/rl_login"
+            android:id="@+id/rl_next_request"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
+            android:onClick="next"
             android:padding="5dp">
 
             <TextView

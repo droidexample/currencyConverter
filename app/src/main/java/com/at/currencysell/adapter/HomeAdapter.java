@@ -8,7 +8,9 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.androidquery.AQuery;
 import com.at.currencysell.R;
+import com.at.currencysell.holder.HomeList;
 import com.at.currencysell.model.HomeListModel;
 
 
@@ -18,14 +20,14 @@ public class HomeAdapter extends BaseAdapter {
     private Context mContext;
     private Vector<HomeListModel> all_Line_itemses = null;
     private LayoutInflater l_Inflater;
-//    private AQuery mAQuery;
+    private AQuery mAQuery;
 
 
     public HomeAdapter(Context context, Vector<HomeListModel> AllLineitemses) {
         this.mContext = context;
         this.all_Line_itemses = AllLineitemses;
         l_Inflater = LayoutInflater.from(context);
-//        mAQuery = new AQuery(mContext);
+        mAQuery = new AQuery(mContext);
     }
 
     @Override
@@ -61,6 +63,7 @@ public class HomeAdapter extends BaseAdapter {
             holder.tv_want_amount = (TextView) convertView.findViewById(R.id.tv_want_amount);
             holder.tv_pay_currency = (TextView) convertView.findViewById(R.id.tv_pay_currency);
             holder.tv_pay_amount = (TextView) convertView.findViewById(R.id.tv_pay_amount);
+            holder.user_profile_photo = (ImageView) convertView.findViewById(R.id.user_profile_photo);
             convertView.setTag(holder);
 
 
@@ -74,11 +77,7 @@ public class HomeAdapter extends BaseAdapter {
         holder.tv_want_amount.setText(lineitems.getWant_amount());
         holder.tv_pay_currency.setText(lineitems.getPay_currency());
         holder.tv_pay_amount.setText(lineitems.getPay_amount());
-
-
-//        mAQuery.id(holder.im_eventImage).image(lineitems.getUser_img(), true, true, 0, R.drawable.noimage);
-
-
+        //mAQuery.id(holder.user_profile_photo).image(HomeList.getmAllPeopleHave(position).getImage_url(), true, true);
 
         return convertView;
 
@@ -92,7 +91,7 @@ public class HomeAdapter extends BaseAdapter {
         private TextView tv_want_amount;
         private TextView tv_pay_currency;
         private TextView tv_pay_amount;
-        private ImageView im_eventImage;
+        private ImageView user_profile_photo;
 
     }
 

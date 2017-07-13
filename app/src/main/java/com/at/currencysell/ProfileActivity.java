@@ -1,16 +1,22 @@
 package com.at.currencysell;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.androidquery.AQuery;
 import com.at.currencysell.model.HomeListModel;
 import com.at.currencysell.tabpager.TabsPagerAdapterProfile;
+import com.at.currencysell.utils.PersistentUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,14 +31,18 @@ public class ProfileActivity extends BaseActivity {
     private LinearLayout ll_rates;
     private ViewPager mViewPager;
     private TabsPagerAdapterProfile mAdapter;
-
+    private TextView txt_user_name;
+    private ImageView img_profile_photo;
     private LinearLayout ll_edit_profile;
+    private AQuery mAQuery;
+    private Context mContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getLayoutInflater().inflate(R.layout.activity_profile,frameLayout);
         mContext = this;
+        mAQuery = new AQuery(mContext);
         selecteddeselectedTab(4);
         if (android.os.Build.VERSION.SDK_INT >= 21) {
             Window window = getWindow();
@@ -52,6 +62,13 @@ public class ProfileActivity extends BaseActivity {
         ll_review.setSelected(true);
         ll_edit_profile = (LinearLayout) this.findViewById(R.id.ll_edit_profile);
         ll_edit_profile.setOnClickListener(listener);
+        img_profile_photo = (ImageView)this.findViewById(R.id.img_profile_photo);
+        txt_user_name = (TextView) this.findViewById(R.id.txt_user_name);
+
+
+        txt_user_name.setText(PersistentUser.getUserName(mContext));
+
+        mAQuery.id(img_profile_photo).image(PersistentUser.getUSERPIC(mContext), true, true);
 
         listView = (ListView) findViewById(R.id.list_home);
 

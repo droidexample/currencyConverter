@@ -2,6 +2,7 @@ package com.at.currencysell;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -22,13 +23,32 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.at.currencysell.holder.AllCurrencyList;
 import com.at.currencysell.model.Currency_Names;
+import com.at.currencysell.utils.AlertMessage;
+import com.at.currencysell.utils.NetInfo;
 import com.at.currencysell.utils.PersistentUser;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.NumberFormat;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.Vector;
 
@@ -45,6 +65,15 @@ public class MyRequestWantActivity extends AppCompatActivity {
     private RelativeLayout rl_convert;
     String s_names = null;
     private LinearLayout ll_back;
+    public static  String url_Result = null;
+    private RelativeLayout rl_next_request;
+    String first_country_short;
+    String second_country_short;
+    public JSONObject jsonObj_result=null;
+    String final_Result = null;
+    String temp = null;
+    String from_amount = "1";
+    String refinedNumber;
 
 
 
@@ -73,14 +102,16 @@ public class MyRequestWantActivity extends AppCompatActivity {
         tv_from_currency = (TextView) this.findViewById(R.id.tv_from_currency);
         tv_to_currency = (TextView) this.findViewById(R.id.tv_to_currency);
         listView = (ListView) findViewById(R.id.list_my_request_have);
+        rl_next_request = (RelativeLayout) this.findViewById(R.id.rl_next_request);
+        rl_next_request.setOnClickListener(listener);
 
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+     /*   listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
             }
-        });
+        });*/
 
 
         // for scarch list
@@ -110,10 +141,27 @@ public class MyRequestWantActivity extends AppCompatActivity {
 
 
         add_country_names();
-        String rates = PersistentUser.getCurrencyRate(mContext);
-        Log.w("rates", "are" + rates);
+
 
     }
+
+    View.OnClickListener listener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+
+            switch (view.getId()) {
+                case R.id.rl_next_request:
+
+                    String get_cc_link= getResources().getString(R.string.Free_CC_link);
+                    url_Result =get_cc_link+first_country_short+"_"+second_country_short;
+                    doWebRequestforMarketRate();
+                    break;
+
+
+            }
+
+        }
+    };
 
 
 
@@ -152,6 +200,56 @@ public class MyRequestWantActivity extends AppCompatActivity {
 
 
     }
+
+    public void doWebRequestforMarketRate() {
+
+
+
+        if (!NetInfo.isOnline(mContext)) {
+            AlertMessage.showMessage(mContext, "Status", "Please check internet Connection");
+            return;
+        }
+
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url_Result, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                Log.w("response", "are" + response);
+                try
+                {
+
+                    jsonObj_result = new JSONObject(response);
+
+                    final_Result  = jsonObj_result.getJSONObject("results").toString();
+
+                }catch (JSONException e)
+                {
+                    Log.e("JSON Parser", "Error parsing data " + e.toString());
+                }
+
+                add_country_Result();
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.w("response", "are" + error);
+
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(mContext);
+        requestQueue.add(stringRequest);
+    }
+
+
 
 
     class DolorListAdapter extends ArrayAdapter<Currency_Names> {
@@ -222,6 +320,7 @@ public class MyRequestWantActivity extends AppCompatActivity {
                     rl_convert.setVisibility(View.VISIBLE);
                     tv_from_currency.setText(listModel.getShort_name());
                     tv_to_currency.setText(listModel.getShort_name());
+                    first_country_short = tv_from_currency.getText().toString();
 
 
                 }
@@ -232,6 +331,7 @@ public class MyRequestWantActivity extends AppCompatActivity {
                 public void onClick(View view) {
                     rl_convert.setVisibility(View.VISIBLE);
                     tv_to_currency.setText(listModel.getShort_name());
+                    second_country_short = tv_to_currency.getText().toString();
 
                 }
             });
@@ -288,6 +388,155 @@ public class MyRequestWantActivity extends AppCompatActivity {
                 notifyDataSetInvalidated();
             }
         }
+
+
+
+    }
+
+
+    public void add_country_Result()  {
+
+        final_Result=final_Result.replace("{","");
+        final_Result=final_Result.replace("}","");
+        final_Result=final_Result.replace("\"","");
+
+        StringTokenizer stok= new StringTokenizer(final_Result,",");
+
+        while(stok.hasMoreElements())
+        {
+            temp= stok.nextElement().toString();
+
+            if(temp.indexOf("val") != -1){
+                String split[]= temp.split(":");
+
+
+                NumberFormat f = NumberFormat.getInstance(Locale.US);
+
+
+                double temp_Amount2 = Double.parseDouble(split[2]);
+                DecimalFormat df = new DecimalFormat("#.#########");
+                temp_Amount2 = Double.valueOf(f.format(temp_Amount2));
+
+                double temp_Amount1 = Double.parseDouble(from_amount);
+                DecimalFormat df1 = new DecimalFormat("#.#########",new DecimalFormatSymbols(Locale.US));
+                temp_Amount1 = Double.valueOf(df1.format(temp_Amount1));
+
+                double result = temp_Amount1 * temp_Amount2;
+                DecimalFormat df2 = new DecimalFormat("#.#########");
+                result = Double.valueOf(df1.format(result));
+
+
+
+                f.setGroupingUsed(false);
+                refinedNumber = f.format(result);
+                Toast.makeText(mContext,"Rate"+ refinedNumber,Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(mContext,CreateRequestActivity.class);
+                intent.putExtra("RATE",refinedNumber);
+                startActivity(intent);
+
+            }
+            temp= stok.nextElement().toString();
+
+
+            if(temp.indexOf("val") != -1){
+                String split[]= temp.split(":");
+
+
+                NumberFormat f = NumberFormat.getInstance(Locale.US);
+
+                double temp_Amount2 = Double.parseDouble(split[1]);
+                DecimalFormat df = new DecimalFormat("#.#########");
+                temp_Amount2 = Double.valueOf(f.format(temp_Amount2));
+
+                double temp_Amount1 = Double.parseDouble(from_amount);
+                DecimalFormat df1 = new DecimalFormat("#.#########",new DecimalFormatSymbols(Locale.US));
+                temp_Amount1 = Double.valueOf(df1.format(temp_Amount1));
+
+                double result = temp_Amount1 * temp_Amount2;
+                DecimalFormat df2 = new DecimalFormat("#.#########");
+                result = Double.valueOf(df1.format(result));
+
+
+
+                f.setGroupingUsed(false);
+                refinedNumber = f.format(result);
+
+                Toast.makeText(mContext,"Rate"+ refinedNumber,Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(mContext,CreateRequestActivity.class);
+                intent.putExtra("RATE",refinedNumber);
+                startActivity(intent);
+
+
+            }
+
+            temp= stok.nextElement().toString();
+
+
+            if(temp.indexOf("val") != -1){
+
+                String split[]= temp.split(":");
+
+
+                NumberFormat f = NumberFormat.getInstance(Locale.US);
+
+                double temp_Amount2 = Double.parseDouble(split[1]);
+                DecimalFormat df = new DecimalFormat("#.#########");
+                temp_Amount2 = Double.valueOf(f.format(temp_Amount2));
+
+                double temp_Amount1 = Double.parseDouble(from_amount);
+                DecimalFormat df1 = new DecimalFormat("#.#########",new DecimalFormatSymbols(Locale.US));
+                temp_Amount1 = Double.valueOf(df1.format(temp_Amount1));
+
+                double result = temp_Amount1 * temp_Amount2;
+                DecimalFormat df2 = new DecimalFormat("#.#########");
+                result = Double.valueOf(df1.format(result));
+
+
+
+                f.setGroupingUsed(false);
+                refinedNumber = f.format(result);
+
+                Toast.makeText(mContext,"Rate"+ refinedNumber,Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(mContext,CreateRequestActivity.class);
+                intent.putExtra("RATE",refinedNumber);
+                startActivity(intent);
+
+            }
+
+            temp= stok.nextElement().toString();
+
+
+            if(temp.indexOf("val") != -1){
+                String split[]= temp.split(":");
+
+                NumberFormat f = NumberFormat.getInstance(Locale.US);
+
+                double temp_Amount2 = Double.parseDouble(split[1]);
+
+                DecimalFormat df = new DecimalFormat("#.#########");
+                temp_Amount2 = Double.valueOf(f.format(temp_Amount2));
+
+                double temp_Amount1 = Double.parseDouble(from_amount);
+                DecimalFormat df1 = new DecimalFormat("#.#########",new DecimalFormatSymbols(Locale.US));
+                temp_Amount1 = Double.valueOf(df1.format(temp_Amount1));
+
+                double result = temp_Amount1 * temp_Amount2;
+                DecimalFormat df2 = new DecimalFormat("#.#########");
+                result = Double.valueOf(df1.format(result));
+
+                f.setGroupingUsed(false);
+                refinedNumber = f.format(result);
+
+                Toast.makeText(mContext,"Rate"+ refinedNumber,Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(mContext,CreateRequestActivity.class);
+                intent.putExtra("RATE",refinedNumber);
+                startActivity(intent);
+
+
+            }
+
+        }
+
 
     }
 

@@ -10,6 +10,7 @@ public class HomeListModel {
     private String want_amount;
     private String pay_currency;
     private String pay_amount;
+    String image_url;
 
     public String getName() {
         return name;
@@ -65,5 +66,13 @@ public class HomeListModel {
 
     public void setPay_amount(String pay_amount) {
         this.pay_amount = pay_amount;
+    }
+
+    public String getImage_url() {
+        return image_url;
+    }
+
+    public void setImage_url(String image_url) {
+        this.image_url = image_url;
     }
 }
