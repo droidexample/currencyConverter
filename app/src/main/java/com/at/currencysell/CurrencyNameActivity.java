@@ -111,7 +111,7 @@ public class CurrencyNameActivity extends AppCompatActivity {
         });
 
         doWebRequestforCrrencyName();
-        doWebRequestforCrrencyRates();
+      //  doWebRequestforCrrencyRates();
 
         ll_back = (LinearLayout) this.findViewById(R.id.ll_back);
         ll_back.setOnClickListener(new View.OnClickListener() {
@@ -125,7 +125,7 @@ public class CurrencyNameActivity extends AppCompatActivity {
     public void doWebRequestforCrrencyName() {
 
         String key = getResources().getString(R.string.Currencylayer_Key);
-        ulr_curency_namees = "http://www.apilayer.net/api/list?access_key=" + key + "&format=1";
+        ulr_curency_namees="http://www.apilayer.net/api/list?access_key="+key+"&format=1";
 
 
         if (!NetInfo.isOnline(mContext)) {

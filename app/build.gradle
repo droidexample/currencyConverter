@@ -40,3 +40,4 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile files('libs/android-query-full.0.26.7.jar')
 }
+apply plugin: 'com.google.gms.google-services'

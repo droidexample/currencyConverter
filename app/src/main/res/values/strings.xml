@@ -56,7 +56,7 @@
     <!-- Facebook App Id -->
     <string name="facebook_app_id">111222619507033</string>
 
-    <string name="Currencylayer_Key">3741afd246e484205bd81b6bf1ac2922</string>
+    <string name="Currencylayer_Key">50cf00a294110960a14cc3b1f330e3fc</string>
     <string name="Free_CC_link">http://free.currencyconverterapi.com/api/v3/convert?q=</string>
 
 </resources>

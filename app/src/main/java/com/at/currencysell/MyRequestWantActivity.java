@@ -65,16 +65,15 @@ public class MyRequestWantActivity extends AppCompatActivity {
     private RelativeLayout rl_convert;
     String s_names = null;
     private LinearLayout ll_back;
-    public static  String url_Result = null;
+    public static String url_Result = null;
     private RelativeLayout rl_next_request;
     String first_country_short;
     String second_country_short;
-    public JSONObject jsonObj_result=null;
+    public JSONObject jsonObj_result = null;
     String final_Result = null;
     String temp = null;
     String from_amount = "1";
     String refinedNumber;
-
 
 
     @Override
@@ -152,8 +151,8 @@ public class MyRequestWantActivity extends AppCompatActivity {
             switch (view.getId()) {
                 case R.id.rl_next_request:
 
-                    String get_cc_link= getResources().getString(R.string.Free_CC_link);
-                    url_Result =get_cc_link+first_country_short+"_"+second_country_short;
+                    String get_cc_link = getResources().getString(R.string.Free_CC_link);
+                    url_Result = get_cc_link + first_country_short + "_" + second_country_short;
                     doWebRequestforMarketRate();
                     break;
 
@@ -162,7 +161,6 @@ public class MyRequestWantActivity extends AppCompatActivity {
 
         }
     };
-
 
 
     public void add_country_names() {
@@ -204,7 +202,6 @@ public class MyRequestWantActivity extends AppCompatActivity {
     public void doWebRequestforMarketRate() {
 
 
-
         if (!NetInfo.isOnline(mContext)) {
             AlertMessage.showMessage(mContext, "Status", "Please check internet Connection");
             return;
@@ -216,15 +213,13 @@ public class MyRequestWantActivity extends AppCompatActivity {
             public void onResponse(String response) {
 
                 Log.w("response", "are" + response);
-                try
-                {
+                try {
 
                     jsonObj_result = new JSONObject(response);
 
-                    final_Result  = jsonObj_result.getJSONObject("results").toString();
+                    final_Result = jsonObj_result.getJSONObject("results").toString();
 
-                }catch (JSONException e)
-                {
+                } catch (JSONException e) {
                     Log.e("JSON Parser", "Error parsing data " + e.toString());
                 }
 
@@ -250,8 +245,6 @@ public class MyRequestWantActivity extends AppCompatActivity {
     }
 
 
-
-
     class DolorListAdapter extends ArrayAdapter<Currency_Names> {
         public Activity activity;
         private Vector<Currency_Names> originalList;
@@ -266,7 +259,7 @@ public class MyRequestWantActivity extends AppCompatActivity {
             this.originalList = new Vector<Currency_Names>();
             this.chatList.addAll(cityLists);
             this.originalList.addAll(cityLists);
-            this.activity	 =	a;
+            this.activity = a;
 
         }
 
@@ -297,16 +290,14 @@ public class MyRequestWantActivity extends AppCompatActivity {
             holder.currency_name.setText(listModel.getShort_name());
             holder.full_name.setText(listModel.getShort_name());
 
-            resId = activity.getResources().getIdentifier(listModel.getShort_name().toLowerCase(), "drawable",activity.getPackageName());
+            resId = activity.getResources().getIdentifier(listModel.getShort_name().toLowerCase(), "drawable", activity.getPackageName());
 
 
-            if(listModel.getShort_name().contains("TRY"))
-            {
-                resId = activity.getResources().getIdentifier("tnd", "drawable",activity.getPackageName());
+            if (listModel.getShort_name().contains("TRY")) {
+                resId = activity.getResources().getIdentifier("tnd", "drawable", activity.getPackageName());
                 holder.imageView.setImageResource(resId);
-            }else if(resId==0)
-            {
-                resId = activity.getResources().getIdentifier("xdr", "drawable",activity.getPackageName());
+            } else if (resId == 0) {
+                resId = activity.getResources().getIdentifier("xdr", "drawable", activity.getPackageName());
 
                 holder.imageView.setImageResource(resId);
             }
@@ -390,24 +381,22 @@ public class MyRequestWantActivity extends AppCompatActivity {
         }
 
 
-
     }
 
 
-    public void add_country_Result()  {
+    public void add_country_Result() {
 
-        final_Result=final_Result.replace("{","");
-        final_Result=final_Result.replace("}","");
-        final_Result=final_Result.replace("\"","");
+        final_Result = final_Result.replace("{", "");
+        final_Result = final_Result.replace("}", "");
+        final_Result = final_Result.replace("\"", "");
 
-        StringTokenizer stok= new StringTokenizer(final_Result,",");
+        StringTokenizer stok = new StringTokenizer(final_Result, ",");
 
-        while(stok.hasMoreElements())
-        {
-            temp= stok.nextElement().toString();
+        while (stok.hasMoreElements()) {
+            temp = stok.nextElement().toString();
 
-            if(temp.indexOf("val") != -1){
-                String split[]= temp.split(":");
+            if (temp.indexOf("val") != -1) {
+                String split[] = temp.split(":");
 
 
                 NumberFormat f = NumberFormat.getInstance(Locale.US);
@@ -418,7 +407,7 @@ public class MyRequestWantActivity extends AppCompatActivity {
                 temp_Amount2 = Double.valueOf(f.format(temp_Amount2));
 
                 double temp_Amount1 = Double.parseDouble(from_amount);
-                DecimalFormat df1 = new DecimalFormat("#.#########",new DecimalFormatSymbols(Locale.US));
+                DecimalFormat df1 = new DecimalFormat("#.#########", new DecimalFormatSymbols(Locale.US));
                 temp_Amount1 = Double.valueOf(df1.format(temp_Amount1));
 
                 double result = temp_Amount1 * temp_Amount2;
@@ -426,20 +415,19 @@ public class MyRequestWantActivity extends AppCompatActivity {
                 result = Double.valueOf(df1.format(result));
 
 
-
                 f.setGroupingUsed(false);
                 refinedNumber = f.format(result);
-                Toast.makeText(mContext,"Rate"+ refinedNumber,Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(mContext,CreateRequestActivity.class);
-                intent.putExtra("RATE",refinedNumber);
+
+                Intent intent = new Intent(mContext, CreateRequestActivity.class);
+                intent.putExtra("RATE", refinedNumber);
                 startActivity(intent);
 
             }
-            temp= stok.nextElement().toString();
+            temp = stok.nextElement().toString();
 
 
-            if(temp.indexOf("val") != -1){
-                String split[]= temp.split(":");
+            if (temp.indexOf("val") != -1) {
+                String split[] = temp.split(":");
 
 
                 NumberFormat f = NumberFormat.getInstance(Locale.US);
@@ -449,7 +437,7 @@ public class MyRequestWantActivity extends AppCompatActivity {
                 temp_Amount2 = Double.valueOf(f.format(temp_Amount2));
 
                 double temp_Amount1 = Double.parseDouble(from_amount);
-                DecimalFormat df1 = new DecimalFormat("#.#########",new DecimalFormatSymbols(Locale.US));
+                DecimalFormat df1 = new DecimalFormat("#.#########", new DecimalFormatSymbols(Locale.US));
                 temp_Amount1 = Double.valueOf(df1.format(temp_Amount1));
 
                 double result = temp_Amount1 * temp_Amount2;
@@ -457,24 +445,23 @@ public class MyRequestWantActivity extends AppCompatActivity {
                 result = Double.valueOf(df1.format(result));
 
 
-
                 f.setGroupingUsed(false);
                 refinedNumber = f.format(result);
 
-                Toast.makeText(mContext,"Rate"+ refinedNumber,Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(mContext,CreateRequestActivity.class);
-                intent.putExtra("RATE",refinedNumber);
+
+                Intent intent = new Intent(mContext, CreateRequestActivity.class);
+                intent.putExtra("RATE", refinedNumber);
                 startActivity(intent);
 
 
             }
 
-            temp= stok.nextElement().toString();
+            temp = stok.nextElement().toString();
 
 
-            if(temp.indexOf("val") != -1){
+            if (temp.indexOf("val") != -1) {
 
-                String split[]= temp.split(":");
+                String split[] = temp.split(":");
 
 
                 NumberFormat f = NumberFormat.getInstance(Locale.US);
@@ -484,7 +471,7 @@ public class MyRequestWantActivity extends AppCompatActivity {
                 temp_Amount2 = Double.valueOf(f.format(temp_Amount2));
 
                 double temp_Amount1 = Double.parseDouble(from_amount);
-                DecimalFormat df1 = new DecimalFormat("#.#########",new DecimalFormatSymbols(Locale.US));
+                DecimalFormat df1 = new DecimalFormat("#.#########", new DecimalFormatSymbols(Locale.US));
                 temp_Amount1 = Double.valueOf(df1.format(temp_Amount1));
 
                 double result = temp_Amount1 * temp_Amount2;
@@ -492,22 +479,20 @@ public class MyRequestWantActivity extends AppCompatActivity {
                 result = Double.valueOf(df1.format(result));
 
 
-
                 f.setGroupingUsed(false);
                 refinedNumber = f.format(result);
 
-                Toast.makeText(mContext,"Rate"+ refinedNumber,Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(mContext,CreateRequestActivity.class);
-                intent.putExtra("RATE",refinedNumber);
+                Intent intent = new Intent(mContext, CreateRequestActivity.class);
+                intent.putExtra("RATE", refinedNumber);
                 startActivity(intent);
 
             }
 
-            temp= stok.nextElement().toString();
+            temp = stok.nextElement().toString();
 
 
-            if(temp.indexOf("val") != -1){
-                String split[]= temp.split(":");
+            if (temp.indexOf("val") != -1) {
+                String split[] = temp.split(":");
 
                 NumberFormat f = NumberFormat.getInstance(Locale.US);
 
@@ -517,7 +502,7 @@ public class MyRequestWantActivity extends AppCompatActivity {
                 temp_Amount2 = Double.valueOf(f.format(temp_Amount2));
 
                 double temp_Amount1 = Double.parseDouble(from_amount);
-                DecimalFormat df1 = new DecimalFormat("#.#########",new DecimalFormatSymbols(Locale.US));
+                DecimalFormat df1 = new DecimalFormat("#.#########", new DecimalFormatSymbols(Locale.US));
                 temp_Amount1 = Double.valueOf(df1.format(temp_Amount1));
 
                 double result = temp_Amount1 * temp_Amount2;
@@ -527,9 +512,9 @@ public class MyRequestWantActivity extends AppCompatActivity {
                 f.setGroupingUsed(false);
                 refinedNumber = f.format(result);
 
-                Toast.makeText(mContext,"Rate"+ refinedNumber,Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(mContext,CreateRequestActivity.class);
-                intent.putExtra("RATE",refinedNumber);
+
+                Intent intent = new Intent(mContext, CreateRequestActivity.class);
+                intent.putExtra("RATE", refinedNumber);
                 startActivity(intent);
 
 

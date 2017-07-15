@@ -13,291 +13,341 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-    <RelativeLayout
-        android:id="@+id/rl_header"
-        android:layout_width="match_parent"
-        android:layout_height="@android:dimen/app_icon_size"
-        >
+        <RelativeLayout
+            android:id="@+id/rl_header"
+            android:layout_width="match_parent"
+            android:layout_height="@android:dimen/app_icon_size">
 
 
-        <LinearLayout
-            android:id="@+id/ll_back_create_request"
-            android:layout_width="100dp"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical">
+            <LinearLayout
+                android:id="@+id/ll_back_create_request"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical">
 
-            <ImageView
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:src="@drawable/ic_back" />
+
+            </LinearLayout>
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="10dp"
-                android:src="@drawable/ic_back" />
-
-        </LinearLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="@string/create_request_text"
-            android:textColor="@color/white"
-            android:textSize="@dimen/large_text"
-            android:textAllCaps="true"/>
+                android:layout_centerInParent="true"
+                android:text="@string/create_request_text"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="@dimen/large_text" />
 
 
-    </RelativeLayout>
+        </RelativeLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:weightSum="6">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_marginLeft="10dp"
-            android:layout_weight="3">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="I WANT"
-                android:textColor="@color/white"
-                android:textSize="@dimen/large_text"/>
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#88095A"
-                android:layout_marginTop="10dp"
-                >
-                <ImageView
-                    android:id="@+id/img_currency_have"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@drawable/ic_usa"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="10dp"/>
-                <TextView
-                    android:id="@+id/tv_currency_name_want"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="USD"
-                    android:layout_below="@+id/img_currency_have"
-                    android:textColor="@color/white"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginLeft="10dp"/>
-
-                <TextView
-                    android:id="@+id/tv_currency_rate_want"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="1.2692"
-                    android:textColor="@color/white"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerInParent="true"
-                    android:layout_marginRight="10dp"/>
-
-            </RelativeLayout>
-
-
-        </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="3"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="I WANT"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/large_text" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="#88095A">
+
+                    <ImageView
+                        android:id="@+id/img_currency_have"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:src="@drawable/ic_usa" />
+
+                    <TextView
+                        android:id="@+id/tv_currency_name_want"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/img_currency_have"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:text="USD"
+                        android:textColor="@color/white" />
+
+                    <TextView
+                        android:id="@+id/tv_currency_rate_want"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerInParent="true"
+                        android:layout_marginRight="10dp"
+                        android:text="1.2692"
+                        android:textColor="@color/white" />
+
+                </RelativeLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_marginLeft="20dp"
-                android:layout_weight="3">
+                android:layout_weight="3"
+                android:orientation="vertical">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="I HAVE"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/large_text"/>
+                    android:textSize="@dimen/large_text" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#88095A"
-                    android:layout_marginTop="10dp"
                     android:layout_marginRight="5dp"
-                    >
+                    android:layout_marginTop="10dp"
+                    android:background="#88095A">
+
                     <ImageView
                         android:id="@+id/img_currency_want"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:src="@drawable/ic_eur_img"
                         android:layout_marginLeft="10dp"
-                        android:layout_marginTop="10dp"/>
+                        android:layout_marginTop="10dp"
+                        android:src="@drawable/ic_eur_img" />
+
                     <TextView
                         android:id="@+id/tv_currency_name_have"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="EURO"
                         android:layout_below="@+id/img_currency_want"
-                        android:textColor="@color/white"
-                        android:layout_marginTop="10dp"
                         android:layout_marginBottom="10dp"
-                        android:layout_marginLeft="10dp"/>
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:text="EURO"
+                        android:textColor="@color/white" />
 
                     <TextView
                         android:id="@+id/tv_currency_rate_have"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="1.0"
-                        android:textColor="@color/white"
                         android:layout_alignParentRight="true"
                         android:layout_centerInParent="true"
-                        android:layout_marginRight="10dp"/>
+                        android:layout_marginRight="10dp"
+                        android:text="1.0"
+                        android:textColor="@color/white" />
 
                 </RelativeLayout>
-
 
 
             </LinearLayout>
 
         </LinearLayout>
+
+        <com.github.siyamed.shapeimageview.CircularImageView
+            android:id="@+id/add_photo"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:layout_marginLeft="15dp"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_compare_arrows_black_24dp"
+            app:siBorderColor="@color/white"
+            app:siBorderWidth="3dp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_market"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Market Rate:        "
+                android:textColor="@color/white"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="223dp"
+                android:layout_marginStart="223dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1.2698"
+                android:textColor="@color/white"
+                android:layout_toRightOf="@+id/tv_market"
+                />
+        </RelativeLayout>
+
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#88095A"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginLeft="10dp"
             android:layout_marginBottom="10dp"
-            >
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="10dp"
+            android:background="#88095A">
+
             <ImageView
                 android:id="@+id/img_exchange_rate"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:src="@drawable/ic_shuffle"
+                android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
-                android:layout_centerVertical="true"/>
+                android:src="@drawable/ic_shuffle" />
+
             <TextView
 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Exchange rate"
-                android:layout_toRightOf="@+id/img_exchange_rate"
-                android:textColor="@color/white"
-                android:layout_marginTop="10dp"
+                android:layout_centerInParent="true"
                 android:layout_marginBottom="30dp"
                 android:layout_marginLeft="10dp"
-                android:layout_centerInParent="true"/>
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@+id/img_exchange_rate"
+                android:text="Exchange rate"
+                android:textColor="@color/white" />
 
             <TextView
                 android:id="@+id/tv_exchange_rate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="1.2698"
-                android:textColor="@color/chat_text_color"
-                android:textStyle="bold"
                 android:layout_alignParentRight="true"
                 android:layout_centerInParent="true"
-                android:layout_marginRight="10dp"/>
+                android:layout_marginRight="10dp"
+                android:text="1.2698"
+                android:textColor="@color/chat_text_color"
+                android:textStyle="bold" />
 
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#88095A"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginLeft="10dp"
             android:layout_marginBottom="10dp"
-            >
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="10dp"
+            android:background="#88095A">
+
             <ImageView
                 android:id="@+id/img_expiry_date"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:src="@drawable/ic_shuffle"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"/>
+                android:layout_marginTop="10dp"
+                android:src="@drawable/ic_shuffle" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Expiry Date"
-                android:layout_toRightOf="@+id/img_expiry_date"
-                android:textColor="@color/white"
-                android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
-                android:layout_marginLeft="10dp"/>
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@+id/img_expiry_date"
+                android:text="Expiry Date"
+                android:textColor="@color/white" />
 
             <TextView
                 android:id="@+id/tv_expiry_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="2017.06.20"
-                android:textColor="@color/white"
                 android:layout_alignParentRight="true"
                 android:layout_centerInParent="true"
-                android:layout_marginRight="10dp"/>
+                android:layout_marginRight="10dp"
+                android:text="2017.06.20"
+                android:textColor="@color/white" />
 
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#88095A"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginLeft="10dp"
             android:layout_marginBottom="10dp"
-            >
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="10dp"
+            android:background="#88095A">
+
             <ImageView
                 android:id="@+id/img_location"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:src="@drawable/ic_location"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"/>
+                android:layout_marginTop="10dp"
+                android:src="@drawable/ic_location" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Exchange Location"
-                android:singleLine="false"
-                android:layout_toRightOf="@+id/img_location"
-                android:textColor="@color/white"
-                android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
-                android:layout_marginLeft="10dp"/>
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@+id/img_location"
+                android:singleLine="false"
+                android:text="Exchange Location"
+                android:textColor="@color/white" />
 
             <TextView
                 android:id="@+id/tv_exchane_location"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Road no. 11"
-                android:textColor="@color/white"
                 android:layout_alignParentRight="true"
                 android:layout_centerInParent="true"
-                android:layout_marginRight="10dp"/>
+                android:layout_marginRight="10dp"
+                android:text="Road no. 11"
+                android:textColor="@color/white" />
 
         </RelativeLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:background="#88095A"
             android:layout_marginLeft="10dp"
-            android:layout_marginRight="5dp">
+            android:layout_marginRight="5dp"
+            android:background="#88095A">
+
             <TextView
                 android:id="@+id/tv_remarks"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="Remarks"
-                android:textColor="@color/white"
+                android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginLeft="10dp"/>
+                android:text="Remarks"
+                android:textColor="@color/white" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="70dp"
-            android:background="@drawable/button_background_gmail"
             android:layout_marginLeft="50dp"
             android:layout_marginRight="50dp"
-            android:layout_marginTop="20dp">
+            android:layout_marginTop="20dp"
+            android:background="@drawable/button_background_gmail">
 
 
             <RelativeLayout
@@ -310,14 +360,13 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:padding="20dp"
                     android:text="@string/create_text"
                     android:textAlignment="center"
-                    android:padding="20dp"
+                    android:textAllCaps="true"
                     android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/medium_text"
-                    android:textStyle="bold"
-                    android:textAllCaps="true"
-                    />
+                    android:textStyle="bold" />
 
 
             </RelativeLayout>

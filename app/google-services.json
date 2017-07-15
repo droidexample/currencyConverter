@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "369307583960",
+    "firebase_url": "https://currency-sell.firebaseio.com",
+    "project_id": "currency-sell",
+    "storage_bucket": "currency-sell.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:369307583960:android:f93b6ef5236ae92c",
+        "android_client_info": {
+          "package_name": "com.at.currencysell"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "369307583960-ba0438ra9omip4a1e7j6otarv23rjril.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA3t_PXnRvJ6d8-yuNd52u1cmvQ2di62Mw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
