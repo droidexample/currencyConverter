@@ -59,4 +59,8 @@
     <string name="Currencylayer_Key">50cf00a294110960a14cc3b1f330e3fc</string>
     <string name="Free_CC_link">http://free.currencyconverterapi.com/api/v3/convert?q=</string>
 
+    <string name="user_successfully_added">User successfully added!</string>
+    <string name="user_unable_to_add">Unable to add user!</string>
+    <string name="type_a_message">Type a message...</string>
+
 </resources>

@@ -9,6 +9,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.at.currencysell.utils.PersistentUser;
+import com.google.firebase.auth.FirebaseAuth;
 
 
 public class SplashActivity extends AppCompatActivity {
@@ -36,10 +37,18 @@ public class SplashActivity extends AppCompatActivity {
     private final Runnable mPendingLauncherRunnable = new Runnable() {
         @Override
         public void run() {
-            if (PersistentUser.isLogged(mContext)) {
+            /*if (PersistentUser.isLogged(mContext)) {
                 Intent mm = new Intent(SplashActivity.this, HomeActivity.class);
                 startActivity(mm);
             } else {
+                Intent mm = new Intent(SplashActivity.this, LoginActivity.class);
+                startActivity(mm);
+            }*/
+
+            if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+                Intent mm = new Intent(SplashActivity.this, HomeActivity.class);
+                startActivity(mm);
+           } else {
                 Intent mm = new Intent(SplashActivity.this, LoginActivity.class);
                 startActivity(mm);
             }

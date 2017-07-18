@@ -1,17 +1,40 @@
 package com.at.currencysell;
 
+import android.content.Context;
+import android.content.Intent;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.at.currencysell.adapter.ChatListAdapter;
+import com.at.currencysell.adapter.UserListingRecyclerAdapter;
+import com.at.currencysell.core.users.getall.GetUsersContract;
+import com.at.currencysell.core.users.getall.GetUsersPresenter;
 import com.at.currencysell.holder.HomeList;
 import com.at.currencysell.model.HomeListModel;
+import com.at.currencysell.model.User;
+import com.at.currencysell.utils.Constants;
+import com.at.currencysell.utils.ItemClickSupport;
 
-public class ChatActivity extends BaseActivity {
+import java.util.List;
+
+public class ChatActivity extends BaseActivity implements GetUsersContract.View,ItemClickSupport.OnItemClickListener{
     private ListView listview;
     private ChatListAdapter adapter;
+    private GetUsersPresenter mGetUsersPresenter;
+    private RecyclerView mRecyclerViewAllUserListing;
+    Context mcontext;
+
+    private UserListingRecyclerAdapter mUserListingRecyclerAdapter;
+    public static final String ARG_TYPE = "type";
+    public static final String TYPE_CHATS = "type_chats";
+    public static final String TYPE_ALL = "type_all";
 
 
     @Override
@@ -32,25 +55,63 @@ public class ChatActivity extends BaseActivity {
 
 
     private void initUI(){
-        listview = (ListView) findViewById(R.id.listview);
-        dummyData();
+
+        mGetUsersPresenter = new GetUsersPresenter(this);
+        getUsers();
+        mRecyclerViewAllUserListing = (RecyclerView)findViewById(R.id.recycler_view_all_user_listing);
+
+        ItemClickSupport.addTo(mRecyclerViewAllUserListing)
+                .setOnItemClickListener(this);
 
     }
 
-    private void dummyData() {
-        String[] user_name = {"MICHEAL SMITH","JOHN SMITH","PITER SMITH","ROSIN SMITH","MICHEAL SMITH"};
+
+    private void getUsers() {
+
+       /* if (TextUtils.equals((ARG_TYPE), TYPE_CHATS)) {
+
+        } else if (TextUtils.equals((ARG_TYPE), TYPE_ALL)) {*/
+            mGetUsersPresenter.getAllUsers();
+        //}
+
+    }
 
 
-        for (int i = 0; i < user_name.length; i++) {
-            HomeListModel nameItem = new HomeListModel();
-            nameItem.setName(user_name[i]);
 
 
-            HomeList.setPeopleHaveinfo(nameItem);
 
-        }
+    @Override
+    public void onGetAllUsersSuccess(List<User> users) {
 
-        adapter = new ChatListAdapter(mContext,  HomeList.getAllPeopleHave());
-        listview.setAdapter(adapter);
+        mUserListingRecyclerAdapter = new UserListingRecyclerAdapter(users);
+        mRecyclerViewAllUserListing.setAdapter(mUserListingRecyclerAdapter);
+        mUserListingRecyclerAdapter.notifyDataSetChanged();
+
+    }
+
+    @Override
+    public void onGetAllUsersFailure(String message) {
+        Toast.makeText(mContext, "Error: " + message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onGetChatUsersSuccess(List<User> users) {
+
+    }
+
+    @Override
+    public void onGetChatUsersFailure(String message) {
+
+    }
+
+    @Override
+    public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+        Intent intent = new Intent(mContext,ChatDetailsActivity.class);
+        intent.putExtra(Constants.ARG_RECEIVER,mUserListingRecyclerAdapter.getUser(position).email);
+        intent.putExtra(Constants.ARG_RECEIVER_UID,mUserListingRecyclerAdapter.getUser(position).uid);
+        intent.putExtra(Constants.ARG_FIREBASE_TOKEN,mUserListingRecyclerAdapter.getUser(position).firebaseToken);
+
+        startActivity(intent);
+
     }
 }

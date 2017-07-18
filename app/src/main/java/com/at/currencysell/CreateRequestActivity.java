@@ -20,6 +20,7 @@ public class CreateRequestActivity extends AppCompatActivity {
     private TextView tv_expiry_date;
     private TextView tv_exchane_location;
     private TextView tv_remarks;
+    private TextView tv_rate;
     private Context mContext;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +36,7 @@ public class CreateRequestActivity extends AppCompatActivity {
         tv_currency_rate_want = (TextView)this.findViewById(R.id.tv_currency_rate_want);
         tv_currency_name_have = (TextView)this.findViewById(R.id.tv_currency_name_have);
         tv_currency_rate_have = (TextView)this.findViewById(R.id.tv_currency_rate_have);
+        tv_rate = (TextView)this.findViewById(R.id.tv_rate);
         tv_exchange_rate = (TextView)this.findViewById(R.id.tv_exchange_rate);
         tv_expiry_date = (TextView)this.findViewById(R.id.tv_expiry_date);
         tv_exchane_location = (TextView)this.findViewById(R.id.tv_exchane_location);
@@ -51,7 +53,8 @@ public class CreateRequestActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String rate = intent.getStringExtra("RATE");
-        Toast.makeText(mContext,"Rate"+rate,Toast.LENGTH_LONG).show();
+        tv_rate.setText(rate);
+        tv_exchange_rate.setText(rate);
 
     }
 

@@ -24,5 +24,13 @@
     <dimen name="text_top_margin">10dp</dimen>
     <dimen name="text_left_margin">5dp</dimen>
 
+    <dimen name="margin_small">8dp</dimen>
+    <dimen name="padding_small">8dp</dimen>
+    <dimen name="padding_avg">16dp</dimen>
+    <dimen name="margin_huge">64dp</dimen>
+    <dimen name="margin_avg">16dp</dimen>
+    <dimen name="space_avg">16dp</dimen>
+    <dimen name="user_icon_width">36dp</dimen>
+    <dimen name="user_icon_height">36dp</dimen>
 
 </resources>

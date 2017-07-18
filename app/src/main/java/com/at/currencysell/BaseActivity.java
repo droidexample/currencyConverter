@@ -13,15 +13,18 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.androidquery.AQuery;
+import com.at.currencysell.core.logout.LogoutContract;
+import com.at.currencysell.core.logout.LogoutPresenter;
 import com.at.currencysell.slidermenu.SlidingMenu;
 import com.at.currencysell.utils.PersistentUser;
 import com.facebook.login.LoginManager;
 
 
-public class BaseActivity extends AppCompatActivity {
+public class BaseActivity extends AppCompatActivity implements LogoutContract.View{
 
     Context mContext;
     LinearLayout ll_silding;
@@ -52,6 +55,7 @@ public class BaseActivity extends AppCompatActivity {
     private ImageView img_search;
     private RelativeLayout rl_search;
     private AQuery mAQuery;
+    private LogoutPresenter mLogoutPresenter;
 
 
 
@@ -99,6 +103,7 @@ public class BaseActivity extends AppCompatActivity {
         tv_name = (TextView) this.findViewById(R.id.tv_name);
         tv_sign_out = (TextView) findViewById(R.id.tv_sign_out);
         tv_sign_out.setOnClickListener(listener);
+        mLogoutPresenter = new LogoutPresenter(this);
 
         img_scan = (ImageView) findViewById(R.id.img_scan);
         img_scan.setOnClickListener(listener);
@@ -137,10 +142,11 @@ public class BaseActivity extends AppCompatActivity {
 
                 case R.id.tv_sign_out:
 
-                    PersistentUser.resetAllData(mContext);
-                    PersistentUser.clearCurrentUser(mContext);
-                    LoginManager.getInstance().logOut();
-                    Intent mIntent = new Intent(mContext, SignupFirstActivity.class);
+                   // PersistentUser.resetAllData(mContext);
+                  //  PersistentUser.clearCurrentUser(mContext);
+                    //LoginManager.getInstance().logOut();
+                    mLogoutPresenter.logout();
+                    Intent mIntent = new Intent(mContext, LoginActivity.class);
                     mIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | IntentCompat.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(mIntent);
                     finish();
@@ -251,4 +257,13 @@ public class BaseActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onLogoutSuccess(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onLogoutFailure(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
 }

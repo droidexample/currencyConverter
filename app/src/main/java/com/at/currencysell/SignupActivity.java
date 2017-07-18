@@ -23,6 +23,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.at.currencysell.core.registration.RegisterContract;
+import com.at.currencysell.core.registration.RegisterPresenter;
+import com.at.currencysell.core.users.add.AddUserContract;
+import com.at.currencysell.core.users.add.AddUserPresenter;
 import com.at.currencysell.utils.AlbumStorageDirFactory;
 import com.at.currencysell.utils.AlertMessage;
 import com.at.currencysell.utils.BaseAlbumDirFactory;
@@ -34,6 +38,7 @@ import com.at.currencysell.utils.NetInfo;
 import com.at.currencysell.utils.PersistentUser;
 import com.at.currencysell.utils.StorageUtils;
 import com.at.currencysell.utils.WebUtil;
+import com.google.firebase.auth.FirebaseUser;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -43,7 +48,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class SignupActivity extends AppCompatActivity {
+public class SignupActivity extends AppCompatActivity implements RegisterContract.View, AddUserContract.View{
     private LinearLayout ll_back_sign_up;
     private LinearLayout ll_member_login;
     private Context mContext;
@@ -73,6 +78,11 @@ public class SignupActivity extends AppCompatActivity {
 
     private String login_type = "1";
     private String social_status = " ";
+
+    //firebase chat
+
+    private RegisterPresenter mRegisterPresenter;
+    private AddUserPresenter mAddUserPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,6 +128,9 @@ public class SignupActivity extends AppCompatActivity {
         ll_member_login.setOnClickListener(listener);
         ll_sign_up = (LinearLayout) this.findViewById(R.id.ll_sign_up);
         ll_sign_up.setOnClickListener(listener);
+
+        mRegisterPresenter = new RegisterPresenter(this);
+        mAddUserPresenter = new AddUserPresenter(this);
     }
 
     View.OnClickListener listener = new View.OnClickListener() {
@@ -133,7 +146,9 @@ public class SignupActivity extends AppCompatActivity {
                     alertshow();
                     break;
                 case R.id.ll_sign_up:
-                    signUp();
+
+                   // signUp();
+                    onRegister(view);
                     break;
                 case R.id.ll_member_login:
                     Intent intent = new Intent(mContext, LoginActivity.class);
@@ -185,11 +200,41 @@ public class SignupActivity extends AppCompatActivity {
             return;
         } else {
 
-            new UploadFileToServer().execute();
-            // doWebRequestForsignUp(firstname,lastname,email,password,login_type,social_status);
+            //new UploadFileToServer().execute();
 
 
         }
+    }
+    private void onRegister(View view) {
+        email = et_email.getText().toString();
+        password = et_password.getText().toString();
+
+        mRegisterPresenter.register(SignupActivity.this, email, password);
+
+    }
+    @Override
+    public void onAddUserSuccess(String message) {
+        Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(mContext, LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | IntentCompat.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onAddUserFailure(String message) {
+        Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onRegistrationSuccess(FirebaseUser firebaseUser) {
+        Toast.makeText(mContext, "Registration Successful!", Toast.LENGTH_SHORT).show();
+        mAddUserPresenter.addUser(mContext, firebaseUser);
+    }
+
+    @Override
+    public void onRegistrationFailure(String message) {
+        Log.e("response", "onRegistrationFailure: " + message);
+        Toast.makeText(mContext, "Registration failed!+\n" + message, Toast.LENGTH_LONG).show();
     }
 
 

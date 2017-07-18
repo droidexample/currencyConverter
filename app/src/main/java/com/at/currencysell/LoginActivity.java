@@ -19,6 +19,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.at.currencysell.core.login.LoginContract;
+import com.at.currencysell.core.login.LoginPresenter;
 import com.at.currencysell.utils.AlertMessage;
 import com.at.currencysell.utils.BaseUrl;
 import com.at.currencysell.utils.BusyDialog;
@@ -32,7 +34,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements LoginContract.View {
     private RelativeLayout rl_login;
     private LinearLayout ll_back_login;
     private LinearLayout member_sign_up;
@@ -40,7 +42,9 @@ public class LoginActivity extends AppCompatActivity {
     private EditText et_password;
     private String userEmail;
     private String userPass;
-    Context mContext;
+    private Context mContext;
+
+    private LoginPresenter mLoginPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +65,8 @@ public class LoginActivity extends AppCompatActivity {
         ll_back_login = (LinearLayout) this.findViewById(R.id.ll_back_login);
         ll_back_login.setOnClickListener(listener);
 
+        mLoginPresenter = new LoginPresenter(this);
+
     }
 
     View.OnClickListener listener = new View.OnClickListener() {
@@ -69,10 +75,9 @@ public class LoginActivity extends AppCompatActivity {
 
             switch (view.getId()) {
                 case R.id.rl_login:
-                    valuationMethods();
-                    /*Intent intent = new Intent(mContext, HomeActivity.class);
-                    startActivity(intent);
-                    finish();*/
+                    onLogin(view);
+
+                    // valuationMethods();
                     break;
                 case R.id.member_sign_up:
                     Intent in = new Intent(mContext, SignupActivity.class);
@@ -142,7 +147,7 @@ public class LoginActivity extends AppCompatActivity {
                         PersistentUser.setUserEmail(mContext, userData.getString("email"));
                         PersistentUser.setUSERPIC(mContext, userData.getString("picture"));
                         PersistentUser.setUserID(mContext, userData.getString("user_id"));
-                        PersistentUser.setUSERDATA(mContext, ""+userData);
+                        PersistentUser.setUSERDATA(mContext, "" + userData);
                         PersistentUser.setLogin(mContext);
                         Intent intent = new Intent(mContext, HomeActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | IntentCompat.FLAG_ACTIVITY_CLEAR_TASK);
@@ -183,5 +188,28 @@ public class LoginActivity extends AppCompatActivity {
         };
         RequestQueue requestQueue = Volley.newRequestQueue(mContext);
         requestQueue.add(stringRequest);
+    }
+
+    private void onLogin(View view) {
+        userEmail = et_email.getText().toString();
+        userPass = et_password.getText().toString();
+
+        mLoginPresenter.login(LoginActivity.this, userEmail, userPass);
+
+
+    }
+
+    @Override
+    public void onLoginSuccess(String message) {
+        Toast.makeText(mContext, "Logged in successfully", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(mContext, HomeActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | IntentCompat.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+
+    }
+
+    @Override
+    public void onLoginFailure(String message) {
+        Toast.makeText(mContext, "Error: " + message, Toast.LENGTH_SHORT).show();
     }
 }

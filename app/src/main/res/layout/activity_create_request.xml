@@ -193,6 +193,7 @@
                 android:layout_marginStart="223dp" />
 
             <TextView
+                android:id="@+id/tv_rate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="1.2698"
