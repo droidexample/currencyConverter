@@ -20,7 +20,7 @@
 
 
             <LinearLayout
-                android:id="@+id/ll_back_create_request"
+                android:id="@+id/ll_back"
                 android:layout_width="100dp"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical">
@@ -73,7 +73,7 @@
                     android:background="#88095A">
 
                     <ImageView
-                        android:id="@+id/img_currency_have"
+                        android:id="@+id/img_currency_want"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_marginLeft="10dp"
@@ -84,22 +84,23 @@
                         android:id="@+id/tv_currency_name_want"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/img_currency_have"
+                        android:layout_below="@+id/img_currency_want"
                         android:layout_marginBottom="10dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="10dp"
                         android:text="USD"
                         android:textColor="@color/white" />
 
-                    <TextView
-                        android:id="@+id/tv_currency_rate_want"
-                        android:layout_width="wrap_content"
+                    <EditText
+                        android:id="@+id/et_currency_rate_want"
+                        android:layout_width="80dp"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerInParent="true"
                         android:layout_marginRight="10dp"
-                        android:text="1.2692"
-                        android:textColor="@color/white" />
+                        android:text="1"
+                        android:textColor="@color/white"
+                        android:background="@android:color/transparent"/>
 
                 </RelativeLayout>
 
@@ -128,7 +129,7 @@
                     android:background="#88095A">
 
                     <ImageView
-                        android:id="@+id/img_currency_want"
+                        android:id="@+id/img_currency_have"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_marginLeft="10dp"
@@ -139,22 +140,23 @@
                         android:id="@+id/tv_currency_name_have"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/img_currency_want"
+                        android:layout_below="@+id/img_currency_have"
                         android:layout_marginBottom="10dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="10dp"
                         android:text="EURO"
                         android:textColor="@color/white" />
 
-                    <TextView
-                        android:id="@+id/tv_currency_rate_have"
+                    <EditText
+                        android:id="@+id/et_currency_rate_have"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerInParent="true"
                         android:layout_marginRight="10dp"
-                        android:text="1.0"
-                        android:textColor="@color/white" />
+                        android:text="1"
+                        android:textColor="@color/white"
+                        android:background="@android:color/transparent"/>
 
                 </RelativeLayout>
 
@@ -247,6 +249,7 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/rl_expiry_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"

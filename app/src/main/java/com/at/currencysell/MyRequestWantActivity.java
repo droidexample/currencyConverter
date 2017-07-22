@@ -35,6 +35,7 @@ import com.android.volley.toolbox.Volley;
 import com.at.currencysell.holder.AllCurrencyList;
 import com.at.currencysell.model.Currency_Names;
 import com.at.currencysell.utils.AlertMessage;
+import com.at.currencysell.utils.AllCountryName;
 import com.at.currencysell.utils.NetInfo;
 import com.at.currencysell.utils.PersistentUser;
 
@@ -63,17 +64,19 @@ public class MyRequestWantActivity extends AppCompatActivity {
     private TextView tv_from_currency;
     private TextView tv_to_currency;
     private RelativeLayout rl_convert;
-    String s_names = null;
+
     private LinearLayout ll_back;
     public static String url_Result = null;
     private RelativeLayout rl_next_request;
-    String first_country_short;
-    String second_country_short;
     public JSONObject jsonObj_result = null;
-    String final_Result = null;
-    String temp = null;
-    String from_amount = "1";
-    String refinedNumber;
+    private String s_names = null;
+    private String first_country_short;
+    private String second_country_short;
+    private String final_Result = null;
+    private String temp = null;
+    private String from_amount = "1";
+    private String refinedNumber;
+    private JSONObject jsonObj_names = null;
 
 
     @Override
@@ -104,13 +107,6 @@ public class MyRequestWantActivity extends AppCompatActivity {
         rl_next_request = (RelativeLayout) this.findViewById(R.id.rl_next_request);
         rl_next_request.setOnClickListener(listener);
 
-
-     /*   listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-            }
-        });*/
 
 
         // for scarch list
@@ -165,7 +161,17 @@ public class MyRequestWantActivity extends AppCompatActivity {
 
     public void add_country_names() {
 
-        s_names = PersistentUser.getCurrencyNAME(mContext);
+        String currency_names = AllCountryName.ALLCOUNTRYNAME;
+
+        try {
+            jsonObj_names = new JSONObject(currency_names);
+            s_names = jsonObj_names.getJSONObject("currencies").toString();
+            Log.w("s_name", "are" + s_names);
+
+
+        } catch (JSONException e) {
+            Toast.makeText(mContext, e.toString(), Toast.LENGTH_LONG).show();
+        }
         AllCurrencyList.removeAllCurrencyList();
         s_names = s_names.replace("{", "");
         s_names = s_names.replace("}", "");
@@ -420,6 +426,8 @@ public class MyRequestWantActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(mContext, CreateRequestActivity.class);
                 intent.putExtra("RATE", refinedNumber);
+                intent.putExtra("CURRNAMEWANT", first_country_short);
+                intent.putExtra("CURRNAMEHAVE", second_country_short);
                 startActivity(intent);
 
             }
@@ -451,6 +459,8 @@ public class MyRequestWantActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(mContext, CreateRequestActivity.class);
                 intent.putExtra("RATE", refinedNumber);
+                intent.putExtra("CURRNAMEWANT", first_country_short);
+                intent.putExtra("CURRNAMEHAVE", second_country_short);
                 startActivity(intent);
 
 
@@ -484,6 +494,8 @@ public class MyRequestWantActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(mContext, CreateRequestActivity.class);
                 intent.putExtra("RATE", refinedNumber);
+                intent.putExtra("CURRNAMEWANT", first_country_short);
+                intent.putExtra("CURRNAMEHAVE", second_country_short);
                 startActivity(intent);
 
             }
@@ -515,6 +527,8 @@ public class MyRequestWantActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(mContext, CreateRequestActivity.class);
                 intent.putExtra("RATE", refinedNumber);
+                intent.putExtra("CURRNAMEWANT", first_country_short);
+                intent.putExtra("CURRNAMEHAVE", second_country_short);
                 startActivity(intent);
 
 

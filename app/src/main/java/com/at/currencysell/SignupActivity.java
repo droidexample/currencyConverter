@@ -147,7 +147,7 @@ public class SignupActivity extends AppCompatActivity implements RegisterContrac
                     break;
                 case R.id.ll_sign_up:
 
-                   // signUp();
+                    signUp();
                     onRegister(view);
                     break;
                 case R.id.ll_member_login:
@@ -200,7 +200,7 @@ public class SignupActivity extends AppCompatActivity implements RegisterContrac
             return;
         } else {
 
-            //new UploadFileToServer().execute();
+            new UploadFileToServer().execute();
 
 
         }

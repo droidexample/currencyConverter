@@ -77,7 +77,7 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
                 case R.id.rl_login:
                     onLogin(view);
 
-                    // valuationMethods();
+                     valuationMethods();
                     break;
                 case R.id.member_sign_up:
                     Intent in = new Intent(mContext, SignupActivity.class);
@@ -201,10 +201,10 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
 
     @Override
     public void onLoginSuccess(String message) {
-        Toast.makeText(mContext, "Logged in successfully", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(mContext, HomeActivity.class);
+        PersistentUser.setLogin(mContext);
+       /* Intent intent = new Intent(mContext, HomeActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | IntentCompat.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
+        startActivity(intent);*/
 
     }
 

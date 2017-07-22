@@ -34,18 +34,14 @@ import java.util.StringTokenizer;
 
 public class CurrencyNameActivity extends AppCompatActivity {
 
-    public JSONObject jsonObj_names = null, jsonObj_rates = null;
+    public JSONObject jsonObj_names = null;
     String s_names, s_rates = null;
     private ListView listview;
     private CurrencyNameAdapter adapter_listview;
-    private String ulr_curency_namees;
     private Context mContext;
     private EditText edt_search;
     private LinearLayout ll_back;
 
-    public static final String BASE_URL = "http://apilayer.net/api/";
-    public static final String ENDPOINT = "live";
-    String url_currency_rates;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,7 +92,6 @@ public class CurrencyNameActivity extends AppCompatActivity {
         });
 
         add_country_names(AllCountryName.ALLCOUNTRYNAME);
-        //  doWebRequestforCrrencyRates();
 
         ll_back = (LinearLayout) this.findViewById(R.id.ll_back);
         ll_back.setOnClickListener(new View.OnClickListener() {
@@ -107,92 +102,7 @@ public class CurrencyNameActivity extends AppCompatActivity {
         });
     }
 
-//    public void doWebRequestforCrrencyName() {
-//
-//        String key = getResources().getString(R.string.Currencylayer_Key);
-//        ulr_curency_namees="http://www.apilayer.net/api/list?access_key="+key+"&format=1";
-//
-//
-//        if (!NetInfo.isOnline(mContext)) {
-//            AlertMessage.showMessage(mContext, "Status", "Please check internet Connection");
-//            return;
-//        }
-//
-//
-//        StringRequest stringRequest = new StringRequest(Request.Method.GET, ulr_curency_namees, new Response.Listener<String>() {
-//            @Override
-//            public void onResponse(String response) {
-//
-//                Log.w("response", "are" + response);
-//
-//
-//                add_country_names();
-//
-//            }
-//        }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                Log.w("response", "are" + error);
-//
-//            }
-//        }) {
-//            @Override
-//            protected Map<String, String> getParams() throws AuthFailureError {
-//                Map<String, String> params = new HashMap<String, String>();
-//                return params;
-//            }
-//        };
-//        RequestQueue requestQueue = Volley.newRequestQueue(mContext);
-//        requestQueue.add(stringRequest);
-//    }
 
-
-//    public void doWebRequestforCrrencyRates() {
-//
-//        String key = getResources().getString(R.string.Currencylayer_Key);
-//        url_currency_rates = BASE_URL + ENDPOINT + "?access_key=" + key;
-//
-//
-//        if (!NetInfo.isOnline(mContext)) {
-//            AlertMessage.showMessage(mContext, "Status", "Please check internet Connection");
-//            return;
-//        }
-//
-//
-//        StringRequest stringRequest = new StringRequest(Request.Method.GET, url_currency_rates, new Response.Listener<String>() {
-//            @Override
-//            public void onResponse(String response) {
-//
-//                Log.w("response", "are" + response);
-//
-//                try {
-//                    jsonObj_rates = new JSONObject(response);
-//                    s_rates = jsonObj_rates.getJSONObject("quotes").toString();
-//                    PersistentUser.setCurrencyRate(mContext,s_rates);
-//                    Log.w("s_rates ",""+s_rates);
-//
-//                } catch (JSONException e) {
-//                    Toast.makeText(mContext, e.toString(), Toast.LENGTH_LONG).show();
-//                }
-//                add_currency_rates();
-//
-//            }
-//        }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                Log.w("response", "are" + error);
-//
-//            }
-//        }) {
-//            @Override
-//            protected Map<String, String> getParams() throws AuthFailureError {
-//                Map<String, String> params = new HashMap<String, String>();
-//                return params;
-//            }
-//        };
-//        RequestQueue requestQueue = Volley.newRequestQueue(mContext);
-//        requestQueue.add(stringRequest);
-//    }
 
 
     public void add_country_names(String response) {
@@ -201,7 +111,6 @@ public class CurrencyNameActivity extends AppCompatActivity {
             jsonObj_names = new JSONObject(response);
             s_names = jsonObj_names.getJSONObject("currencies").toString();
             Log.w("s_name", "are" + s_names);
-            PersistentUser.setCurrencyNAME(mContext, s_names);
 
         } catch (JSONException e) {
             Toast.makeText(mContext, e.toString(), Toast.LENGTH_LONG).show();
@@ -240,41 +149,5 @@ public class CurrencyNameActivity extends AppCompatActivity {
 
     }
 
-    public void add_currency_rates() {
-        s_rates = s_rates.replace("{", "");
-        s_rates = s_rates.replace("}", "");
-        s_rates = s_rates.replace("\"", "");
-
-        StringTokenizer stok = new StringTokenizer(s_rates, ",");
-
-        while (stok.hasMoreElements()) {
-
-            String temp = stok.nextElement().toString();
-
-            String split[] = temp.split(":");
-
-
-            double amount = Double.parseDouble(split[1]);
-
-            DecimalFormat df1 = new DecimalFormat("#.###", new DecimalFormatSymbols(Locale.US));
-
-            String refinedNumber = df1.format(amount);
-
-            split[1] = String.valueOf(refinedNumber);
-
-
-            AllCurrencyRateList.setmCurrencyRateList(new CurrencyRatesModel(split[0], split[1]));
-
-        }
-
-        Collections.sort(AllCurrencyRateList.getmAllCurrencyRateList(), new Comparator<CurrencyRatesModel>() {
-            @Override
-            public int compare(CurrencyRatesModel r1, CurrencyRatesModel r2) {
-                return r1.title.compareTo(r2.title);
-            }
-        });
-
-
-    }
 
 }

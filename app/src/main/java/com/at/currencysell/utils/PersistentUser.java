@@ -14,8 +14,6 @@ public class PersistentUser {
     private static final String USEREMAIL = "useremail";
     private static final String JSONUSER = "userdate";
     private static final String USERID = "uid";
-    private static final String CURRENCYRNAME = "currencyname";
-    private static final String CURRENCYRATE = "currencyrate";
     private static final String USERDATA = "userdata";
 
     public static String getUSERDATA(final Context ctx) {
@@ -106,32 +104,6 @@ public class PersistentUser {
         ComplexPreferences complexPreferences = ComplexPreferences.getComplexPreferences(ctx, "user_prefs", 0);
         complexPreferences.clearObject();
         complexPreferences.commit();
-    }
-
-    public static void setCurrencyNAME(final Context ctx, final String currencydata) {
-        final SharedPreferences prefs = ctx.getSharedPreferences(
-                PersistentUser.PREFS_FILE_NAME, Context.MODE_PRIVATE);
-        final Editor editor = prefs.edit();
-        editor.putString(PersistentUser.CURRENCYRNAME, currencydata);
-        editor.commit();
-    }
-
-    public static String getCurrencyNAME(final Context ctx) {
-        return ctx.getSharedPreferences(PREFS_FILE_NAME, Context.MODE_PRIVATE)
-                .getString(CURRENCYRNAME, "");
-    }
-
-    public static void setCurrencyRate(final Context ctx, final String currencydata) {
-        final SharedPreferences prefs = ctx.getSharedPreferences(
-                PersistentUser.PREFS_FILE_NAME, Context.MODE_PRIVATE);
-        final Editor editor = prefs.edit();
-        editor.putString(PersistentUser.CURRENCYRATE, currencydata);
-        editor.commit();
-    }
-
-    public static String getCurrencyRate(final Context ctx) {
-        return ctx.getSharedPreferences(PREFS_FILE_NAME, Context.MODE_PRIVATE)
-                .getString(CURRENCYRATE, "");
     }
 
 
