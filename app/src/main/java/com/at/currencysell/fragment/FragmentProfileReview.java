@@ -85,6 +85,7 @@ public class FragmentProfileReview extends Fragment {
                     for (int i = 0; i < JsonMain.length(); i++) {
                         JSONObject m = JsonMain.getJSONObject(i);
                         ProfileReviewModel model = new ProfileReviewModel();
+                        model.setReview_user_picture(m.getString("review_user_picture"));
                         model.setReview_userName(m.getString("review_userName"));
                         model.setComment(m.getString("comment"));
                       /*  model.setLocation(m.getString("location"));
@@ -92,7 +93,7 @@ public class FragmentProfileReview extends Fragment {
                         model.setWant_amount(m.getString("have_amount"));
                         model.setPay_currency(m.getString("sell_crr"));
                         model.setPay_amount(m.getString("sell_amount"));
-                        model.setImage_url(m.getString("image"));*/
+                        */
                         ProfileReviewList.setPeopleHaveinfo(model);
 
                     }

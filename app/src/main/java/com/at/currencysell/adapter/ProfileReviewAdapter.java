@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.androidquery.AQuery;
 import com.at.currencysell.R;
 import com.at.currencysell.model.HomeListModel;
 import com.at.currencysell.model.ProfileReviewModel;
@@ -18,14 +19,14 @@ public class ProfileReviewAdapter extends BaseAdapter {
     private Context mContext;
     private Vector<ProfileReviewModel> all_Line_itemses = null;
     private LayoutInflater l_Inflater;
-//    private AQuery mAQuery;
+    private AQuery mAQuery;
 
 
     public ProfileReviewAdapter(Context context, Vector<ProfileReviewModel> AllLineitemses) {
         this.mContext = context;
         this.all_Line_itemses = AllLineitemses;
         l_Inflater = LayoutInflater.from(context);
-//        mAQuery = new AQuery(mContext);
+        mAQuery = new AQuery(mContext);
     }
 
     @Override
@@ -56,6 +57,7 @@ public class ProfileReviewAdapter extends BaseAdapter {
             holder = new ViewHolder();
             holder.tv_user_name = (TextView) convertView.findViewById(R.id.tv_user_name);
             holder.tv_comment = (TextView) convertView.findViewById(R.id.tv_comment);
+            holder.im_eventImage = (ImageView) convertView.findViewById(R.id.review_user_picture);
             convertView.setTag(holder);
 
 
@@ -66,7 +68,7 @@ public class ProfileReviewAdapter extends BaseAdapter {
         holder.tv_comment.setText(lineitems.getComment());
 
 
-//        mAQuery.id(holder.im_eventImage).image(lineitems.getUser_img(), true, true, 0, R.drawable.noimage);
+        mAQuery.id(holder.im_eventImage).image(lineitems.getReview_user_picture(), true, true, 0, R.drawable.profile);
 
 
 
