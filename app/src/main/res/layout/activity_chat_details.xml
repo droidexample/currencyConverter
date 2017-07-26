@@ -2,26 +2,48 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/ic_backround_image">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view_chat"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/edit_text_message"
+        android:layout_above="@+id/ll_message_area"
         app:layoutManager="LinearLayoutManager" />
 
-    <EditText
-        android:id="@+id/edit_text_message"
+
+    <LinearLayout
+        android:id="@+id/ll_message_area"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:gravity="bottom"
         android:layout_margin="@dimen/margin_small"
         android:background="@drawable/rounded_rect_bg"
-        android:hint="@string/type_a_message"
-        android:imeOptions="actionSend"
-        android:inputType="text"
-        android:maxLines="1"
-        android:padding="@dimen/padding_small" />
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true">
+
+        <EditText
+            android:id="@+id/edit_text_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:inputType="text"
+            android:hint="@string/type_a_message"
+            android:background="@android:color/transparent"
+            android:padding="@dimen/padding_small"
+            android:textColorHint="@color/send"
+           />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:padding="4dp"
+            android:onClick="send"
+            android:src="@android:drawable/ic_menu_send"
+            android:tint="@color/send"/>
+    </LinearLayout>
+
 
 </RelativeLayout>

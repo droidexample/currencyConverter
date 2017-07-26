@@ -73,7 +73,6 @@ public class SignupFirstActivity extends AppCompatActivity {
 
     private void initUI(){
         rl_fb_login = (RelativeLayout) this.findViewById(R.id.rl_fb_login);
-      //  rl_fb_login.setOnClickListener(listener);
         ll_email_login = (LinearLayout)this.findViewById(R.id.ll_email_login);
         ll_email_login.setOnClickListener(listener);
         ll_signup = (LinearLayout)this.findViewById(R.id.ll_signup);
@@ -132,7 +131,7 @@ public class SignupFirstActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 mBusyDialog = new BusyDialog(mContext, true, "Loading");
-               // mBusyDialog.show();
+                mBusyDialog.show();
 
                 loginButton.performClick();
 
@@ -150,7 +149,7 @@ public class SignupFirstActivity extends AppCompatActivity {
     private FacebookCallback<LoginResult> mCallBack = new FacebookCallback<LoginResult>() {
         @Override
         public void onSuccess(LoginResult loginResult) {
-            //mBusyDialog.dismis();
+            mBusyDialog.dismis();
 
 
             // App code

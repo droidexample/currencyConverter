@@ -71,6 +71,7 @@
                         />
                 </LinearLayout>
                 <TextView
+                    android:id="@+id/tv_amount_have"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="900"
@@ -79,6 +80,7 @@
                     android:textStyle="bold"
                     />
                 <TextView
+                    android:id="@+id/tv_end_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Ends at: 2016.12.30"
@@ -109,6 +111,7 @@
                                 android:layout_height="20dp"
                                 android:src="@drawable/ic_eur_img"/>
                             <TextView
+                                android:id="@+id/tv_currency_need"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="EUR"
@@ -118,6 +121,7 @@
                                 />
                         </LinearLayout>
                         <TextView
+                            android:id="@+id/tv_amount_need"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="810.7"

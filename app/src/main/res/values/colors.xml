@@ -47,5 +47,9 @@
     <color name="switch_regular_text_color">#A8A8A8</color>
     <color name="grey_300">#E0E0E0</color>
     <color name="grey_100">#F5F5F5</color>
+    <color name="send">#7E6988</color>
+    <color name="chat_mine">#581250</color>
+    <color name="chat_other">#99195A</color>
+
 
 </resources>

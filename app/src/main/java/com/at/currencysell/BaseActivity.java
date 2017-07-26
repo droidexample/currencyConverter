@@ -142,11 +142,11 @@ public class BaseActivity extends AppCompatActivity implements LogoutContract.Vi
 
                 case R.id.tv_sign_out:
 
-                   // PersistentUser.resetAllData(mContext);
+                    PersistentUser.resetAllData(mContext);
                   //  PersistentUser.clearCurrentUser(mContext);
                     //LoginManager.getInstance().logOut();
                     mLogoutPresenter.logout();
-                    Intent mIntent = new Intent(mContext, LoginActivity.class);
+                    Intent mIntent = new Intent(mContext, SignupFirstActivity.class);
                     mIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | IntentCompat.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(mIntent);
                     finish();

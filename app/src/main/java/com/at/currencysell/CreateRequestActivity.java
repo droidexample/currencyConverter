@@ -234,6 +234,9 @@ public class CreateRequestActivity extends AppCompatActivity {
             public void onResponse(String response) {
 
                 Log.w("response", "are" + response);
+                mBusyDialog.dismis();
+                Toast.makeText(mContext,"Request Sucess",Toast.LENGTH_LONG).show();
+                CreateRequestActivity.this.finish();
 /*
                 try {
 

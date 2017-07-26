@@ -14,15 +14,19 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.v4.content.IntentCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.at.currencysell.adapter.PlaceAutocompleteAdapter;
 import com.at.currencysell.core.registration.RegisterContract;
 import com.at.currencysell.core.registration.RegisterPresenter;
 import com.at.currencysell.core.users.add.AddUserContract;
@@ -31,6 +35,7 @@ import com.at.currencysell.utils.AlbumStorageDirFactory;
 import com.at.currencysell.utils.AlertMessage;
 import com.at.currencysell.utils.BaseAlbumDirFactory;
 import com.at.currencysell.utils.BaseUrl;
+import com.at.currencysell.utils.BitmapUtils;
 import com.at.currencysell.utils.BusyDialog;
 import com.at.currencysell.utils.FroyoAlbumDirFactory;
 import com.at.currencysell.utils.MultipartUtility;
@@ -38,17 +43,26 @@ import com.at.currencysell.utils.NetInfo;
 import com.at.currencysell.utils.PersistentUser;
 import com.at.currencysell.utils.StorageUtils;
 import com.at.currencysell.utils.WebUtil;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.location.places.AutocompletePrediction;
+import com.google.android.gms.location.places.PlaceBuffer;
+import com.google.android.gms.location.places.Places;
 import com.google.firebase.auth.FirebaseUser;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class SignupActivity extends AppCompatActivity implements RegisterContract.View, AddUserContract.View{
+public class SignupActivity extends AppCompatActivity implements RegisterContract.View, AddUserContract.View, GoogleApiClient.OnConnectionFailedListener {
     private LinearLayout ll_back_sign_up;
     private LinearLayout ll_member_login;
     private Context mContext;
@@ -67,6 +81,11 @@ public class SignupActivity extends AppCompatActivity implements RegisterContrac
     private EditText et_email;
     private EditText et_password;
     private EditText et_confirm_password;
+    private AutoCompleteTextView insert_location;
+    protected GoogleApiClient mGoogleApiClient;
+    private PlaceAutocompleteAdapter mAdapter;
+    private double latitude = 0;
+    private double longitude = 0;
 
     private String firstname;
     private String lastname;
@@ -75,6 +94,7 @@ public class SignupActivity extends AppCompatActivity implements RegisterContrac
     private String confirmpassword;
     private LinearLayout ll_sign_up;
     BusyDialog mBusyDialog;
+    private Activity mActivity;
 
     private String login_type = "1";
     private String social_status = " ";
@@ -89,6 +109,7 @@ public class SignupActivity extends AppCompatActivity implements RegisterContrac
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
         mContext = this;
+        mActivity = this;
 
         initUI();
 
@@ -129,6 +150,14 @@ public class SignupActivity extends AppCompatActivity implements RegisterContrac
         ll_sign_up = (LinearLayout) this.findViewById(R.id.ll_sign_up);
         ll_sign_up.setOnClickListener(listener);
 
+        insert_location = (AutoCompleteTextView) findViewById(R.id.insert_location);
+        mGoogleApiClient = new GoogleApiClient.Builder(this).enableAutoManage(this, this).addApi(Places.GEO_DATA_API).addApi(Places.PLACE_DETECTION_API)
+                .build();
+
+        mAdapter = new PlaceAutocompleteAdapter(this, mGoogleApiClient, null);
+        insert_location.setAdapter(mAdapter);
+        insert_location.setOnItemClickListener(mAutocompleteClickListener);
+
         mRegisterPresenter = new RegisterPresenter(this);
         mAddUserPresenter = new AddUserPresenter(this);
     }
@@ -146,9 +175,8 @@ public class SignupActivity extends AppCompatActivity implements RegisterContrac
                     alertshow();
                     break;
                 case R.id.ll_sign_up:
-
                     signUp();
-                    onRegister(view);
+                    //onRegister(view);
                     break;
                 case R.id.ll_member_login:
                     Intent intent = new Intent(mContext, LoginActivity.class);
@@ -156,6 +184,38 @@ public class SignupActivity extends AppCompatActivity implements RegisterContrac
                     break;
 
             }
+
+        }
+    };
+
+    private AdapterView.OnItemClickListener mAutocompleteClickListener
+            = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            final AutocompletePrediction item = mAdapter.getItem(position);
+            final String placeId = item.getPlaceId();
+            final CharSequence primaryText = item.getPrimaryText(null);
+
+
+            PendingResult<PlaceBuffer> placeResult = Places.GeoDataApi.getPlaceById(mGoogleApiClient, placeId);
+            placeResult.setResultCallback(new ResultCallback<PlaceBuffer>() {
+                @Override
+                public void onResult(@NonNull PlaceBuffer places) {
+                    if(places.getCount()==1){
+                        //Do the things here on Click.....
+                        latitude = places.get(0).getLatLng().latitude;
+                        longitude = places.get(0).getLatLng().longitude;
+                        //city = (String) places.get(0).getName();
+
+
+
+                    }else {
+                        Toast.makeText(getApplicationContext(),"SOMETHING_WENT_WRONG,TRY AGAIN",Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+
 
         }
     };
@@ -201,23 +261,18 @@ public class SignupActivity extends AppCompatActivity implements RegisterContrac
         } else {
 
             new UploadFileToServer().execute();
+            mRegisterPresenter.register(SignupActivity.this, email, password);
 
 
         }
     }
-    private void onRegister(View view) {
-        email = et_email.getText().toString();
-        password = et_password.getText().toString();
 
-        mRegisterPresenter.register(SignupActivity.this, email, password);
-
-    }
     @Override
     public void onAddUserSuccess(String message) {
         Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(mContext, LoginActivity.class);
+      /*  Intent intent = new Intent(mContext, LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | IntentCompat.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
+        startActivity(intent);*/
     }
 
     @Override
@@ -227,7 +282,6 @@ public class SignupActivity extends AppCompatActivity implements RegisterContrac
 
     @Override
     public void onRegistrationSuccess(FirebaseUser firebaseUser) {
-        Toast.makeText(mContext, "Registration Successful!", Toast.LENGTH_SHORT).show();
         mAddUserPresenter.addUser(mContext, firebaseUser);
     }
 
@@ -235,6 +289,13 @@ public class SignupActivity extends AppCompatActivity implements RegisterContrac
     public void onRegistrationFailure(String message) {
         Log.e("response", "onRegistrationFailure: " + message);
         Toast.makeText(mContext, "Registration failed!+\n" + message, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+        Toast.makeText(this,
+                "Could not connect to Google API Client: Error " + connectionResult.getErrorCode(),
+                Toast.LENGTH_SHORT).show();
     }
 
 
@@ -312,25 +373,20 @@ public class SignupActivity extends AppCompatActivity implements RegisterContrac
                     PersistentUser.setUSERPIC(mContext, userData.getString("picture"));
                     PersistentUser.setUserID(mContext, userData.getString("user_id"));
                     PersistentUser.setLogin(mContext);
-
                     Intent intent = new Intent(mContext, HomeActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | IntentCompat.FLAG_ACTIVITY_CLEAR_TASK);
-
                     startActivity(intent);
 
-
-                    Toast.makeText(mContext, "" + "Registered successfully", Toast.LENGTH_LONG).show();
+                    Toast.makeText(mContext, "" + JSONresponse.getString("message"), Toast.LENGTH_LONG).show();
 
 
                 } else {
-                    Toast.makeText(mContext, "" + JSONresponse.getInt("message"), Toast.LENGTH_LONG).show();
-
+                    Toast.makeText(mContext, "" + JSONresponse.getString("message"), Toast.LENGTH_LONG).show();
                 }
 
             } catch (JSONException sd) {
                 Toast.makeText(mContext, sd.toString(), Toast.LENGTH_LONG).show();
             }
-
 
         }
 
@@ -431,11 +487,34 @@ public class SignupActivity extends AppCompatActivity implements RegisterContrac
                 if (resultCode == Activity.RESULT_OK) {
                     Apath = file_image.getAbsolutePath();
                     Log.w("ApathA", "" + Apath);
+                    File file_image = new File(Apath);
+                    final Uri selectedImageUr = Uri.fromFile(file_image);
+                    setPrepareImageData(selectedImageUr);
+                }
+                break;
+            case RESULT_LOAD_IMAGE:
+
+                if (resultCode == Activity.RESULT_OK && null != data) {
+                    Uri selectedImageUri = data.getData();
+                    File file = new File(getRealPathFromURI(selectedImageUri));
+                    Apath = file.getAbsolutePath();
+                    Log.w("ApathB", "" + Apath);
+                    setPrepareImageData(selectedImageUri);
+                    break;
+
+                }
+
+          /*  case TAKE_PICTURE:
+                if (resultCode == Activity.RESULT_OK) {
+                    Apath = file_image.getAbsolutePath();
+                    Log.w("ApathA", "" + Apath);
                     File imgFile = new File(Apath);
                     if (imgFile.exists()) {
                         Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
                         addPhoto.setImageBitmap(myBitmap);
 
+                    }else {
+                        Toast.makeText(SignupActivity.this, "Error", Toast.LENGTH_LONG).show();
                     }
 
 
@@ -447,19 +526,22 @@ public class SignupActivity extends AppCompatActivity implements RegisterContrac
                     Uri selectedImageUri = data.getData();
                     File file = new File(getRealPathFromURI(selectedImageUri));
                     Apath = file.getAbsolutePath();
+                    Log.w("ApathB", "" + Apath);
                     File imgFile = new File(Apath);
                     if (imgFile.exists()) {
 
                         Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
                         addPhoto.setImageBitmap(myBitmap);
 
+                    }else {
+                        Toast.makeText(SignupActivity.this, "Error", Toast.LENGTH_LONG).show();
                     }
 
                     break;
 
                 } else {
                     Toast.makeText(SignupActivity.this, "Error", Toast.LENGTH_LONG).show();
-                }
+                }*/
 
         }
     }
@@ -475,4 +557,36 @@ public class SignupActivity extends AppCompatActivity implements RegisterContrac
             return contentUri.getPath();
         }
     }
+    private byte photoFileData[] = new byte[0];
+    public Bitmap bit;
+
+    private void setPrepareImageData(Uri selectedImage) {
+        // TODO Auto-generated method stub
+        try {
+
+            final InputStream is = mActivity.getContentResolver().openInputStream(selectedImage);
+            try {
+                if (is.available() > 0) {
+                    photoFileData = new byte[is.available()];
+                    is.read(photoFileData, 0, is.available());
+                    is.close();
+                    bit = BitmapUtils.getBitmapFromByteArray(photoFileData, 512);
+                    addPhoto.setImageBitmap(bit);
+                }
+
+            } catch (final IOException e) {
+
+
+            }
+
+        } catch (final FileNotFoundException e) {
+
+            Log.w("FileNotFoundException", "are" + e.getMessage());
+
+            e.printStackTrace();
+        } catch (final Exception e) {
+            Log.w("Exception", "are" + e.getMessage());
+        }
+    }
+
 }

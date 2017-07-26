@@ -12,7 +12,9 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import org.greenrobot.eventbus.Subscribe;
+
 import android.support.annotation.Nullable;
 
 import com.at.currencysell.adapter.ChatRecyclerAdapter;
@@ -27,7 +29,7 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 
-public class ChatDetailsActivity extends AppCompatActivity implements ChatContract.View, TextView.OnEditorActionListener{
+public class ChatDetailsActivity extends AppCompatActivity implements ChatContract.View {
 
     private RecyclerView mRecyclerViewChat;
     private EditText mETxtMessage;
@@ -46,7 +48,6 @@ public class ChatDetailsActivity extends AppCompatActivity implements ChatContra
     }
 
 
-
     @Override
     public void onStart() {
         super.onStart();
@@ -63,27 +64,19 @@ public class ChatDetailsActivity extends AppCompatActivity implements ChatContra
 
         mRecyclerViewChat = (RecyclerView) findViewById(R.id.recycler_view_chat);
         mETxtMessage = (EditText) findViewById(R.id.edit_text_message);
-        mETxtMessage.setOnEditorActionListener(this);
 
         mChatPresenter = new ChatPresenter(this);
         mChatPresenter.getMessage(FirebaseAuth.getInstance().getCurrentUser().getUid(),
                 getIntent().getExtras().getString(Constants.ARG_RECEIVER_UID));
 
-       // Log.w("IDRECEIVERSENDER",FirebaseAuth.getInstance().getCurrentUser().getUid()+ (Constants.ARG_RECEIVER_UID));
-
 
     }
 
-
-
-    @Override
-    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-        if (actionId == EditorInfo.IME_ACTION_SEND) {
-            sendMessage();
-            return true;
-        }
-        return false;
+    public void send(View view) {
+        sendMessage();
     }
+
+
 
     private void sendMessage() {
         String message = mETxtMessage.getText().toString();
@@ -120,7 +113,6 @@ public class ChatDetailsActivity extends AppCompatActivity implements ChatContra
 
     @Override
     public void onGetMessagesSuccess(Chat chat) {
-        Toast.makeText(ChatDetailsActivity.this, "Message Received", Toast.LENGTH_SHORT).show();
 
         if (mChatRecyclerAdapter == null) {
 
