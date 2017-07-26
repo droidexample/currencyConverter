@@ -8,15 +8,20 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Address;
+import android.location.Geocoder;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -29,10 +34,12 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.at.currencysell.adapter.PlaceAutocompleteAdapter;
 import com.at.currencysell.utils.AlbumStorageDirFactory;
 import com.at.currencysell.utils.AlertMessage;
 import com.at.currencysell.utils.BaseAlbumDirFactory;
 import com.at.currencysell.utils.BaseUrl;
+import com.at.currencysell.utils.BitmapUtils;
 import com.at.currencysell.utils.BusyDialog;
 import com.at.currencysell.utils.FroyoAlbumDirFactory;
 import com.at.currencysell.utils.MultipartUtility;
@@ -40,20 +47,32 @@ import com.at.currencysell.utils.NetInfo;
 import com.at.currencysell.utils.PersistentUser;
 import com.at.currencysell.utils.StorageUtils;
 import com.at.currencysell.utils.WebUtil;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.location.places.AutocompletePrediction;
+import com.google.android.gms.location.places.PlaceBuffer;
+import com.google.android.gms.location.places.Places;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
-public class ProfileUpdateActivity extends AppCompatActivity {
+public class ProfileUpdateActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
     private LinearLayout ll_back_sign_up;
-    Context mContext;
+    private Context mContext;
+    private Activity mActivity;
 
     private ImageView addPhoto;
     private static final int RESULT_LOAD_IMAGE = 1;
@@ -67,6 +86,14 @@ public class ProfileUpdateActivity extends AppCompatActivity {
     private EditText et_first_name;
     private EditText et_last_name;
     private EditText et_email;
+    private AutoCompleteTextView insert_location;
+    protected GoogleApiClient mGoogleApiClient;
+    private PlaceAutocompleteAdapter mAdapter;
+    private double latitude = 0;
+    private double longitude = 0;
+    private String city = "";
+    private String address = "";
+    private String country = "";
 
     private String firstname;
     private String lastname;
@@ -82,6 +109,7 @@ public class ProfileUpdateActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_update);
         mContext = this;
+        mActivity = this;
 
         initUI();
 
@@ -115,6 +143,13 @@ public class ProfileUpdateActivity extends AppCompatActivity {
         et_first_name = (EditText) findViewById(R.id.et_first_name);
         et_last_name = (EditText) findViewById(R.id.et_last_name);
         et_email = (EditText) findViewById(R.id.et_email);
+        insert_location = (AutoCompleteTextView) findViewById(R.id.insert_location);
+        mGoogleApiClient = new GoogleApiClient.Builder(this).enableAutoManage(this, this).addApi(Places.GEO_DATA_API).addApi(Places.PLACE_DETECTION_API)
+                .build();
+
+        mAdapter = new PlaceAutocompleteAdapter(this, mGoogleApiClient, null);
+        insert_location.setAdapter(mAdapter);
+        insert_location.setOnItemClickListener(mAutocompleteClickListener);
 
         ll_update = (LinearLayout)this.findViewById(R.id.ll_update);
         ll_update.setOnClickListener(listener);
@@ -154,6 +189,49 @@ public class ProfileUpdateActivity extends AppCompatActivity {
         }
     };
 
+    private AdapterView.OnItemClickListener mAutocompleteClickListener
+            = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            final AutocompletePrediction item = mAdapter.getItem(position);
+            final String placeId = item.getPlaceId();
+            final CharSequence primaryText = item.getPrimaryText(null);
+
+
+            PendingResult<PlaceBuffer> placeResult = Places.GeoDataApi.getPlaceById(mGoogleApiClient, placeId);
+            placeResult.setResultCallback(new ResultCallback<PlaceBuffer>() {
+                @Override
+                public void onResult(@NonNull PlaceBuffer places) {
+                    if(places.getCount()==1){
+                        //Do the things here on Click.....
+                        latitude = places.get(0).getLatLng().latitude;
+                        longitude = places.get(0).getLatLng().longitude;
+                        city = (String) places.get(0).getName();
+                        try {
+                            Geocoder geocoder = new Geocoder(mContext, Locale.getDefault());
+                            List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
+                            if (addresses != null && addresses.size() > 0) {
+
+                                 address = addresses.get(0).getAddressLine(0);
+                                 country = addresses.get(0).getCountryName();
+                                Toast.makeText(getApplicationContext(),address+country,Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+
+                    }else {
+                        Toast.makeText(getApplicationContext(),"SOMETHING_WENT_WRONG,TRY AGAIN",Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+
+
+        }
+    };
+
     public void updateProfile() {
 
 
@@ -173,13 +251,17 @@ public class ProfileUpdateActivity extends AppCompatActivity {
             return;
         }  else {
 
-            //new UploadFileToServer().execute();
-           doWebRequestForsignUp(firstname,lastname,email,user_id);
-
-
+            new UploadFileToServer().execute();
         }
     }
-/*
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+        Toast.makeText(this,
+                "Could not connect to Google API Client: Error " + connectionResult.getErrorCode(),
+                Toast.LENGTH_SHORT).show();
+    }
+
     private class UploadFileToServer extends AsyncTask<Object, String, Object> {
 
         String response = "";
@@ -207,16 +289,19 @@ public class ProfileUpdateActivity extends AppCompatActivity {
             // TODO Auto-generated method stub
             try {
 
-                String ulr = BaseUrl.HttpUrl + "registration";
+                String ulr = BaseUrl.HttpUrl + "update-profile";
                 MultipartUtility body = new MultipartUtility(ulr);
+                body.addFormField("api_key", BaseUrl.Api_key);
+                body.addFormField("user_id",user_id);
                 body.addFormField("first_name", "" + firstname);
                 body.addFormField("last_name", "" + lastname);
                 body.addFormField("email", "" + email);
-                body.addFormField("password", "" + password);
+                body.addFormField("lat", "" + latitude);
+                body.addFormField("long", "" + longitude);
+                body.addFormField("country", "" + country);
+                body.addFormField("address", "" + address);
                 body.addFilePart("picture", Apath);
-                body.addFilePart("api_key", BaseUrl.Api_key);
-                body.addFormField("login_type", "" + login_type);
-                body.addFormField("social_status", "" + social_status);
+
                 response = body.finish();
 
 
@@ -245,22 +330,22 @@ public class ProfileUpdateActivity extends AppCompatActivity {
 
                 int success = JSONresponse.getInt("success");
                 if (success == 1) {
-                    JSONObject userData = JSONresponse.getJSONObject("result");
+                   /* JSONObject userData = JSONresponse.getJSONObject("result");
                     PersistentUser.setUSERNAME(mContext, userData.getString("first_name"));
                     PersistentUser.setUserEmail(mContext, userData.getString("email"));
                     PersistentUser.setUSERPIC(mContext, userData.getString("picture"));
-                    PersistentUser.setUserID(mContext, userData.getString("user_id"));
+                    PersistentUser.setUserID(mContext, userData.getString("user_id"));*/
                     PersistentUser.setLogin(mContext);
 
                     Intent intent = new Intent(mContext, HomeActivity.class);
                     startActivity(intent);
                     ProfileUpdateActivity.this.finish();
 
-                    Toast.makeText(mContext, "" + "Registered successfully", Toast.LENGTH_LONG).show();
+                    Toast.makeText(mContext, "" + JSONresponse.getString("message"), Toast.LENGTH_LONG).show();
 
 
                 } else {
-                    Toast.makeText(mContext, "" + JSONresponse.getInt("message"), Toast.LENGTH_LONG).show();
+                    Toast.makeText(mContext, "" + JSONresponse.getString("message"), Toast.LENGTH_LONG).show();
 
                 }
 
@@ -271,78 +356,8 @@ public class ProfileUpdateActivity extends AppCompatActivity {
 
         }
 
-    }*/
-
-    public void doWebRequestForsignUp(final String first,final String last,final String mail,final String user_id) {
-
-        if (!NetInfo.isOnline(mContext)) {
-            AlertMessage.showMessage(mContext, "Status", "Please check internet Connection");
-            return;
-        }
-
-        mBusyDialog = new BusyDialog(mContext, true, "Loading");
-        mBusyDialog.show();
-
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, BaseUrl.HttpUrl + "update-profile", new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-
-                mBusyDialog.dismis();
-                Log.w("response", "are" + response);
-                try {
-                    JSONObject JSONresponse = new JSONObject(response);
-
-                    int success = JSONresponse.getInt("success");
-                    if (success == 1) {
-                        JSONObject userData = JSONresponse.getJSONObject("result");
-                        PersistentUser.setUSERNAME(mContext, userData.getString("first_name"));
-                        PersistentUser.setUserEmail(mContext, userData.getString("email"));
-                        PersistentUser.setUSERPIC(mContext, userData.getString("picture"));
-                        PersistentUser.setUserID(mContext, userData.getString("user_id"));
-                        PersistentUser.setLogin(mContext);
-
-                        Intent intent = new Intent(mContext, HomeActivity.class);
-                        startActivity(intent);
-                        ProfileUpdateActivity.this.finish();
-
-
-                        Toast.makeText(mContext, "" + JSONresponse.getString("message"), Toast.LENGTH_LONG).show();
-
-
-                    } else {
-                        Toast.makeText(mContext, "" + JSONresponse.getInt("message"), Toast.LENGTH_LONG).show();
-
-                    }
-
-                } catch (JSONException sd) {
-                    Toast.makeText(mContext, sd.toString(), Toast.LENGTH_LONG).show();
-                }
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                mBusyDialog.dismis();
-                Log.w("response", "are" + error);
-
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
-
-                params.put("api_key", BaseUrl.Api_key);
-                params.put("first_name", first);
-                params.put("last_name", last);
-                params.put("email", mail);
-                params.put("user_id",user_id);
-
-                return params;
-            }
-        };
-        RequestQueue requestQueue = Volley.newRequestQueue(mContext);
-        requestQueue.add(stringRequest);
     }
+
 
 
     public void alertshow() {
@@ -439,14 +454,9 @@ public class ProfileUpdateActivity extends AppCompatActivity {
                 if (resultCode == Activity.RESULT_OK) {
                     Apath = file_image.getAbsolutePath();
                     Log.w("ApathA", "" + Apath);
-                    File imgFile = new File(Apath);
-                    if (imgFile.exists()) {
-                        Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-                        addPhoto.setImageBitmap(myBitmap);
-
-                    }
-
-
+                    File file_image = new File(Apath);
+                    final Uri selectedImageUr = Uri.fromFile(file_image);
+                    setPrepareImageData(selectedImageUr);
                 }
                 break;
             case RESULT_LOAD_IMAGE:
@@ -456,18 +466,9 @@ public class ProfileUpdateActivity extends AppCompatActivity {
                     File file = new File(getRealPathFromURI(selectedImageUri));
                     Apath = file.getAbsolutePath();
                     Log.w("ApathB", "" + Apath);
-                    File imgFile = new File(Apath);
-                    if (imgFile.exists()) {
-
-                        Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-                        addPhoto.setImageBitmap(myBitmap);
-
-                    }
-
+                    setPrepareImageData(selectedImageUri);
                     break;
 
-                } else {
-                    Toast.makeText(ProfileUpdateActivity.this, "Error", Toast.LENGTH_LONG).show();
                 }
 
         }
@@ -482,6 +483,38 @@ public class ProfileUpdateActivity extends AppCompatActivity {
             return cursor.getString(column_index);
         } catch (Exception e) {
             return contentUri.getPath();
+        }
+    }
+
+    private byte photoFileData[] = new byte[0];
+    public Bitmap bit;
+
+    private void setPrepareImageData(Uri selectedImage) {
+        // TODO Auto-generated method stub
+        try {
+
+            final InputStream is = mActivity.getContentResolver().openInputStream(selectedImage);
+            try {
+                if (is.available() > 0) {
+                    photoFileData = new byte[is.available()];
+                    is.read(photoFileData, 0, is.available());
+                    is.close();
+                    bit = BitmapUtils.getBitmapFromByteArray(photoFileData, 512);
+                    addPhoto.setImageBitmap(bit);
+                }
+
+            } catch (final IOException e) {
+
+
+            }
+
+        } catch (final FileNotFoundException e) {
+
+            Log.w("FileNotFoundException", "are" + e.getMessage());
+
+            e.printStackTrace();
+        } catch (final Exception e) {
+            Log.w("Exception", "are" + e.getMessage());
         }
     }
 }

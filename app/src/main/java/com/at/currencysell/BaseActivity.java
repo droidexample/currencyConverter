@@ -190,8 +190,10 @@ public class BaseActivity extends AppCompatActivity implements LogoutContract.Vi
 
                    if (rl_search.getVisibility()==View.GONE){
                        rl_search.setVisibility(View.VISIBLE);
+                       img_scan.setVisibility(View.GONE);
                    }else {
                        rl_search.setVisibility(View.GONE);
+                       img_scan.setVisibility(View.VISIBLE);
                    }
                     break;
 

@@ -504,45 +504,6 @@ public class SignupActivity extends AppCompatActivity implements RegisterContrac
 
                 }
 
-          /*  case TAKE_PICTURE:
-                if (resultCode == Activity.RESULT_OK) {
-                    Apath = file_image.getAbsolutePath();
-                    Log.w("ApathA", "" + Apath);
-                    File imgFile = new File(Apath);
-                    if (imgFile.exists()) {
-                        Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-                        addPhoto.setImageBitmap(myBitmap);
-
-                    }else {
-                        Toast.makeText(SignupActivity.this, "Error", Toast.LENGTH_LONG).show();
-                    }
-
-
-                }
-                break;
-            case RESULT_LOAD_IMAGE:
-
-                if (resultCode == Activity.RESULT_OK && null != data) {
-                    Uri selectedImageUri = data.getData();
-                    File file = new File(getRealPathFromURI(selectedImageUri));
-                    Apath = file.getAbsolutePath();
-                    Log.w("ApathB", "" + Apath);
-                    File imgFile = new File(Apath);
-                    if (imgFile.exists()) {
-
-                        Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-                        addPhoto.setImageBitmap(myBitmap);
-
-                    }else {
-                        Toast.makeText(SignupActivity.this, "Error", Toast.LENGTH_LONG).show();
-                    }
-
-                    break;
-
-                } else {
-                    Toast.makeText(SignupActivity.this, "Error", Toast.LENGTH_LONG).show();
-                }*/
-
         }
     }
 

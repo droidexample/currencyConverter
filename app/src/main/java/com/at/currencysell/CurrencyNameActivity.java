@@ -16,20 +16,14 @@ import android.widget.Toast;
 
 import com.at.currencysell.adapter.CurrencyNameAdapter;
 import com.at.currencysell.holder.AllCurrencyList;
-import com.at.currencysell.holder.AllCurrencyRateList;
-import com.at.currencysell.model.CurrencyRatesModel;
 import com.at.currencysell.model.Currency_Names;
 import com.at.currencysell.utils.AllCountryName;
-import com.at.currencysell.utils.PersistentUser;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Locale;
 import java.util.StringTokenizer;
 
 public class CurrencyNameActivity extends AppCompatActivity {
