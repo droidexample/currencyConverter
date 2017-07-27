@@ -34,6 +34,7 @@
                 android:layout_gravity="center"
                 android:adjustViewBounds="true"
                 android:scaleType="centerCrop"
+                android:layout_marginLeft="10dp"
                 android:src="@drawable/person"
                 app:siBorderColor="@color/white"
                 app:siBorderWidth="3dp" />
@@ -182,6 +183,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="( 4 more days)"
+                        android:visibility="gone"
                         android:textColor="@color/white"
                         android:textSize="10sp"/>
 
@@ -189,6 +191,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="( 0 km)"
+                        android:visibility="gone"
                         android:textColor="@color/white"
                         android:textSize="8sp"/>
                 </LinearLayout>

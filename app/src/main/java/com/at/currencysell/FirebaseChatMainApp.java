@@ -2,6 +2,7 @@ package com.at.currencysell;
 
 
 import android.app.Application;
+import android.support.multidex.MultiDex;
 
 public class FirebaseChatMainApp extends Application {
     private static boolean sIsChatActivityOpen = false;
@@ -16,6 +17,8 @@ public class FirebaseChatMainApp extends Application {
 
     @Override
     public void onCreate() {
+
+        MultiDex.install(this);
         super.onCreate();
     }
 }
