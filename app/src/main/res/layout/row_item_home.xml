@@ -108,6 +108,7 @@
 
                         >
                         <ImageView
+                            android:id="@+id/img_want_currency"
                             android:layout_width="20dp"
                             android:layout_height="20dp"
                             android:src="@drawable/ic_usd_img"/>
@@ -160,6 +161,7 @@
 
                         >
                         <ImageView
+                            android:id="@+id/img_pay_currency"
                             android:layout_width="20dp"
                             android:layout_height="20dp"
                             android:src="@drawable/ic_eur_img"/>

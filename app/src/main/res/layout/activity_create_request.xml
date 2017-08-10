@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -347,12 +347,14 @@
                 android:textColor="@color/white" />
         </LinearLayout>
 
-        <LinearLayout
+       <!-- <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="70dp"
             android:layout_marginLeft="50dp"
             android:layout_marginRight="50dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="30dp"
             android:background="@drawable/button_background_gmail">
 
 
@@ -376,7 +378,42 @@
 
 
             </RelativeLayout>
-        </LinearLayout>
+        </LinearLayout>-->
     </LinearLayout>
 
-</LinearLayout>
+    <LinearLayout
+
+        android:layout_width="fill_parent"
+        android:layout_height="40dp"
+        android:background="@drawable/button_background_gmail"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp">
+
+
+        <RelativeLayout
+            android:id="@+id/rl_create_request"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:onClick="create"
+            android:padding="5dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/create_text"
+                android:textAlignment="center"
+                android:padding="3dp"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/medium_text"
+                android:textStyle="bold"
+                android:textAllCaps="true"
+                />
+
+
+        </RelativeLayout>
+    </LinearLayout>
+
+</RelativeLayout>

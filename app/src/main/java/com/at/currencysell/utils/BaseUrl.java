@@ -6,7 +6,9 @@ package com.at.currencysell.utils;
 
 public class BaseUrl {
 
-    public static String HttpUrl ="http://messengerlab.asia/currency_api/public/api/";
+    //public static String HttpUrl ="http://messengerlab.asia/currency_api/public/api/";
+    public static String HttpUrl ="http://103.94.217.14/currency_api/public/api/";
     public static String Api_key ="08092103003";
+
 
 }

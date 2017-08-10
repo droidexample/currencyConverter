@@ -20,5 +20,6 @@ public class FirebaseChatMainApp extends Application {
 
         MultiDex.install(this);
         super.onCreate();
+
     }
 }

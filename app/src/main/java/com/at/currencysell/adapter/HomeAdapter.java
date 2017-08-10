@@ -21,6 +21,8 @@ public class HomeAdapter extends BaseAdapter {
     private Vector<HomeListModel> all_Line_itemses = null;
     private LayoutInflater l_Inflater;
     private AQuery mAQuery;
+    private int resIdwant;
+    private int resIdpay;
 
 
     public HomeAdapter(Context context, Vector<HomeListModel> AllLineitemses) {
@@ -64,6 +66,8 @@ public class HomeAdapter extends BaseAdapter {
             holder.tv_pay_currency = (TextView) convertView.findViewById(R.id.tv_pay_currency);
             holder.tv_pay_amount = (TextView) convertView.findViewById(R.id.tv_pay_amount);
             holder.user_profile_photo = (ImageView) convertView.findViewById(R.id.user_profile_photo);
+            holder.img_want_currency = (ImageView) convertView.findViewById(R.id.img_want_currency);
+            holder.img_pay_currency = (ImageView) convertView.findViewById(R.id.img_pay_currency);
             convertView.setTag(holder);
 
 
@@ -78,7 +82,10 @@ public class HomeAdapter extends BaseAdapter {
         holder.tv_pay_currency.setText(lineitems.getPay_currency());
         holder.tv_pay_amount.setText(lineitems.getPay_amount());
         //mAQuery.id(holder.user_profile_photo).image(HomeList.getmAllPeopleHave(position).getImage_url(), true, true);
-
+        resIdpay = mContext.getResources().getIdentifier(lineitems.getPay_currency().toLowerCase(), "drawable",mContext.getPackageName());
+        holder.img_pay_currency.setImageResource(resIdpay);
+        resIdwant = mContext.getResources().getIdentifier(lineitems.getWant_currency().toLowerCase(), "drawable",mContext.getPackageName());
+        holder.img_want_currency.setImageResource(resIdwant);
         return convertView;
 
     }
@@ -92,6 +99,8 @@ public class HomeAdapter extends BaseAdapter {
         private TextView tv_pay_currency;
         private TextView tv_pay_amount;
         private ImageView user_profile_photo;
+        private ImageView img_want_currency;
+        private ImageView img_pay_currency;
 
     }
 

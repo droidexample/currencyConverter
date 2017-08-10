@@ -39,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginBottom="10dp"
-                android:layout_toRightOf="@+id/add_photo"
+                android:layout_toRightOf="@+id/review_user_picture"
                 android:orientation="vertical">
 
                 <TextView

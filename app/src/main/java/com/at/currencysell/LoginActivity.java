@@ -76,7 +76,6 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
             switch (view.getId()) {
                 case R.id.rl_login:
                     onLogin(view);
-
                      valuationMethods();
                     break;
                 case R.id.member_sign_up:

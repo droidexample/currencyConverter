@@ -55,6 +55,7 @@ public class FragmentMyRequestActive extends Fragment {
     }
 
     private void initUI(View view) {
+
         listview = (ListView) view.findViewById(R.id.list_home);
         doWebRequestForRequestActive();
 
@@ -107,7 +108,7 @@ public class FragmentMyRequestActive extends Fragment {
                     adapter.notifyDataSetChanged();
                     mBusyDialog.dismis();
                     }else {
-                        Toast.makeText(mContext, "" + JsonObject.getString("message"), Toast.LENGTH_LONG).show();
+                        Toast.makeText(mContext, "" + JsonObject.getString("msg"), Toast.LENGTH_LONG).show();
                     }
 
                 } catch (JSONException e) {

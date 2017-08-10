@@ -57,6 +57,7 @@
 
                     >
                     <ImageView
+                        android:id="@+id/img_usd"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:src="@drawable/ic_usd_img"/>
@@ -107,6 +108,7 @@
 
                             >
                             <ImageView
+                                android:id="@+id/img_currency_need"
                                 android:layout_width="20dp"
                                 android:layout_height="20dp"
                                 android:src="@drawable/ic_eur_img"/>

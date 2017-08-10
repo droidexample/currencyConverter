@@ -20,6 +20,8 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
@@ -34,6 +36,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.androidquery.AQuery;
 import com.at.currencysell.adapter.PlaceAutocompleteAdapter;
 import com.at.currencysell.utils.AlbumStorageDirFactory;
 import com.at.currencysell.utils.AlertMessage;
@@ -91,7 +94,6 @@ public class ProfileUpdateActivity extends AppCompatActivity implements GoogleAp
     private PlaceAutocompleteAdapter mAdapter;
     private double latitude = 0;
     private double longitude = 0;
-    private String city = "";
     private String address = "";
     private String country = "";
 
@@ -99,6 +101,7 @@ public class ProfileUpdateActivity extends AppCompatActivity implements GoogleAp
     private String lastname;
     private String email;
     private String user_id;
+    private AQuery mAQuery;
 
     private LinearLayout ll_update;
     BusyDialog mBusyDialog;
@@ -108,6 +111,13 @@ public class ProfileUpdateActivity extends AppCompatActivity implements GoogleAp
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_update);
+
+        if (android.os.Build.VERSION.SDK_INT >= 21) {
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.setStatusBarColor(getResources().getColor(R.color.colorPrimaryDark));
+        }
         mContext = this;
         mActivity = this;
 
@@ -155,6 +165,9 @@ public class ProfileUpdateActivity extends AppCompatActivity implements GoogleAp
         ll_update.setOnClickListener(listener);
 
         user_id = PersistentUser.getUserID(mContext);
+        mAQuery = new AQuery(mContext);
+        // Set Persintition Data
+        mAQuery.id(addPhoto).image(PersistentUser.getUSERPIC(mContext), true, true);
 
         try {
             JSONObject JsonUser = new JSONObject(PersistentUser.getUSERDATA(mContext));
@@ -207,7 +220,6 @@ public class ProfileUpdateActivity extends AppCompatActivity implements GoogleAp
                         //Do the things here on Click.....
                         latitude = places.get(0).getLatLng().latitude;
                         longitude = places.get(0).getLatLng().longitude;
-                        city = (String) places.get(0).getName();
                         try {
                             Geocoder geocoder = new Geocoder(mContext, Locale.getDefault());
                             List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
