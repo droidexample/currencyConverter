@@ -2,10 +2,8 @@ package com.at.currencysell;
 
 import android.content.Context;
 import android.content.Intent;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -16,9 +14,8 @@ import com.at.currencysell.adapter.ChatListAdapter;
 import com.at.currencysell.adapter.UserListingRecyclerAdapter;
 import com.at.currencysell.core.users.getall.GetUsersContract;
 import com.at.currencysell.core.users.getall.GetUsersPresenter;
-import com.at.currencysell.holder.HomeList;
-import com.at.currencysell.model.HomeListModel;
 import com.at.currencysell.model.User;
+import com.at.currencysell.root_activities.BaseActivity;
 import com.at.currencysell.utils.Constants;
 import com.at.currencysell.utils.ItemClickSupport;
 

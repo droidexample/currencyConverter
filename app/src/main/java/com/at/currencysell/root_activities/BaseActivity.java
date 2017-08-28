@@ -1,4 +1,4 @@
-package com.at.currencysell;
+package com.at.currencysell.root_activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -17,11 +17,17 @@ import android.widget.Toast;
 
 
 import com.androidquery.AQuery;
+import com.at.currencysell.ChatActivity;
+import com.at.currencysell.MyRequestWantActivity;
+import com.at.currencysell.MyRequestsActivity;
+import com.at.currencysell.ProfileActivity;
+import com.at.currencysell.R;
+import com.at.currencysell.ScanActivity;
+import com.at.currencysell.SignupFirstActivity;
 import com.at.currencysell.core.logout.LogoutContract;
 import com.at.currencysell.core.logout.LogoutPresenter;
 import com.at.currencysell.slidermenu.SlidingMenu;
 import com.at.currencysell.utils.PersistentUser;
-import com.facebook.login.LoginManager;
 
 
 public class BaseActivity extends AppCompatActivity implements LogoutContract.View{

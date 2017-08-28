@@ -97,8 +97,6 @@ public class CurrencyNameActivity extends AppCompatActivity {
     }
 
 
-
-
     public void add_country_names(String response) {
 
         try {

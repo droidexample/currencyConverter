@@ -1,20 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/parent_relative"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/ic_backround_image"
-    xmlns:ads="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/parent_relative"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
 
 
     <RelativeLayout
-
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-
-        >
+        android:layout_height="wrap_content">
 
         <RelativeLayout
             android:id="@+id/rl_header"
@@ -43,9 +39,9 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:text="Currency List"
+                android:textAllCaps="true"
                 android:textColor="@color/white"
-                android:textSize="@dimen/large_text"
-                android:textAllCaps="true"/>
+                android:textSize="@dimen/large_text" />
 
 
         </RelativeLayout>
@@ -55,9 +51,9 @@
             android:id="@+id/rl_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_below="@+id/rl_header"
             android:layout_marginBottom="16dp"
-            android:layout_below="@+id/rl_header">
+            android:layout_marginTop="10dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -70,13 +66,13 @@
                     android:id="@+id/edt_search"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/button_color_editext"
-                    android:textAlignment="center"
-                    android:padding="10dp"
                     android:background="@android:color/transparent"
-                    android:textColorHint="@color/white"
+                    android:backgroundTint="@color/button_color_editext"
+                    android:padding="10dp"
+                    android:singleLine="true"
+                    android:textAlignment="center"
                     android:textColor="@color/white"
-                    android:singleLine="true"/>
+                    android:textColorHint="@color/white" />
             </LinearLayout>
 
             <ImageView
@@ -93,19 +89,12 @@
             android:id="@+id/listview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/rl_layout"
-            >
+            android:layout_below="@+id/rl_layout">
 
         </ListView>
 
 
-
     </RelativeLayout>
-
-
-
-
-
 
 
 </LinearLayout>

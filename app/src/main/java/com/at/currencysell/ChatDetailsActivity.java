@@ -1,16 +1,10 @@
 package com.at.currencysell;
 
-import android.app.ProgressDialog;
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -20,7 +14,7 @@ import android.support.annotation.Nullable;
 import com.at.currencysell.adapter.ChatRecyclerAdapter;
 import com.at.currencysell.core.chat.ChatContract;
 import com.at.currencysell.core.chat.ChatPresenter;
-import com.at.currencysell.event.PushNotificationEvent;
+import com.at.currencysell.model.PushNotificationEvent;
 import com.at.currencysell.model.Chat;
 import com.at.currencysell.utils.Constants;
 import com.google.firebase.auth.FirebaseAuth;

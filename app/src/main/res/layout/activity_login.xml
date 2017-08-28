@@ -4,11 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.at.currencysell.LoginActivity"
     android:background="@drawable/ic_backround_image"
+    android:orientation="vertical"
+    tools:context="com.at.currencysell.LoginActivity">
 
-    >
     <RelativeLayout
         android:id="@+id/rl_header"
         android:layout_width="match_parent"
@@ -41,103 +40,106 @@
 
 
     </RelativeLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center">
-
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/button_background_edittext"
-    android:layout_marginLeft="50dp"
-    android:layout_marginRight="50dp">
-    <EditText
-        android:id="@+id/et_email"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:hint="@string/email_text"
-        android:textColorHint="@color/white"
-        android:textColor="@color/white"
-        android:textAlignment="center"
-        android:inputType="textEmailAddress"
-        android:backgroundTint="@color/button_color_editext"
-        android:background="@android:color/transparent"/>
-</LinearLayout>
+        android:gravity="center"
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/button_background_edittext"
             android:layout_marginLeft="50dp"
             android:layout_marginRight="50dp"
-            android:layout_marginTop="10dp">
+            android:background="@drawable/button_background_edittext">
+
+            <EditText
+                android:id="@+id/et_email"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="@android:color/transparent"
+                android:backgroundTint="@color/button_color_editext"
+                android:hint="@string/email_text"
+                android:inputType="textEmailAddress"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/button_background_edittext">
+
             <EditText
                 android:id="@+id/et_password"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
+                android:background="@android:color/transparent"
+                android:backgroundTint="@color/button_color_editext"
                 android:hint="@string/password_text"
-                android:textColorHint="@color/white"
-                android:textColor="@color/white"
                 android:inputType="textPassword"
                 android:textAlignment="center"
-                android:backgroundTint="@color/button_color_editext"
-                android:background="@android:color/transparent"/>
+                android:textColor="@color/white"
+                android:textColorHint="@color/white" />
         </LinearLayout>
 
 
-    <LinearLayout
-
-        android:layout_width="fill_parent"
-        android:layout_height="40dp"
-        android:background="@drawable/button_background_gmail"
-        android:gravity="center_vertical|left"
-        android:layout_marginLeft="50dp"
-        android:layout_marginRight="50dp"
-        android:layout_marginTop="10dp">
-
-
-        <RelativeLayout
-            android:id="@+id/rl_login"
+        <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:padding="5dp">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="@string/login_text"
-                android:textAlignment="center"
-                android:padding="3dp"
-                android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/medium_text"
-                android:textStyle="bold"
-                android:textAllCaps="true"
-                />
+            android:layout_height="40dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/button_background_gmail"
+            android:gravity="center_vertical|left">
 
 
-        </RelativeLayout>
-    </LinearLayout>
+            <RelativeLayout
+                android:id="@+id/rl_login"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:padding="5dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="3dp"
+                    android:text="@string/login_text"
+                    android:textAlignment="center"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/medium_text"
+                    android:textStyle="bold" />
+
+
+            </RelativeLayout>
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/member_sign_up"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_marginTop="10dp"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="horizontal">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/member_text"
-                android:textColor="@color/white"/>
+                android:textColor="@color/white" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
                 android:text="@string/sign_up_text"
-                android:textColor="@color/white"
-                android:layout_marginLeft="10dp"/>
+                android:textColor="@color/white" />
         </LinearLayout>
     </LinearLayout>
 

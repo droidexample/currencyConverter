@@ -1,4 +1,4 @@
-package com.at.currencysell;
+package com.at.currencysell.root_activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,8 +8,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.at.currencysell.R;
+import com.at.currencysell.SignupFirstActivity;
 import com.at.currencysell.utils.PersistentUser;
-import com.google.firebase.auth.FirebaseAuth;
 
 
 public class SplashActivity extends AppCompatActivity {

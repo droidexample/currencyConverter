@@ -1,6 +1,5 @@
 package com.at.currencysell;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -23,6 +22,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.at.currencysell.model.UserModel;
+import com.at.currencysell.root_activities.HomeActivity;
 import com.at.currencysell.utils.AlertMessage;
 import com.at.currencysell.utils.BaseUrl;
 import com.at.currencysell.utils.BusyDialog;

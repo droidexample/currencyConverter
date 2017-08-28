@@ -11,10 +11,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.androidquery.AQuery;
 import com.at.currencysell.model.HomeListModel;
+import com.at.currencysell.root_activities.BaseActivity;
 import com.at.currencysell.tabpager.TabsPagerAdapterProfile;
 import com.at.currencysell.utils.PersistentUser;
 

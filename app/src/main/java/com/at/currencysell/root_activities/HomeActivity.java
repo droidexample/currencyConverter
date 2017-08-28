@@ -1,4 +1,4 @@
-package com.at.currencysell;
+package com.at.currencysell.root_activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +12,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.at.currencysell.CurrencyNameActivity;
+import com.at.currencysell.R;
 import com.at.currencysell.tabpager.TabsPagerAdapter;
 
 public class HomeActivity extends BaseActivity {
@@ -51,7 +53,7 @@ public class HomeActivity extends BaseActivity {
         ll_people_have = (LinearLayout) this.findViewById(R.id.ll_people_have);
         ll_people_have.setOnClickListener(listener);
 
-        img_flag=(ImageView)this.findViewById(R.id.img_flag);
+        img_flag = (ImageView) this.findViewById(R.id.img_flag);
         ll_people_need.setSelected(true);
 
         //=============View page for sliding============
@@ -94,8 +96,8 @@ public class HomeActivity extends BaseActivity {
 
                     break;
                 case R.id.rl_currency:
-                    Intent intent = new Intent(mContext,CurrencyNameActivity.class);
-                   startActivityForResult(intent,1);
+                    Intent intent = new Intent(mContext, CurrencyNameActivity.class);
+                    startActivityForResult(intent, 1);
 
                     break;
 
@@ -108,12 +110,11 @@ public class HomeActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode==1)
-        {
-            String currency=data.getStringExtra("MESSAGE");
-            Toast.makeText(mContext,currency,Toast.LENGTH_LONG).show();
+        if (requestCode == 1) {
+            String currency = data.getStringExtra("MESSAGE");
+            Toast.makeText(mContext, currency, Toast.LENGTH_LONG).show();
             tv_currency_name.setText(currency);
-            resId = mContext.getResources().getIdentifier(currency.toLowerCase(), "drawable",mContext.getPackageName());
+            resId = mContext.getResources().getIdentifier(currency.toLowerCase(), "drawable", mContext.getPackageName());
             img_flag.setImageResource(resId);
 
         }

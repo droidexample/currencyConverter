@@ -11,8 +11,7 @@ import android.util.Log;
 
 import com.at.currencysell.ChatDetailsActivity;
 import com.at.currencysell.FirebaseChatMainApp;
-import com.at.currencysell.R;
-import com.at.currencysell.event.PushNotificationEvent;
+import com.at.currencysell.model.PushNotificationEvent;
 import com.at.currencysell.utils.Constants;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;

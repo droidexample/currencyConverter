@@ -53,10 +53,10 @@
                     android:id="@+id/edt_search"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/button_color_editext"
-                    android:textAlignment="center"
-                    android:padding="10dp"
                     android:background="@android:color/transparent"
+                    android:backgroundTint="@color/button_color_editext"
+                    android:padding="10dp"
+                    android:textAlignment="center"
                     android:textColorHint="@color/white" />
             </LinearLayout>
 

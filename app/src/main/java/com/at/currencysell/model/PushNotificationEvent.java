@@ -1,4 +1,4 @@
-package com.at.currencysell.event;
+package com.at.currencysell.model;
 
 /**
  * Created by delaroy on 4/13/17.
