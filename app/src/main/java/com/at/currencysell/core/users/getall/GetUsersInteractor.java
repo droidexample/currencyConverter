@@ -17,8 +17,6 @@ import java.util.Iterator;
 import java.util.List;
 
 
-
-
 public class GetUsersInteractor implements GetUsersContract.Interactor {
     private static final String TAG = "GetUsersInteractor";
 
@@ -39,10 +37,10 @@ public class GetUsersInteractor implements GetUsersContract.Interactor {
                 while (dataSnapshots.hasNext()) {
                     DataSnapshot dataSnapshotChild = dataSnapshots.next();
                     User user = dataSnapshotChild.getValue(User.class);
-                    Log.w("UserData",user.email);
+                    Log.w("UserData", user.email);
                     if (!TextUtils.equals(user.uid, FirebaseAuth.getInstance().getCurrentUser().getUid())) {
                         users.add(user);
-                    }else {
+                    } else {
 
                     }
                 }

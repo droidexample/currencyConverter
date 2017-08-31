@@ -1,4 +1,4 @@
-package com.at.currencysell;
+package com.at.currencysell.root_activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +13,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.androidquery.AQuery;
+import com.at.currencysell.ProfileUpdateActivity;
+import com.at.currencysell.R;
 import com.at.currencysell.model.HomeListModel;
 import com.at.currencysell.root_activities.BaseActivity;
 import com.at.currencysell.tabpager.TabsPagerAdapterProfile;

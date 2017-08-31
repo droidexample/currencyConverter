@@ -17,10 +17,7 @@ import android.widget.Toast;
 
 
 import com.androidquery.AQuery;
-import com.at.currencysell.ChatActivity;
 import com.at.currencysell.MyRequestWantActivity;
-import com.at.currencysell.MyRequestsActivity;
-import com.at.currencysell.ProfileActivity;
 import com.at.currencysell.R;
 import com.at.currencysell.ScanActivity;
 import com.at.currencysell.SignupFirstActivity;

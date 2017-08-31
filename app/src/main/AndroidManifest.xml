@@ -49,7 +49,7 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".MyRequestsActivity"
+            android:name=".root_activities.MyRequestsActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
         <activity
@@ -65,13 +65,13 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".ChatActivity"
+            android:name=".root_activities.ChatActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ScanActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ProfileActivity"
+            android:name=".root_activities.ProfileActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".FavouriteCurrencyActivity" />
 

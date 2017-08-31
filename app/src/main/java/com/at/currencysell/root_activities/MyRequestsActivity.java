@@ -1,4 +1,4 @@
-package com.at.currencysell;
+package com.at.currencysell.root_activities;
 
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -8,6 +8,7 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
+import com.at.currencysell.R;
 import com.at.currencysell.model.HomeListModel;
 import com.at.currencysell.root_activities.BaseActivity;
 import com.at.currencysell.tabpager.TabsPagerAdapterMyRequests;

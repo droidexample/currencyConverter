@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/ic_backround_image"
-    tools:context="com.at.currencysell.MyRequestsActivity">
+    tools:context="com.at.currencysell.root_activities.MyRequestsActivity">
 
 
     <LinearLayout

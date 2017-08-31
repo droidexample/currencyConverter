@@ -6,8 +6,6 @@ import com.at.currencysell.model.User;
 import java.util.List;
 
 
-
-
 public class GetUsersPresenter implements GetUsersContract.Presenter, GetUsersContract.OnGetAllUsersListener {
     private GetUsersContract.View mView;
     private GetUsersInteractor mGetUsersInteractor;

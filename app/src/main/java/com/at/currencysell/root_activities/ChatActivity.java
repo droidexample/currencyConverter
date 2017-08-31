@@ -1,4 +1,4 @@
-package com.at.currencysell;
+package com.at.currencysell.root_activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +10,8 @@ import android.view.WindowManager;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.at.currencysell.ChatDetailsActivity;
+import com.at.currencysell.R;
 import com.at.currencysell.adapter.ChatListAdapter;
 import com.at.currencysell.adapter.UserListingRecyclerAdapter;
 import com.at.currencysell.core.users.getall.GetUsersContract;
