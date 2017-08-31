@@ -13,8 +13,6 @@ import com.at.currencysell.model.User;
 import java.util.List;
 
 
-
-
 public class UserListingRecyclerAdapter extends RecyclerView.Adapter<UserListingRecyclerAdapter.ViewHolder> {
     private List<User> mUsers;
     private static MyClickListener myClickListener;
@@ -38,11 +36,12 @@ public class UserListingRecyclerAdapter extends RecyclerView.Adapter<UserListing
     public void onBindViewHolder(ViewHolder holder, int position) {
         User user = mUsers.get(position);
 
-        String alphabet = user.email.substring(0, 1);
+        // String alphabet = user.email.substring(0, 1);
+        String alphabet = user.getEmail().substring(0, 1);
 
-        holder.txtUsername.setText(user.email);
-       // Log.w("Name",user.email);
-       // holder.txtUserAlphabet.setText(alphabet);
+        holder.txtUsername.setText(user.getEmail());
+        // Log.w("Name",user.email);
+        // holder.txtUserAlphabet.setText(alphabet);
     }
 
     @Override
@@ -62,16 +61,16 @@ public class UserListingRecyclerAdapter extends RecyclerView.Adapter<UserListing
 
         ViewHolder(View itemView) {
             super(itemView);
-        //    txtUserAlphabet = (TextView) itemView.findViewById(R.id.text_view_user_alphabet);
+            //    txtUserAlphabet = (TextView) itemView.findViewById(R.id.text_view_user_alphabet);
             txtUsername = (TextView) itemView.findViewById(R.id.tv_name);
         }
     }
 
-    public void setOnItemClickListener(MyClickListener myClickListener){
+    public void setOnItemClickListener(MyClickListener myClickListener) {
         this.myClickListener = myClickListener;
     }
 
-    public interface MyClickListener{
+    public interface MyClickListener {
         public void onItemClick(int position, View v);
     }
 }

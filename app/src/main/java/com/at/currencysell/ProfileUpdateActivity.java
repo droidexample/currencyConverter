@@ -135,8 +135,8 @@ public class ProfileUpdateActivity extends AppCompatActivity implements GoogleAp
         }
     }
 
-    private void initUI(){
-        ll_back_sign_up = (LinearLayout)this.findViewById(R.id.ll_back_sign_up);
+    private void initUI() {
+        ll_back_sign_up = (LinearLayout) this.findViewById(R.id.ll_back_sign_up);
         ll_back_sign_up.setOnClickListener(listener);
         addPhoto = (ImageView) findViewById(R.id.add_photo);
         addPhoto.setOnClickListener(listener);
@@ -151,7 +151,7 @@ public class ProfileUpdateActivity extends AppCompatActivity implements GoogleAp
         insert_location.setAdapter(mAdapter);
         insert_location.setOnItemClickListener(mAutocompleteClickListener);
 
-        ll_update = (LinearLayout)this.findViewById(R.id.ll_update);
+        ll_update = (LinearLayout) this.findViewById(R.id.ll_update);
         ll_update.setOnClickListener(listener);
 
         user_id = PersistentUser.getUserID(mContext);
@@ -206,7 +206,7 @@ public class ProfileUpdateActivity extends AppCompatActivity implements GoogleAp
             placeResult.setResultCallback(new ResultCallback<PlaceBuffer>() {
                 @Override
                 public void onResult(@NonNull PlaceBuffer places) {
-                    if(places.getCount()==1){
+                    if (places.getCount() == 1) {
                         //Do the things here on Click.....
                         latitude = places.get(0).getLatLng().latitude;
                         longitude = places.get(0).getLatLng().longitude;
@@ -215,17 +215,17 @@ public class ProfileUpdateActivity extends AppCompatActivity implements GoogleAp
                             List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
                             if (addresses != null && addresses.size() > 0) {
 
-                                 address = addresses.get(0).getAddressLine(0);
-                                 country = addresses.get(0).getCountryName();
-                                Toast.makeText(getApplicationContext(),address+country,Toast.LENGTH_SHORT).show();
+                                address = addresses.get(0).getAddressLine(0);
+                                country = addresses.get(0).getCountryName();
+                                Toast.makeText(getApplicationContext(), address + country, Toast.LENGTH_SHORT).show();
                             }
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
 
 
-                    }else {
-                        Toast.makeText(getApplicationContext(),"SOMETHING_WENT_WRONG,TRY AGAIN",Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "SOMETHING_WENT_WRONG,TRY AGAIN", Toast.LENGTH_SHORT).show();
                     }
                 }
             });
@@ -251,7 +251,7 @@ public class ProfileUpdateActivity extends AppCompatActivity implements GoogleAp
         } else if (lastname.equalsIgnoreCase("")) {
             Toast.makeText(mContext, "Please Enter Your Last Name", Toast.LENGTH_LONG).show();
             return;
-        }  else {
+        } else {
 
             new UploadFileToServer().execute();
         }
@@ -294,7 +294,7 @@ public class ProfileUpdateActivity extends AppCompatActivity implements GoogleAp
                 String ulr = BaseUrl.HttpUrl + "update-profile";
                 MultipartUtility body = new MultipartUtility(ulr);
                 body.addFormField("api_key", BaseUrl.Api_key);
-                body.addFormField("user_id",user_id);
+                body.addFormField("user_id", user_id);
                 body.addFormField("first_name", "" + firstname);
                 body.addFormField("last_name", "" + lastname);
                 body.addFormField("email", "" + email);
@@ -359,7 +359,6 @@ public class ProfileUpdateActivity extends AppCompatActivity implements GoogleAp
         }
 
     }
-
 
 
     public void alertshow() {

@@ -1,7 +1,5 @@
 package com.at.currencysell.utils;
 
-
-
 public class Constants {
     public static final String ARG_USERS = "users";
     public static final String ARG_RECEIVER = "receiver";

@@ -1,12 +1,9 @@
 package com.at.currencysell.core.users.getall;
 
 
-
 import com.at.currencysell.model.User;
 
 import java.util.List;
-
-
 
 
 public interface GetUsersContract {

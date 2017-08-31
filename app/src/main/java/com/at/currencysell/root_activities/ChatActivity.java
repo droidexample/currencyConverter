@@ -1,45 +1,36 @@
 package com.at.currencysell.root_activities;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.at.currencysell.ChatDetailsActivity;
 import com.at.currencysell.R;
-import com.at.currencysell.adapter.ChatListAdapter;
 import com.at.currencysell.adapter.UserListingRecyclerAdapter;
 import com.at.currencysell.core.users.getall.GetUsersContract;
 import com.at.currencysell.core.users.getall.GetUsersPresenter;
 import com.at.currencysell.model.User;
-import com.at.currencysell.root_activities.BaseActivity;
 import com.at.currencysell.utils.Constants;
 import com.at.currencysell.utils.ItemClickSupport;
 
 import java.util.List;
 
-public class ChatActivity extends BaseActivity implements GetUsersContract.View,ItemClickSupport.OnItemClickListener{
-    private ListView listview;
-    private ChatListAdapter adapter;
+public class ChatActivity extends BaseActivity implements GetUsersContract.View, ItemClickSupport.OnItemClickListener {
+
     private GetUsersPresenter mGetUsersPresenter;
     private RecyclerView mRecyclerViewAllUserListing;
-    Context mcontext;
 
     private UserListingRecyclerAdapter mUserListingRecyclerAdapter;
-    public static final String ARG_TYPE = "type";
-    public static final String TYPE_CHATS = "type_chats";
-    public static final String TYPE_ALL = "type_all";
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getLayoutInflater().inflate(R.layout.activity_chat,frameLayout);
+        getLayoutInflater().inflate(R.layout.activity_chat, frameLayout);
         mContext = this;
         selecteddeselectedTab(3);
         if (android.os.Build.VERSION.SDK_INT >= 21) {
@@ -53,11 +44,11 @@ public class ChatActivity extends BaseActivity implements GetUsersContract.View,
     }
 
 
-    private void initUI(){
+    private void initUI() {
 
         mGetUsersPresenter = new GetUsersPresenter(this);
         getUsers();
-        mRecyclerViewAllUserListing = (RecyclerView)findViewById(R.id.recycler_view_all_user_listing);
+        mRecyclerViewAllUserListing = (RecyclerView) findViewById(R.id.recycler_view_all_user_listing);
 
         ItemClickSupport.addTo(mRecyclerViewAllUserListing)
                 .setOnItemClickListener(this);
@@ -70,13 +61,10 @@ public class ChatActivity extends BaseActivity implements GetUsersContract.View,
        /* if (TextUtils.equals((ARG_TYPE), TYPE_CHATS)) {
 
         } else if (TextUtils.equals((ARG_TYPE), TYPE_ALL)) {*/
-            mGetUsersPresenter.getAllUsers();
+        mGetUsersPresenter.getAllUsers();
         //}
 
     }
-
-
-
 
 
     @Override
@@ -105,10 +93,10 @@ public class ChatActivity extends BaseActivity implements GetUsersContract.View,
 
     @Override
     public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-        Intent intent = new Intent(mContext,ChatDetailsActivity.class);
-        intent.putExtra(Constants.ARG_RECEIVER,mUserListingRecyclerAdapter.getUser(position).email);
-        intent.putExtra(Constants.ARG_RECEIVER_UID,mUserListingRecyclerAdapter.getUser(position).uid);
-        intent.putExtra(Constants.ARG_FIREBASE_TOKEN,mUserListingRecyclerAdapter.getUser(position).firebaseToken);
+        Intent intent = new Intent(mContext, ChatDetailsActivity.class);
+        intent.putExtra(Constants.ARG_RECEIVER, mUserListingRecyclerAdapter.getUser(position).getEmail());
+        intent.putExtra(Constants.ARG_RECEIVER_UID, mUserListingRecyclerAdapter.getUser(position).getUid());
+        intent.putExtra(Constants.ARG_FIREBASE_TOKEN, mUserListingRecyclerAdapter.getUser(position).getFirebaseToken());
 
         startActivity(intent);
 
