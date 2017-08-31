@@ -4,15 +4,14 @@
     android:layout_height="match_parent"
     android:background="@drawable/ic_backround_image">
 
-
     <RelativeLayout
         android:id="@+id/rl_header"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
-        android:background="@drawable/backround"
-        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/backround">
 
 
         <LinearLayout
@@ -66,13 +65,13 @@
                     android:id="@+id/edt_search"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/button_color_editext"
-                    android:textAlignment="center"
-                    android:padding="10dp"
                     android:background="@android:color/transparent"
-                    android:textColorHint="@color/white"
+                    android:backgroundTint="@color/button_color_editext"
+                    android:padding="10dp"
+                    android:singleLine="true"
+                    android:textAlignment="center"
                     android:textColor="@color/white"
-                    android:singleLine="true"/>
+                    android:textColorHint="@color/white" />
             </LinearLayout>
 
             <ImageView
@@ -90,12 +89,12 @@
             android:id="@+id/rl_convert"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="5dp"
             android:background="@drawable/edt_shape"
-            android:padding="10dp">
+            android:padding="10dp"
+            android:visibility="gone">
 
             <TextView
                 android:id="@+id/tv_from_currency"
@@ -114,9 +113,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_centerInParent="true"
-                android:src="@drawable/eur"
-
-                />
+                android:src="@drawable/eur" />
 
 
             <TextView
@@ -148,15 +145,13 @@
     </LinearLayout>
 
     <LinearLayout
-
         android:layout_width="fill_parent"
         android:layout_height="40dp"
-        android:background="@drawable/button_background_gmail"
         android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
-        android:layout_marginBottom="10dp">
-
+        android:background="@drawable/button_background_gmail">
 
         <RelativeLayout
             android:id="@+id/rl_next_request"
@@ -168,15 +163,13 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:padding="3dp"
                 android:text="Next"
                 android:textAlignment="center"
-                android:padding="3dp"
+                android:textAllCaps="true"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/medium_text"
-                android:textStyle="bold"
-                android:textAllCaps="true"
-                />
-
+                android:textStyle="bold" />
 
         </RelativeLayout>
     </LinearLayout>

@@ -2,39 +2,39 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="75dp"
-    android:background="@drawable/backround"
-   >
+    android:background="@drawable/backround">
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_alignParentLeft="true">
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        >
-        <LinearLayout
-            android:id="@+id/ll_tab_home"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerVertical="true"
-            android:layout_marginBottom="5dp"
-            android:layout_marginLeft="15dp"
-            >
+        android:layout_alignParentLeft="true"
+        android:orientation="horizontal">
 
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:background="@drawable/btn_home"
-                />
-        </LinearLayout>
-    </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/ll_tab_home"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerVertical="true"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="15dp">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/btn_home" />
+            </LinearLayout>
+        </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp">
+
             <LinearLayout
                 android:id="@+id/ll_tab_my_requests"
                 android:layout_width="wrap_content"
@@ -42,17 +42,16 @@
                 android:layout_alignParentBottom="true"
                 android:layout_centerVertical="true"
                 android:layout_marginBottom="5dp"
-                android:layout_marginLeft="15dp"
-                >
+                android:layout_marginLeft="15dp">
 
                 <ImageView
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:background="@drawable/btn_my_requests"
-                    />
+                    android:background="@drawable/btn_my_requests" />
             </LinearLayout>
         </RelativeLayout>
     </LinearLayout>
+
     <RelativeLayout
         android:id="@+id/rl_tab_add"
         android:layout_width="55dp"
@@ -65,43 +64,41 @@
             android:layout_height="40dp"
             android:layout_centerHorizontal="true"
             android:layout_centerInParent="true"
-            android:background="@drawable/ic_add"
-
-            />
+            android:background="@drawable/ic_add" />
 
     </RelativeLayout>
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_alignParentRight="true">
+        android:layout_alignParentRight="true"
+        android:orientation="horizontal">
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        >
-        <LinearLayout
-            android:id="@+id/ll_tab_chat"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerVertical="true"
-            android:layout_marginBottom="5dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            >
-
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-               android:background="@drawable/btn_chat"
-                />
-        </LinearLayout>
-    </RelativeLayout>
         <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            >
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/ll_tab_chat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerVertical="true"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/btn_chat" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
             <LinearLayout
                 android:id="@+id/ll_tab_profile"
                 android:layout_width="wrap_content"
@@ -110,14 +107,12 @@
                 android:layout_centerVertical="true"
                 android:layout_marginBottom="5dp"
                 android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                >
+                android:layout_marginRight="15dp">
 
                 <ImageView
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:background="@drawable/btn_profile"
-                    />
+                    android:background="@drawable/btn_profile" />
             </LinearLayout>
         </RelativeLayout>
     </LinearLayout>

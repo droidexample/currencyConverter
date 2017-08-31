@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Filter;
@@ -36,8 +35,8 @@ import com.at.currencysell.holder.AllCurrencyList;
 import com.at.currencysell.model.Currency_Names;
 import com.at.currencysell.utils.AlertMessage;
 import com.at.currencysell.utils.AllCountryName;
+import com.at.currencysell.utils.BusyDialog;
 import com.at.currencysell.utils.NetInfo;
-import com.at.currencysell.utils.PersistentUser;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -78,6 +77,8 @@ public class MyRequestWantActivity extends AppCompatActivity {
     private String refinedNumber;
     private JSONObject jsonObj_names = null;
 
+    private BusyDialog busyDialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,15 +100,15 @@ public class MyRequestWantActivity extends AppCompatActivity {
 
 
     private void initUI() {
+
         edt_search = (EditText) this.findViewById(R.id.edt_search);
         rl_convert = (RelativeLayout) this.findViewById(R.id.rl_convert);
         tv_from_currency = (TextView) this.findViewById(R.id.tv_from_currency);
         tv_to_currency = (TextView) this.findViewById(R.id.tv_to_currency);
         listView = (ListView) findViewById(R.id.list_my_request_have);
         rl_next_request = (RelativeLayout) this.findViewById(R.id.rl_next_request);
-        rl_next_request.setOnClickListener(listener);
 
-
+        busyDialog = new BusyDialog(mContext, true, "Loading");
 
         // for scarch list
         edt_search.addTextChangedListener(new TextWatcher() {
@@ -138,28 +139,21 @@ public class MyRequestWantActivity extends AppCompatActivity {
         add_country_names();
 
 
-    }
+        rl_next_request.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
-    View.OnClickListener listener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-
-            switch (view.getId()) {
-                case R.id.rl_next_request:
-
-                    String get_cc_link = getResources().getString(R.string.Free_CC_link);
-                    url_Result = get_cc_link + first_country_short + "_" + second_country_short;
-                    doWebRequestforMarketRate();
-                    break;
-
+                String get_cc_link = getResources().getString(R.string.Free_CC_link);
+                url_Result = get_cc_link + first_country_short + "_" + second_country_short;
+                doWebRequestForMarketRate();
 
             }
+        });
 
-        }
-    };
+    }
 
 
-    public void add_country_names() {
+    private void add_country_names() {
 
         String currency_names = AllCountryName.ALLCOUNTRYNAME;
 
@@ -205,7 +199,7 @@ public class MyRequestWantActivity extends AppCompatActivity {
 
     }
 
-    public void doWebRequestforMarketRate() {
+    public void doWebRequestForMarketRate() {
 
 
         if (!NetInfo.isOnline(mContext)) {
@@ -213,6 +207,7 @@ public class MyRequestWantActivity extends AppCompatActivity {
             return;
         }
 
+        busyDialog.show();
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url_Result, new Response.Listener<String>() {
             @Override
@@ -231,6 +226,7 @@ public class MyRequestWantActivity extends AppCompatActivity {
 
                 add_country_Result();
 
+                busyDialog.dismis();
 
             }
         }, new Response.ErrorListener() {
@@ -390,7 +386,7 @@ public class MyRequestWantActivity extends AppCompatActivity {
     }
 
 
-    public void add_country_Result() {
+    private void add_country_Result() {
 
         final_Result = final_Result.replace("{", "");
         final_Result = final_Result.replace("}", "");
